@@ -1,0 +1,10 @@
+com\yonyou\dms\demo\domains\DTO\sample\DemoUserUpdateDto.class
+com\yonyou\dms\demo\controller\sample\DemoUserController$1.class
+com\yonyou\dms\demo\domains\DTO\sample\DemoUserDto.class
+com\yonyou\dms\demo\domains\DTO\sample\DemoUserImportDto.class
+com\yonyou\dms\demo\domains\DTO\sample\DemoUserAddressDto.class
+com\yonyou\dms\demo\controller\sample\DemoUserController.class
+com\yonyou\dms\demo\domains\PO\sample\DemoAddressPO.class
+com\yonyou\dms\demo\service\sample\DemoUserServiceImpl.class
+com\yonyou\dms\demo\service\sample\DemoUserService.class
+com\yonyou\dms\demo\domains\PO\sample\DemoUserPO.class

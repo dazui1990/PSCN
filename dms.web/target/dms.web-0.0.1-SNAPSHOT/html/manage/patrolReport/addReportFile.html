@@ -1,0 +1,38 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">上传附件</div>
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<input type="hidden" name="agendaId" value="{[agendaId]}">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="form-group">
+						<input type="file" class="importFiles" id="fileupload" multiple
+							name="dmsFile" data-inputName="reportFileIds" 
+							data-billId="{[agendaId]}" data-billType="10421001">
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">
+				<a id="btnUpload" class="btn blue" data-url="/patrolReport/upload" data-model="manage" data-method="POST" 
+					data-callBack="true" data-fileUploadBtn="true" data-toggle="confirmation">上传</a>
+			</div>
+		</div>
+</form>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//上传成功回调
+	$("#btnUpload",container).on("callBack.dms",function(event,response){
+		//关闭打开子窗口
+		$("#btnClose",container).click();
+	});
+});
+
+</script>

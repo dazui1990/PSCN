@@ -1,0 +1,244 @@
+<div class="dms-edit ajaxrest" data-url="/basedata/dealer" data-model="manage" data-pageInitCallBack="true" >
+			<form class="form-horizontal">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="pannel-name">基本信息</div>
+							<div class="pannel-tools">
+								<a href="javascript:;" class="expand"> <i
+									class="fa fa-chevron-down"></i></a>
+							</div>
+						</div>
+						<input type="text" name="dealerId" id="dealerId" data-fieldName="dealer_id" hidden="true"/>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+										<div class="form-group">
+											<label class="control-label col-xs-4">经销商代码</label>
+											<div class="col-xs-8">
+												<input type="text" class="form-control dmsDisabled" data-fieldName="dealer_code"  />
+											</div>
+										</div>
+									</div>
+								<!--/span-->
+									<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+										<div class="form-group">
+											<label class="control-label col-xs-4 col-sm-2">经销商名称</label>
+											<div class="col-xs-8 col-sm-10">
+												<input type="text" class="form-control dmsDisabled"  data-fieldName="dealer_name"  />
+											</div>
+										</div>
+									</div>
+								<!--/span-->
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+										<div class="form-group">
+											<label class="control-label col-xs-4">经销商简称</label>
+											<div class="col-xs-8">
+												<input type="text" class="form-control dmsDisabled" data-fieldName="dealer_shortname" />
+											</div>
+										</div>
+									</div>
+								<!-- span -->
+									<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+										<div class="form-group">
+											<label class="control-label col-xs-4">企业性质</label>
+											<div class="col-xs-8">
+												<select class="bs-select form-control dmsDisabled"  data-dictCode="1010"  data-fieldName="property"  ></select>
+											</div>
+										</div>
+									</div>
+								<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">建站日期</label>
+									<div class="col-xs-8">
+										<div class="input-group date date-picker" data-date-format="yyyy/mm/dd">
+											<input   class="form-control dmsDisabled"
+												type="text" value=""  data-fieldName="created_date"  /> 
+											<span class="input-group-btn">
+					                            <button class="btn default date-set" type="button" >
+					                                  <i class="fa fa-calendar"></i>
+					                            </button>
+                                              <button class="btn default date-reset" type="button"  >
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+				                          	</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">开业日期</label>
+									<div class="col-xs-8">
+										<div class="input-group date date-picker" data-date-format="yyyy/mm/dd">
+											<input   class="form-control dmsDisabled"
+												type="text" value="" data-fieldName="open_date"/> 
+											<span class="input-group-btn">
+					                            <button class="btn default date-set" type="button" >
+					                                  <i class="fa fa-calendar"></i>
+					                            </button>
+                                              <button class="btn default date-reset" type="button"  >
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+				                          	</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">营业状态</label>
+									<div class="col-xs-8">
+										<select id="dealerStatus" name="dealerStatus"  class="bs-select form-control dmsDisabled" data-dictCode="1011"  data-fieldName="dealer_status" ></select>
+									</div>
+								</div>
+							</div>
+						<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">省份</label>
+									<div class="col-xs-8">
+										<select  class="bs-select form-control dmsDisabled" id="province" name="province" data-type="region" data-fieldName="province" ></select>
+									</div>
+								</div>
+							</div>
+							<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">城市</label>
+									<div class="col-xs-8">
+										<select  class="bs-select form-control dmsDisabled" parent="province" class="bs-select form-control dmsDisabled required" name="city" id = "city"  data-fieldName="city" ></select>
+									</div>
+								</div>
+							</div>
+							<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">区县</label>
+									<div class="col-xs-8">
+										<select  parent="city" id="county" class="bs-select form-control dmsDisabled" name="county"  data-fieldName="county" ></select>
+									</div>
+								</div>
+							</div>
+							<!-- span -->
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+								<div class="form-group">
+									<label class="control-label col-xs-4">营业时间</label>
+									<div class="col-xs-8">
+										<input type="text" class="form-control" id="businessHours" name="businessHours" data-fieldName="business_hours" maxlength="30"/>
+									</div>
+								</div>
+							</div>	
+							<!-- span -->
+						</div>	
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="pannel-name">联系方式</div>
+						<div class="pannel-tools">
+							<a href="javascript:;" class="expand"> <i
+								class="fa fa-chevron-down"></i></a>
+						</div>
+					</div>
+						<div class="panel-body">
+							<div class="row">
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">24小时热线</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required" maxlength="30"  id="hotLine" name="hotLine" value="" data-fieldName="hot_line">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">销售热线</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required" maxlength="30" id="salesLine" name="salesLine" value="" data-fieldName="sales_line" >
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">售后热线</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required" maxlength="30"  id="serviceLine" name="serviceLine" value="" data-fieldName="service_line" >
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">E-MAIL</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required email" id="eMail" name="eMail" value="" data-fieldName="e_mail" maxlength="60">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-xs-4 col-sm-2">地址</label>
+										<div class="col-xs-8 col-sm-10">
+											<input type="text" class="form-control" id="address" name="address" value="" data-fieldName="address" maxlength="240">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">邮编</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required zipCode" id="zipCode" name="zipCode" value="" data-fieldName="zip_code" maxlength="6">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+									<div class="form-group">
+										<label class="control-label col-xs-4">传真</label>
+										<div class="col-xs-8">
+											<input type="text" class="form-control required fax" id="fax" name="fax" value="" data-fieldName="fax" maxlength="30">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-xs-4 col-sm-2">公司主页</label>
+										<div class="col-xs-8 col-sm-10">
+											<input type="text" class="form-control" id="companyHomepage" name="companyHomepage" value="" data-fieldName="company_homepage" maxlength="120">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+									<div class="form-group">
+										<label class="control-label col-xs-4 col-sm-2">备注</label>
+										<div class="col-xs-8 col-sm-10">
+											<input type="text" class="form-control" id="remark" name="remark" value="" data-fieldName="remark" maxlength="400">
+										</div>
+									</div>
+								</div>
+								<!-- span -->
+							</div>
+						</div>
+					</div>
+				<div class="modal-footer center-block">
+							<a data-url="/basedata/dealer/" data-model="manage"
+								data-method="PUT" data-callBack='true'
+								class="btn blue" data-toggle="confirmation"><i
+								class="fa fa-save"></i>保存</a>
+				</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).one("onload.dms",function(event,container){
+	});
+</script>

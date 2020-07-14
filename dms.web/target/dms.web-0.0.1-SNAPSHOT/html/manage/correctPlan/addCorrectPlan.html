@@ -1,0 +1,301 @@
+<style>
+#planDetailList span{
+	white-space:pre-wrap !important;
+	word-wrap:break-word;
+  	word-break:break-all;
+}
+#planDetailList textarea{
+	height:40px;
+}
+#planDetailList td{
+	vertical-align:middle;
+}
+#planDetailList td:nth-child(1){
+	width:40px;
+}
+/* 评价项项目 */
+#planDetailList td:nth-child(2){
+	width:100px;
+}
+/* 评价项项目基准 */
+#planDetailList td:nth-child(3){
+	width:130px;
+}
+/* 评价项项目基准 */
+#planDetailList td:nth-child(4){
+	width:160px;
+}
+/* 来源 */
+#planDetailList td:nth-child(5){
+	width:70px;
+}
+/* 弱项选择 */
+#planDetailList td:nth-child(6){
+	width:100px;
+}
+/* 责任人  */
+#planDetailList td:nth-child(8){
+	width:90px;
+}
+/* 计划完成时间  */
+#planDetailList td:nth-child(9){
+	width:145px;
+}
+/* 操作  */
+#planDetailList td:nth-child(10){
+	width:40px;
+}
+</style>
+<div class="dms-add">
+	<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="panel-heading">
+		  <div class="row">
+			<div class="pannel-name"><strong>整改计划书</strong></div>
+		  </div><br>
+		<div class="row">
+			<div class="col-xs-3">
+				<label class="control-label">特约店代码：{[DEALER_CODE]}</label>
+			</div>
+			<div class="col-xs-3">
+				<label class="control-label">特约店名称：{[DEALER_SHORTNAME]}</label>
+			</div>
+			<div class="col-xs-3">
+				<label class="control-label" id="evaluateDate"> 
+				</label>
+			</div>
+			<div class="col-xs-3">
+				<label class="control-label">评价人： {[EVALUATE_BY_NAME]}</label>
+			</div>					
+	</div>
+	  <div class="row">
+		<div class="pannel-button">
+			<div class="btn-group btn-group-sm">
+				<a class="btn blue" href="javascript:;" data-onclickEvent="true" > 
+					<i class="fa fa-plus-square"></i> 新增
+				</a>
+			</div>
+		</div>
+	 </div>
+	 </div>
+	</div>
+	<form class="form-horizontal">
+		<input type="hidden" name="evaluateId" value={[ID]}>
+		<input type="hidden" name="dealerId" value={[DEALER_ID]}>
+		<input type="hidden" name="dealerCode" value={[DEALER_CODE]}>
+		<input type="hidden" name="dealerName" value={[DEALER_SHORTNAME]}>
+		<input type="hidden" name="evaluateName" value={[EVALUATE_NAME]}>
+		<input type="hidden" name="evaluateDate" value={[EVALUATE_DATE]}>
+		<input type="hidden" name="evaluateBy" value={[EVALUATE_BY]}>
+		<input type="hidden" id="scrollVal" value="0">
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive" id="planDetailList"></table>
+			</div>
+		</div>
+	</form>
+	<div class="form-actions">
+		<a id="btnSave" class="btn blue" data-url="/correctPlan/save" data-model="manage" data-method="POST"
+			data-callBack="true" data-toggle="confirmation">
+			<i class="fa fa-save"></i>保存
+	    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a id="btnPublish" class="btn blue" data-url="/correctPlan/publish" data-model="manage" data-method="POST"
+			data-callBack="true" data-toggle="confirmation">
+			<i class="fa fa-save"></i>发布
+	    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a class="btn blue ajaxify" data-goback="page" href="manage/correctPlan/makeCorrectPlan.html">
+			<i class="fa fa-reply"></i>返回
+		</a>
+		<a id="btnTextarea" style="display:none;" class="btn blue" 
+		   data-toggle="modal" data-width="modal-md" 
+		   data-url="padTextarea.html" data-beforeShowEvent="true">
+		</a>
+	</div>
+</div>
+<script type="text/javascript">
+  if(/iPad/i.test(navigator.userAgent)){
+		//iPad环境
+ 		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel: "stylesheet",
+			type: "text/css",
+			href: "../html/css/addCorrectPlan.css"
+	 	}); 
+	}  
+	
+ $(document).one("onload.dms",function(event,container){
+	 
+	var flag = 0;
+	var h = 525;
+	if(/iPad/i.test(navigator.userAgent)){
+		flag = 1;
+		h = 440;
+	}
+	
+	//评价日期格式为年 月 日
+	var evaluateDate = new Date({[EVALUATE_DATE]});
+	var year = evaluateDate.getFullYear();
+	var month = evaluateDate.getMonth()+1;
+	var day = evaluateDate.getDate();
+	$("#evaluateDate",container).html("评价日期："+year+"年"+month+"月"+day+"日");
+	 
+	//来源 评价表
+	new Datatable().initLocale({
+		src : "planDetailList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/correctPlan/findSceneEvaluateDetail/{[ID]}",
+		autoHeight : false,
+		height:h,
+		columns : [ 
+		    {field : "ITEM_NAME",title : "评价项大类",formatter:function(value,row,index){
+		    	var inputPlanID = "<input type='hidden' id='PLAN_ID"+index+"' name='PLAN_ID' value='"+row.PLAN_ID+"' class='form-control'>";
+		    	var ID = "<input type='hidden' id='ID"+index+"' name='ID' value='"+row.ID+"' class='form-control'>";
+		    	if(value != null){
+    				return ID+inputPlanID+"<span id='ITEM_NAME"+index+"'>"+row.ITEM_NAME+"</span>"
+    				+"<input type='hidden' id='ITEM_ID"+index+"' data-inputName='ITEM_ID' value='"+row.ITEM_ID+"' >";
+		    	}else{
+		    		return inputPlanID+"<input type='text' id='ITEM_NAME"+index+"' data-inputName='ITEM_NAME' class='form-control required'>";
+		    	}
+	    	}},
+		    {field : "PROJECT_NAME",title : "评价项项目",formatter:function(value,row,index){
+		    	if(value != null){
+    				return "<span id='PROJECT_NAME"+index+"'>"+row.PROJECT_NAME+"</span>"+
+					"<input type='hidden' id='PROJECT_ID"+index+"' name='PROJECT_ID' value='"+row.PROJECT_ID+"' class='form-control'>";
+		    	}else{
+		    		return "<input type='text' id='PROJECT_NAME"+index+"' name='PROJECT_NAME"+index+"' data-inputName='PROJECT_NAME' class='form-control required'>"; 
+		    	}
+	    	}},
+		    {field : "BENCHMARKS_NAME",title : "评价项项目基准",formatter:function(value,row,index){
+		    	if(value != null){
+    				return "<span id='BENCHMARKS_NAME"+index+"'>"+row.BENCHMARKS_NAME+"</span>"+
+					"<input type='hidden' id='BENCHMARKS_ID"+index+"' name='BENCHMARKS_ID' value='"+row.BENCHMARKS_ID+"' class='form-control'>";
+		    	}else{
+		    		return "<input type='text' id='BENCHMARKS_NAME"+index+"' name='BENCHMARKS_NAME"+index+"' data-inputName='BENCHMARKS_NAME' class='form-control required'>"; 
+		    	}
+	    	}},
+ 			{field : "EVALUATE_FROM",title : "来源",codeFormat : {type : "dict",codeType : "9202",defaultValue : "92021002"},inputHiddenFormat : {hiddenField : "EVALUATE_FROM"}},
+  			{field : "IS_WEAK_PROJECT",title : "弱项选择",inputRadioFormat : {type : "dict",codeType : "1004",defaultValue : "10041001"}}, 
+  			{field : "IMPLEMENT_MEASURE",title : "建议实施措施",formatter:function(value,row,index){
+  				//PC端
+  				if(flag == 0){
+  					return "<textarea name='IMPLEMENT_MEASURE"+index+"' data-inputName='IMPLEMENT_MEASURE' class='form-control'>"+formatNull(value)+"</textarea>";
+  				}
+  				//PAD端
+  				else{
+  					return "<span id='IMPLEMENT_MEASURE"+index+"' name='SPAN_IM' value=''>"+formatNull(value)+"</span><input type='hidden' data-inputName='IMPLEMENT_MEASURE' value='"+formatNull(value)+"'>";
+  				}
+  			}},
+			{field : "RESPONSIBLE_BY",title : "责任人",formatter : function(value, row, index){
+  				//var required = row.IS_WEAK_PROJECT == 10041002?"":"required";
+				return "<input type='text' id='RESPONSIBLE_BY"+index+"' name='RESPONSIBLE_BY"+index+"' data-inputName='RESPONSIBLE_BY' value='"+formatNull(value)+"' class='form-control'>";
+			}},
+			{field : "PLAN_FINISH_DATE",title : "计划完成时间",formatter : function(value, row, index){
+				 value = formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+	  			// var required = row.IS_WEAK_PROJECT == 10041002?"":"required";
+				 var templete = '<div class="input-group date date-picker" data-date="'+value+'" >'
+				 +'<input type="text" id="PLAN_FINISH_DATE'+index+'" name="PLAN_FINISH_DATE'+index+'" data-inputName="PLAN_FINISH_DATE" readonly class="form-control" value="'+value+'" />'
+				 +'<span class="input-group-btn"><button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button></span>'
+				 +'<span class="input-group-btn"><button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button></span></div>';
+				
+				 return templete;
+			 }
+			},
+			{field : "ID",title : "操作",formatter:function(value,row,index){
+				if(value == undefined || value == null || value == "null"){
+					if(row.PLAN_ID == null){
+						return "<a class='btn' href='javascript:;' name='localDel'><i class='font-red fa fa-lg fa-minus-square'></i></a>";
+					}else{
+						return "<a class='btn' name='del' title='删除' data-url='/correctPlan/delete/"+row.PLAN_ID+"' data-model='manage' data-method='DELETE' data-toggle='confirmation' data-callBack='true'><i class='font-red fa fa-lg fa-minus-square'></i></a>";
+					}
+				}else{
+					return "";
+				}
+			 }}
+		],
+		onLoadSuccess : function(){
+			//定位滚动条
+			var scrollValue = $("#scrollVal",container).val();
+			$(".fixed-table-body",container).scrollTop(scrollValue);
+
+/* 			//弱项选择radio change事件
+			//选择否 不校验 建议实施措施 责任人 计划完成时间
+			$("input:radio[data-inputName='IS_WEAK_PROJECT']",container).change(function(){
+	  			var index = $(this).parent().parent().parent().parent().attr("data-index");
+	  			//添加 required校验
+	  			if(this.value == 10041001){
+	  				$("textarea[name='IMPLEMENT_MEASURE"+index+"']",container).addClass("required");
+	  				$("#RESPONSIBLE_BY"+index,container).addClass("required");
+	  				$("#PLAN_FINISH_DATE"+index,container).addClass("required");
+	  			}
+	  			//移除 required校验
+	  			if(this.value == 10041002){
+	  				$("textarea[name='IMPLEMENT_MEASURE"+index+"']",container).removeClass("required");
+	  				$("#RESPONSIBLE_BY"+index,container).removeClass("required");
+	  				$("#PLAN_FINISH_DATE"+index,container).removeClass("required");
+	  			}
+			}); */
+		}
+	});
+	
+	//$("#planDetailList").bootstrapTable("hideColumn","SCENE_EVALUATE_ID");
+		
+ 	//保存回调
+	$("#btnSave",container).on("callBack.dms",function(event,response){
+		var scrollValue = $(".fixed-table-body",container).scrollTop();
+		$("#scrollVal",container).val(scrollValue);
+
+		//刷新当前表格
+		$("#planDetailList",getElementContext()).dmsTable().refreshTableWithForm();
+	}); 
+	
+	//发布回调
+	$("#btnPublish",container).on("callBack.dms",function(event,response){
+		//跳转上级查看页面
+		$("a[data-goback='page']",container).click();
+		//刷新上级查看页面
+		dmsCommon.refreshPageByUrl("manage/correctPlan/makeCorrectPlan.html",container);
+	});
+	
+	//事件点击
+	$("a[data-onclickEvent='true']",container).on("dms.click",function(event){
+		$("#planDetailList",container).dmsTable().appendBlankRow();
+	});
+	
+	//绑定新增行本地删除事件
+	$("#planDetailList",container).on("click","a[name='localDel']",function(){
+		var index = $(this).parent().parent().find("td").eq(0).text();
+		$("#planDetailList",container).dmsTable().deleteRowByIndex(index-1);
+	});
+	
+	//绑定新增行逻辑删除事件回调
+	$("#planDetailList",container).on("callBack.dms","a[name='del']",function(){
+		//刷新当前新增页面
+		dmsCommon.refreshPageByUrl("manage/correctPlan/addCorrectPlan.html",container);
+	});
+	
+	//绑定 建议整改措施 TD点击事件
+	$("#planDetailList",container).on("click","td",function(){
+		if($(this).find("span[name='SPAN_IM']").length > 0){
+			var textareaName = $(this).find("span").attr("id");
+			var textareaVal = $(this).find("span").text();
+			if($.trim(textareaVal)){
+				textareaVal = textareaVal.replace(/[\r\n]/g,"<br>");        
+			}
+			$("#btnTextarea").attr("value1",textareaName);
+			$("#btnTextarea").attr("value2",textareaVal);
+			$("#btnTextarea").click();
+		}
+	});
+	
+	// textarea弹出框
+	$("#btnTextarea",container).on("beforeShow.dms",function(event,returnResult){
+		 var textareaName = $(this).attr("value1");
+		 var textareaVal = $(this).attr("value2");
+		 var map = {textareaName:textareaName,textareaVal:textareaVal};
+		 $(this).data("pageData",map); 
+		 returnResult.status = true;
+	});
+
+}); 
+</script>

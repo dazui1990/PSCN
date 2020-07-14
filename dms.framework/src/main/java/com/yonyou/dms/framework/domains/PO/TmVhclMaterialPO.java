@@ -1,0 +1,11 @@
+package com.yonyou.dms.framework.domains.PO;
+
+import org.javalite.activejdbc.annotations.IdName;
+import org.javalite.activejdbc.annotations.Table;
+
+import com.yonyou.dms.framework.domain.BaseModel;
+@Table("TM_VHCL_MATERIAL")
+@IdName("MATERIAL_ID")
+public class TmVhclMaterialPO extends BaseModel{
+
+}

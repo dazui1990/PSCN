@@ -1,0 +1,154 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">员工职位新增</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">工号:</label>
+								<div class="col-xs-8">
+									<input id="employeeNo" name="employeeNo"
+										class="form-control required" maxlength="30" type="text" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">姓名:</label>
+								<div class="col-xs-8">
+									<input id="employeeName" name="employeeName"
+										class="form-control" maxlength="30" type="text" readonly/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">督导:</label>
+								<div class="col-xs-8">
+									<input id="duDao" name="btSelectAll" type="checkbox"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">系长:</label>
+								<div class="col-xs-8">
+									<input id="xiZhang" name="btSelectAll" type="checkbox"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">科长:</label>
+								<div class="col-xs-8">
+									<input id="keZhang" name="btSelectAll" type="checkbox"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">部长:</label>
+								<div class="col-xs-8">
+									<input id="buZhang" name="btSelectAll" type="checkbox"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a id="save" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue" data-beforeRequest="true"
+				data-toggle="confirmation"><i class="fa fa-save"></i>保存</a> <a
+				data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回</a>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	$("a[data-beforeRequest='true']", container).on("beforeRequest.dms",function(event, returnResult) {
+		var a = document.getElementById("duDao");
+		var duDao;
+		var xiZhang;
+		var keZhang;
+		var buZhang;
+		if(a.checked){
+			duDao = 1;
+		}else{
+			duDao = 2;
+		}
+		
+		var b = document.getElementById("xiZhang");
+		if(b.checked){
+			xiZhang = 1;
+		}else{
+			xiZhang = 2;
+		}
+		
+		var c = document.getElementById("keZhang");
+		if(c.checked){
+			keZhang = 1;
+		}else{
+			keZhang = 2;
+		}
+		
+		var d = document.getElementById("buZhang");
+		if(d.checked){
+			buZhang = 1;
+		}else{
+			buZhang = 2;
+		}
+		
+		
+		if(duDao == 2 && xiZhang == 2 && keZhang == 2 && buZhang == 2){
+			dmsCommon.tip({status:"warning",msg:"至少选择一个职位!"});
+		}else{
+			$("#save",container).attr("data-url","/basedata/employees/userSeriesSave/"+duDao+"/"+xiZhang+"/"+keZhang+"/"+buZhang);
+		}
+		returnResult.status = true;
+	});
+	
+	$("input[name='employeeNo']").bind('input propertychange',function(){
+		var employeeNo = $("#employeeNo",container).val();
+		
+		dmsCommon.ajaxRestRequest({
+    		//所查询数据合计
+    		url : dmsCommon.getDmsPath()["manage"] + "/basedata/employees/returnName/"+employeeNo,
+			dataType:"json",
+			type:"GET",
+			container:container,
+			sucessCallBack : function(data) {//成功回调
+				if(data!=null && data !=""){
+					$("#employeeName",container).val(data[0].EMPLOYEE_NAME);
+				}
+			} 
+    	});
+	});
+	
+	//新增页面的回调函数
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+});
+
+</script>

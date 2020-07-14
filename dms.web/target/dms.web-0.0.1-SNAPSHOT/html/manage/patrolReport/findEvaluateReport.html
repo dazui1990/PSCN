@@ -1,0 +1,273 @@
+<style>
+.modal-lg{
+	min-width:75vw !important;
+}
+#eTitle{
+	text-align:center;
+	font-size:18px;
+	font-weight:bold;
+	padding: 10px;
+}
+#eDate{
+	text-align:center;
+	font-size:16px;
+	font-weight:bold;
+	color:red;
+	padding: 10px;
+}
+
+#itemsList,#signTable .table-bordered th,
+#itemsList,#signTable .table-bordered td
+{
+	border:1px solid #808080 !important; 
+}
+#signTable  th,
+#signTable  td
+{
+	border:1px solid #808080 !important; 
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<h4 id="eTitle"></h4>
+				<h5 id="eDate"></h5>
+			</div><br>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<!-- 评价项表格 -->
+					<div class="col-xs-6">
+						<table id="itemsList" class="table table-striped table-hover table-responsive"></table>
+					</div>
+					<!-- 雷达图 -->
+			 		<div class="col-xs-6" align="center">
+			 			<div id="echart" style="width: 400px;height:250px;"></div>
+			 		</div>
+				</div>
+			</div>
+			<!-- 电子签名 -->
+			<div class="row" style="padding: 10px 5px">
+				<label class="control-label" style="color:red;font-size:16px">电子签名栏</label>
+			</div>
+			<div class="row" >
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<table id="signTable" class="table table-striped table-bordered table-hover table-responsive">
+				<thead><tr>	
+					<th style="text-align: center;">
+					总经理
+					<div class="file-footer-buttons">
+					<a id="del1" data-model="web" data-url="/basedata/upload/deleteInfo/{[evaluateId]}/10421003"  
+						data-method="POST" data-toggle="confirmation" data-callBack="true" title="删除签名">
+					<i class="glyphicon glyphicon-trash text-danger"></i>
+					</a>
+					</div>
+					</th>
+					<th style="text-align: center;">
+					服务经理
+					<div class="file-footer-buttons">
+					<a id="del2" data-model="web" data-url="/basedata/upload/deleteInfo/{[evaluateId]}/10421004"  
+						data-method="POST" data-toggle="confirmation" data-callBack="true" title="删除签名">
+					<i class="glyphicon glyphicon-trash text-danger"></i>
+					</a>
+					</div>					
+					 </th>
+					<th style="text-align: center;">
+					东风本田
+					<div class="file-footer-buttons">
+					<a id="del3" data-model="web" data-url="/basedata/upload/deleteInfo/{[evaluateId]}/10421005"  
+						data-method="POST" data-toggle="confirmation" data-callBack="true" title="删除签名">
+					<i class="glyphicon glyphicon-trash text-danger"></i>
+					</a>
+					</div>					
+					</th>
+				<tr></thead>
+				<tbody></tr>
+					<td style="width:33%"><div id="sign1" value=""  style="height:200px;">
+					</div></td>
+					<td style="width:33%"><div id="sign2" value=""  style="height:200px;">
+					</div></td>
+					<td style="width:33%"><div id="sign3" value=""  style="height:200px;">
+					</div></td>
+				</tr></tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+</form>
+
+<a id="commonSign" style="display:none;" data-toggle="modal" data-width="modal-lg" 
+	data-url="signature.html" data-beforeShowEvent="true"></a>
+<input id="billType" type="hidden" value="">	
+<input id="refreshPage" type="button" style="display:none;">
+	
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	var evaluateDate = new Date({[evaluateDate]});
+	$("#eTitle",container).html(evaluateDate.getFullYear()+"年售后运营评价报告("+'{[dealerName]}'+")");
+	$("#eDate",container).html(showZhDate("巡回时间",evaluateDate));
+	
+	var echart = echarts.init(document.getElementById("echart"));
+	
+	new Datatable().initLocale({
+		src : "itemsList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/patrolReport/findItemList/{[evaluateId]}",
+		autoHeight : false,
+		columns : [ 
+		    {field : "bigitemname",title : "评价项大类"},
+			{field : "ratio",title : "权重"},
+			{field : "score",title : "实际",numberFormat : {decimal:2}}
+		],
+		 onLoadSuccess: function (data) {
+			 //评价得分  合并
+			 var count = data.length-1;
+			 $("#itemsList",container).bootstrapTable('mergeCells', {index: count, field: 'ratio', colspan: 2, rowspan: 1});
+		 	
+			 //雷达图
+			 var indicator = [];
+		 	 var aScore = [];
+		 	 var tScore = [];
+		 	 for(var i=0;i<count;i++){
+		 		var item = {name : data[i]['bigitemname'],max : 100};
+		 		indicator.push(item);
+		 		aScore.push(data[i]['score']);
+		 		tScore.push(100);
+		 	 }
+		 
+		 	var option = {
+		 			color: ['#FF0000','#92D050'],
+				    legend: {
+				    	x: 'right',
+				        data: ['实际', '目标']
+				    },
+				    tooltip: {},
+				    radar: {
+				        name: {
+				            textStyle: {
+				                color: '#fff',
+				                backgroundColor: '#999',
+				                borderRadius: 3,
+				                padding: [3, 5]
+				           }
+				        },
+				        indicator: indicator
+				    },
+				    series: [{
+				        type: 'radar',
+				        center: ['15%', '60%'],
+				        data : [
+				            {
+				                value : aScore,
+				                name : '实际'
+				            },
+				             {
+				                value : tScore,
+				                name : '目标'
+				            }
+				        ]
+				    }]
+				};
+				echart.setOption(option);
+		 		echart.resize();
+		 }
+	});		
+	
+	//电子签名-总经理 服务经理 东风本田
+	var billTypes = [10421003,10421004,10421005];
+	billTypes.forEach(function(value,i){
+		dmsCommon.ajaxRestRequest({
+			url:dmsCommon.getDmsPath()["web"]+"/basedata/download/billFiles/"+value+"/{[evaluateId]}",
+			type:"GET",
+        	sucessCallBack:function(response){
+        		if(response.initialPreview != undefined){
+            		var src = dmsCommon.getDmsFuncIdUrl(dmsCommon.getDmsPath()["web"]+response.initialPreview[0],dmsCommon.currentToken);
+    				$("#sign"+(i+1)).append("<img src='"+src+"' style='width:100%;height:"+$("#sign"+(i+1)).height()+"px;'>");
+    				//签名标识
+    				$("#sign"+(i+1)).attr("value","isSign");
+        		}
+       		}
+		});		
+	});
+
+	$("#refreshPage",container).click(function(){
+		//刷新页面自身
+		dmsCommon.refreshPageByUrl("manage/patrolReport/findEvaluateReport.html",container);
+	});
+	
+	//删除签名回调
+	$("#del1",container).on("callBack.dms",function(){
+		//还原签名标识
+		 $("#sign1").attr("value","");
+		//刷新页面自身
+		dmsCommon.refreshPageByUrl("manage/patrolReport/findEvaluateReport.html",container);
+	});
+	$("#del2",container).on("callBack.dms",function(){
+		//还原签名标识
+		 $("#sign2").attr("value","");
+		//刷新页面自身
+		dmsCommon.refreshPageByUrl("manage/patrolReport/findEvaluateReport.html",container);
+	});
+	$("#del3",container).on("callBack.dms",function(){
+		//还原签名标识
+		 $("#sign3").attr("value","");
+		//刷新页面自身
+		dmsCommon.refreshPageByUrl("manage/patrolReport/findEvaluateReport.html",container);
+	});
+	
+	//iPad环境 才能点击签名
+ 	if(/iPad/i.test(navigator.userAgent)){
+ 		$("#sign1",container).click(function(){
+ 			if($(this).attr("value").length == 0){
+ 				//点击签名的控件ID
+ 				$("#billType",container).val(10421003);
+ 				$("#commonSign",container).click();
+ 			}
+ 		});
+ 		
+ 		$("#sign2",container).click(function(){
+ 			if($(this).attr("value").length == 0){
+ 				//点击签名的控件ID
+ 				$("#billType",container).val(10421004);
+ 				$("#commonSign",container).click();
+ 			}
+ 		});
+ 		
+ 		$("#sign3",container).click(function(){
+ 			if($(this).attr("value").length == 0){
+ 				//点击签名的控件ID
+ 				$("#billType",container).val(10421005);
+ 				$("#commonSign",container).click();
+ 			}
+ 		});
+ 		
+ 		$("#commonSign",container).on("beforeShow.dms",function(event,returnResult){
+ 			 var billType = $("#billType",container).val();
+ 			 var evaluateId = {[evaluateId]};
+ 			 var map = {evaluateId:evaluateId,billType:billType};
+ 			 $(this).data("pageData",map); 
+ 			 returnResult.status = true;
+ 		}); 
+	} 
+	
+});
+
+//显示中文日期
+function showZhDate(name,inDate){
+	//评价日期格式为年 月 日
+	var date = new Date(inDate);
+	var year = date.getFullYear();
+	var month = date.getMonth()+1;
+	var day = date.getDate();
+	return name+"： "+year+"年"+month+"月"+day+"日";
+} 
+</script>
+</div>

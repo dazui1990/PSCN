@@ -1,0 +1,104 @@
+<!-- 巡回报告查看 其他评价表详情 -->
+<div class="dms-search">
+	<div class="modal-header">
+		<div class="modal-title">N&L评价表-详情</div>
+	</div>
+	<br>
+	<div class="panel panel-default table-panel">
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive" id="dNlDetailList"></table>
+		</div>
+	</div>
+	<div class="form-actions">
+		<a id="btnBack" class="btn blue ajaxify" data-beforeShowEvent="true" 
+			href="manage/patrolReport/findPatrolReportDetail.html">返回</a>			
+	</div>
+	<input type="hidden" id="nlId" value={[NL_ID]}>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//N&L评价表详情
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findCountInNlEvaluate/{[NL_ID]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			var columns1=[];
+			var columns2=[];
+			columns1.push({field : "COLUMN1",rowspan: 2,colspan : 1,align : "center"});
+			columns1.push({field : "COLUMN2",rowspan: 2,colspan : 1,align : "center"});
+			if(data > 0){
+				for(var i=1; i<=data; i++){
+					columns1.push({field : "CAR_"+i,title : "第"+i+"台",rowspan: 1,colspan : 2,align : "center"});
+					columns2.push({field : "CAR_"+i+"_B",title : "开始",align : "center"});
+					columns2.push({field : "CAR_"+i+"_E",title : "结束",align : "center"});
+				}
+			}
+		
+			new Datatable().initLocale({
+				src : "dNlDetailList",
+				url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findNlEvaluateDetail/{[NL_ID]}",
+				container : container,
+				autoHeight : false,
+				isShowLineNumber : false,
+				columns : [columns1,columns2],
+				onLoadSuccess : function(){
+					//奇数行(XX损失时间) 单元格合并
+					for(var index=0;index<=17;index++){
+						if(index%2 != 0){
+							$("#dNlDetailList tr[data-index="+index+"]",container).css("background-color","#D3D3D3");
+							for(var i=1;i<=data;i++){
+				  	        	$("#dNlDetailList",container).bootstrapTable('mergeCells',{index:index, field:"CAR_"+i+"_B", colspan: 2, rowspan: 1});   
+							}
+						}
+					}
+				}
+			});
+		}
+	});
+	
+	$("#btnBack",container).on("beforeShow.dms",function(event,returnResult){
+		//页面初始化参数传入详情页面用于返回
+		var map={	ID:{[ID]},AGENDA_ID:{[AGENDA_ID]},EVALUATE_ID:{[EVALUATE_ID]},
+					EVALUATE_NAME:"{[EVALUATE_NAME]}",EVALUATE_DATE:{[EVALUATE_DATE]},
+	 				EVALUATE_BY:"{[EVALUATE_BY]}",EVALUATE_BY_NAME:"{[EVALUATE_BY_NAME]}"
+	 			};
+		$(this).data("pageData",map);
+		returnResult.status = true;
+		
+		//返回N&L表画面
+		setTimeout(function(){
+			$("#btnNL").click();
+		},100); 
+	});
+	
+});
+
+/**
+ * 合并单元格
+ * @param data  原始数据
+ * @param fieldName 合并属性名称
+ * @param colspan   合并列
+ * @param target    目标表格对象
+ */
+function mergeCells(data,fieldName,colspan,target){
+	//合并起始行
+    var index = 0;
+	//合并行数
+    var count = 1;
+    for(var i = 1 ; i < data.length ; i++){
+   		if(data[i-1][fieldName] == data[i][fieldName]){
+   			count += 1;
+   		}else{
+  	        $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+  	        index += count;
+  	        count = 1;
+   		}
+   		
+   		if(i == data.length-1){
+   		    $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+   		}
+    }
+}
+</script>

@@ -1,0 +1,136 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+	<div class="modal-header">
+			<div class="modal-title">评价项分类维护新增</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="center-block">
+						<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+							<div class="form-group">
+								<label class="control-label col-xs-4">评价项大类:</label>
+								<div class="col-xs-8">
+								<select id="dalei11" class="bs-select form-control required"
+									name="dalei11" data-url="/Evaluation/daleiquanbu" 
+									data-model="manage" data-labelValue="id"
+									data-lableDesc="evaluationitem_name"  
+									 data-size="10" >
+								</select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+							</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">评价项领域:</label>
+								<div class="col-xs-8">
+								<select id="lingyu" class="bs-select form-control" parent="dalei11"
+									name="lingyu" data-url="/Evaluation/Largeclassname/{[dalei11]}"
+									data-model="manage" data-labelValue="id" 
+									data-lableDesc="evaluationitem_name" data-live-search="true"
+								     data-size="10" >
+								</select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">评价项分类:</label>
+								<div class="col-xs-8">
+									<input type="text" id="fenlei" class="form-control required " name="fenlei" value="" />
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="modal-footer center-block">
+						<div class="query-btn">
+							<input type="button" class="btn blue" value="保存"
+								onclick="conf();" /> <a data-dismiss="modal" class="btn blue"><i
+								class="fa fa-undo"></i>取消 </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+
+				<div class="panel-body">
+					<table class="table table-striped table-bordered table-hover"
+						id="dms_table"></table>
+				</div>
+
+
+		</div>
+			</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//绑定验证保存按钮  
+});	
+function conf(event,container){
+	
+	var a=$("#dalei11").val();
+	var b=$("#lingyu").val();
+	var c=$("#fenlei").val();
+	if(a==""){
+		dmsCommon.tip({status:"warning",msg:"评价项分类是必填项"});
+		
+		return ;
+	}
+	if(b==""){
+		dmsCommon.tip({status:"warning",msg:"评价项领域是必填项"});
+		
+		return ;
+	}
+	if(c==""){
+		dmsCommon.tip({status:"warning",msg:"评价项分类是必填项"});
+		
+		return ;
+	}
+dmsCommon.ajaxRestRequest({
+			url:dmsCommon.getDmsPath()["manage"] + "/Evaluation/saveevaclassification/"+a+"/"+b+"/"+c,
+			type : 'GET',
+			async : false,
+			dataType: 'JSON',
+			sucessCallBack : function(data) {//成功回调
+				var msg=data.msg;
+			   
+				if(msg=='1'){
+					dmsCommon.tip({status:"warning",msg:"评价项分类已经存在不能新增"});
+					returnResult.status=false;
+				}else{
+					//关闭窗口
+					$("a[data-dismiss='modal']",container).click();
+					//刷新表格
+					$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+				}
+			}
+			
+		});	
+		
+		
+}
+	
+
+
+</script>

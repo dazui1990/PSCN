@@ -1,0 +1,68 @@
+<style>
+#dudaoList td:nth-child(1){
+	width:75px;
+}
+#dudaoList td:nth-child(2){
+	width:45px;
+}
+</style>
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">巡回报告-分享</div>
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"><i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive" id="dudaoList"></table>
+			</div>
+		</div>
+		
+	<input type="hidden" id="reportId" name="reportId" value="{[reportId]}">
+	</form>
+	<div class="form-actions">
+		<a id="btnShare" class="btn blue" data-url="/patrolReport/share" 
+			data-model="manage" data-method="POST" data-toggle="confirmation"
+			data-beforeRequest="true" data-callBack="true" >分享</a>	
+	</div><br>
+
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "dudaoList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/basedata/employees/findSupervisors",
+		pageSize:15,
+		autoHeight : false,
+		selectItemName:"selectItem",
+		columns : [ 
+			{checkbox : true},  
+		    {field : "EMPLOYEE_NO",title : "工号",formatter:function(value,row,index){
+	    		return value
+	    			+"<input type='hidden' id='SUPERVISION_ID"+index+"' name='SUPERVISION_ID' value='"+row.SUPERVISION_ID+"'>"
+	    			+"<input type='hidden' id='EMPLOYEE_NO"+index+"' name='EMPLOYEE_NO' value='"+value+"'>";
+		    }},
+		    {field : "EMPLOYEE_NAME",title : "督导",inputHiddenFormat : {hiddenField : "EMPLOYEE_NAME"}}
+		]
+	});
+	
+	$("#btnShare",container).on("beforeRequest.dms",function(event,returnResult){
+		var selectRows = $("#dudaoList").bootstrapTable("getSelections");
+		if(selectRows.length == 0){
+			dmsCommon.tip({status:"error",msg:"请至少选择一个督导！"})
+			returnResult.status = false;
+			return ;
+		}
+		returnResult.status = true;
+	});
+	
+	$("#btnShare",container).on("callBack.dms",function(event,response){
+		$("#btnClose",container).click();
+	});
+});
+
+</script>

@@ -1,0 +1,168 @@
+ <style>
+.fc-content{
+width:100% !important;
+ height:auto !important; 
+ white-space:normal !important; 
+ word-wrap:break-word !important;
+  word-break:break-all !important;
+}
+.fc-time {
+    display: none;
+}
+</style>
+ <link href="/dms.web/assets/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
+<div class="dms-edit ajaxrest">
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                <div class="row">
+               	 <form class="form-horizontal" id="addAgenda"> 
+             		 <div  class=" col-xs-12 col-sm-12 col-md-8 col-lg-6">
+		 				<a  
+							href="javascript:goBack();" class="btn blue"
+							data-onclickEvent="false" style="display: inline;"><i class="fa fa-undo"></i>返回</a>
+					 </div>
+					 <input type="hidden" id="userId" name="userId" value="{[USER_ID]}">
+					 <input type="hidden" id="agendaDateAlter" name="agendaDateAlter" value="{[DATE_TIME]}">
+                  	</form>
+                  </div>
+                  <br>
+                  <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet light calendar bordered">
+                                <div class="portlet-title ">
+                                    <div class="caption">
+                                        <i class="icon-calendar font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp bold uppercase">日程表</span>
+                
+                                    </div>
+                                </div>
+                                <div style="line-height: 32px">
+                                	&nbsp;<span>事项简称:Y-移动；X-巡店；H-会议；R-弱店辅导；Q-其他；</span>
+                                </div>
+                                <div class="portlet-body">
+                                    <div id="calendarAlter" > </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div> 
+                    
+                </div>
+                <!-- END CONTENT BODY -->
+</div>
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+ <script src="/dms.web/assets/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+ <script src="/dms.web/assets/fullcalendar/lang-all.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+	//页面加载执行此方法
+	 $(document).one("onload.dms",function(event,container){	
+		
+		 var dateStr=$("#agendaDateAlter").val();
+	 		$('#calendarAlter').fullCalendar({
+	            lang: 'zh-cn',	
+	            eventClick: function(event, jsEvent, view) {
+	            	var date = event.start.format('YYYY-MM-DD');
+	            	dmsCommon.ajaxPageRequest({
+	    				url:'manage/basedata/SupervisionManagement/eventAlter.html',
+	    				container:$('#funcId_802002'),//定义容器
+	    	        	success:function(html){
+	    	        		
+	    	        	},
+	    	        	complete:function(xmlRequest, statusCode){
+	    	        		$("#agendaAlter",getParentModal(container)).val(date.format('YYYY-MM-DD'));
+	    	        		$("#userIdAlter",getParentModal(container)).val("{[USER_ID]}");
+	    	        		$("#alter",getParentModal(container)).val("{[PLAN]}");
+	    	        	}
+	    			});	
+	            },
+	 		  events: function(start, end, timezone,callback) {
+    			//进行ajax 请求
+    			dmsCommon.ajaxRestRequest({
+    				url:dmsCommon.getDmsPath()["manage"]+"/supervision/month/{[USER_ID]}/"+dateStr+"/{[PLAN]}",
+    				type:'GET',
+    				async:true,
+    		        sucessCallBack:function(data){
+    		           var agendaList=data['agendaList'];
+       	               var events = [];
+       	               var color;
+       	               for(var i=0;i<agendaList.length;i++){
+       	            	//未提交
+          	            	if(agendaList[i].STATE==90021001||agendaList[i].STATE==90021003){
+      	                 	 	color='#696969';
+      	                	}
+          	            	//待审核
+          	            	if(agendaList[i].STATE==90021002||agendaList[i].STATE==90021004){
+      	                 	 	color='#FFA500';
+      	                	}
+          	            	//通过
+          	            	if(agendaList[i].STATE==90021005){
+      	                 	 	color='blue';
+      	                	}
+          	            	//已执行
+          	            	if(agendaList[i].STATE==90021006){
+      	                 	 	color='#008B00';
+      	                	}
+          	           		//日程被驳回
+          	            	if(agendaList[i].STATE==90021007){
+      	                 	 	color='#696969';
+      	                	}
+          	            	if(agendaList[i].STATE==90021008){
+          	            		color='#FFA500';
+      	                	}
+   	                    events.push({
+	                        title: agendaList[i].TITLE,
+	                        start: agendaList[i].DATE_TIME_MM, // will be parsed
+	                        backgroundColor:color
+	                    }); 
+       	               }
+       	            callback(events);
+       	        
+	            	$(".fc-today").css('backgroundColor','#E8FFC4');
+	            	$("td").css('border-color','#ccc');
+    		        }
+    			});
+    		
+    			
+    	    }
+	        }); 
+	 		//指定日历月份
+	 		$("#calendarAlter").fullCalendar('gotoDate', dateStr);
+	 		$(".fc-today").css('backgroundColor','#E8FFC4');
+	 		//刷新日历事件
+	 		setTimeout(function() {
+	 		$('#calendarAlter').fullCalendar('refetchEvents');
+	 		}, 100);
+	 		//返回按钮延时加载
+	 		setTimeout(function() {
+	 		 $('#addAgenda').find('a').show();
+	 		}, 10); 
+	 		
+	 });
+	 function goBack(){
+		 	var dateStr=$("#agendaDateAlter").val();
+			dmsCommon.ajaxPageRequest({
+				url:'manage/basedata/SupervisionManagement/AlterChecking.html',
+	        	container:$('#funcId_802002'),//定义容器
+	        	success:function(html){
+	        	},
+	        	complete:function(xmlRequest, statusCode){
+	        		$("#auditDate").val(dateStr);
+	        	}
+			});	
+	};
+	function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2006-12-18格式  
+	       var  aDate,  oDate1,  oDate2,  iDays  
+	       aDate  =  sDate1.split("-")  
+	       oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2006格式  
+	       aDate  =  sDate2.split("-")  
+	       oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
+	       iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数  
+	       return  iDays  
+	   } 
+	
+</script>
+
+
+ 

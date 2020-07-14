@@ -1,0 +1,85 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">零部件代码</label>
+						<div class="col-xs-8 ">
+							<input type="text" class="form-control" id="partsCode" name="partsCode">
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">一级分类</label>
+						<div class="col-xs-8">
+							<select id="oneId"
+								class="bs-select form-control" name="oneId" 
+								data-url="/indicator/oneParts"
+								data-model="manage" data-labelValue="ONE_ID"
+								data-lableDesc="ASSORTMENT_ONE" data-live-search="true" data-size="5" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">二级分类</label>
+						<div class="col-xs-8">
+							<select id="twoId"
+								class="bs-select form-control" name="twoId" parent="oneId"
+								data-url="/indicator/twoParts/{[oneId]}"
+								data-model="manage" data-labelValue="ASSORTMENT_TWO"
+								data-lableDesc="ASSORTMENT_TWO" data-live-search="true" data-size="5" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="query-btn">
+					<a href="javascript:;" class="btn blue"   > <i
+						class="fa fa-search"></i> 查询
+					</a> 
+					<a class="btn blue ajaxrest" href="javascript:;" data-url="/indicator/export/excel" data-model="manage" data-method="downLoad">
+					   <i class="fa fa-download"></i>导出
+					</a>
+					<a class="btn blue ajaxify"  href="keyIndicatorDisplay/importPartsMaintain.html"  >
+						<i class="fa fa-upload"></i>导入
+					</a>
+				</div>			
+			</div>
+		  </div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+			<div class="pannel-name">
+				零部件分类维护
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="parts_table"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "parts_table",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/indicator/searchParts",
+		rowID : "PARTS_ID",
+		columns : [ 
+            {field : "PARTS_CODE",title : "零部件代码"},
+			{field : "PARTS_NAME",title : "零部件名称"},
+			{field : "BRANCH_TWO",title : "二级分类"},
+			{field : "BRANCH_ONE",title : "一级分类"}
+		]	
+	});
+});
+	
+</script>

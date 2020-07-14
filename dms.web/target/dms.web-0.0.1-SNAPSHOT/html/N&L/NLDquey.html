@@ -1,0 +1,97 @@
+<style type="text/css">
+.col-center-block {
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<div class="query-btn">
+							<label class="control-label col-xs-4">特约店:</label>
+							<div class="col-xs-8">
+								<select id="dealer_id" class="bs-select form-control"
+									name="dealer_id" data-url="/NLAnalysis/4sdealer"
+									data-model="manage" data-labelValue="DEALER_ID"
+									data-lableDesc="DEALER_SHORTNAME" data-live-search="true"
+									data-size="10" data-existsDefault="true">
+								</select>
+							</div>
+						</div>
+						</div>
+						</div>
+						</div>
+						<div class="row ">
+						<div class="query-btn">
+						
+							<div class="col-xs-12 col-sm-6 col-md-4 col-center-block ">
+								<a href="javascript:;" class="btn blue  "> <i
+									class="fa fa-search"></i> 查询
+								</a>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+			<div class="pannel-name"></div>
+		</div>
+		<div class="panel-body">
+			<table
+				class="table table-striped table-bordered table-hover table-responsive"
+				id="dms_table"></table>
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+/* function goPage(){
+	
+	
+		dmsCommon.ajaxPageRequest({
+			url:'N&L/N&Ladd.html',
+	    	container:$('div.page-content div.page-content-body'),//定义容器
+	    	success:function(html){
+	    	},
+	    	complete:function(xmlRequest, statusCode){
+	    		
+	    		
+	    	}
+		});	
+	
+} */
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "dms_table",
+		container:container,
+		isQueryFirst:false, // 是否进入页面查询,默认为true
+		rowID : "ID",
+		url : dmsCommon.getDmsPath()["manage"] + "/NLAnalysis/seachNL1",
+		isQueryFirst:true,
+		columns : [ 
+		            {field : "dealer_code",title : "特约店代码"},
+		            {field : "dealer_name",title : "特约店简称"},
+					{field : "NL_surface_name",title : "N&L表名称"}, 
+					{field : "NL_newadd_date",title : "新增日期"}, 
+					{field : "id",title : "操作",operateFormat : [
+	                       {type:"detail",title:"查看",url:"N&L/detailsNL.html",openType:"jump",isShow:function(value, row, index){
+	                    	   return true;
+	                       }}
+				   	]
+					}
+			     ]	
+	});
+
+});
+			
+	
+</script>

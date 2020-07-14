@@ -1,0 +1,153 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	<div class="panel panel-default">
+		<div class="form-group">
+		<div class="panel-body">
+			<div class="row">			
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<label class="control-label col-xs-4">特约店</label>
+					<div class="col-xs-8">
+						<select id="dealer_id"
+								class="bs-select form-control"   name="dealer_id"
+								data-url="/supervision/dealer/agendas/dudao" data-model="manage" 
+								data-labelValue="DEALER_ID"	data-lableDesc="DEALER_SHORTNAME"  
+								data-live-search="true"  data-size="10" data-existsDefault="true" >
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">	
+					<div class="query-btn">
+						<a id="search" href="javascript:;" class="btn blue" data-onclickEvent="true">
+						 	<i class="fa fa-search" ></i> 查询
+						</a>
+						<a id="btnExportPatrol" href="javascript:;" class="btn blue ajaxrest" data-url="/patrolReport/exportPatrolReport/1" 
+							data-model="manage" data-method="downLoad">
+						 	<i class="fa fa-download" ></i> 导出
+						</a>  						
+					</div>
+				</div>
+		</div>
+		</div>
+	</div>
+	</form>
+	<div class="panel panel-default table-panel">
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive" id="dReportList"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+$(document).one("onload.dms",function(event,container){
+	var positionCode = "{[userInfo.positionCode]}";
+	
+	$("#btnExportPatrol").css("display","none");
+	var columns = [];
+	var readFunction;
+	//系长 科长 部长 展示是否已读
+	if(positionCode == 96091002 || positionCode == 96091003 || positionCode == 96091004){
+		 columns = [  
+			    {field : "DEALER_CODE",title : "特约店代码"},
+				{field : "DEALER_SHORTNAME",title : "特约店简称"}, 
+				{field : "EVALUATE_NAME",title : "评价表名称"},
+				{field : "EVALUATE_BY_NAME",title : "评价人"},
+				{field : "EVALUATE_DATE",title : "计划评价日期",dateFormat : {format:"YYYY-MM-DD"}},
+				{field : "actualevaluate_date",title : "评价完成时间"},
+				{field : "ycts",title : "延迟天数"},
+				{field : "IS_READ",title : "是否已读",formatter:function(value,row,index){
+					if(value == 1){
+						return "已读";
+					}else{
+						return "<span style='color:red'>未读</span>";
+					}
+				}},
+				{field : "IS_SHARE",title : "来源",formatter:function(value,row,index){
+					if(value == 1){
+						return "<span style='color:blue'>分享</span>";
+					}else{
+						return "--";
+					}
+				}},
+			    {field : "ID",title : "操作",formatter:function(value,row,index){
+			    	return '<a title="明细" name="detail" class="btn ajaxify" href="manage/patrolReport/findPatrolReportDetail.html" data-tableflag="true" data-isdetailflag="true"><i class="fa fa-lg fa-list-alt "></i></a>'
+			        	  +'<a title="导出" name="export" class="btn" onclick="exportReport('+value+')"><i class="fa fa-download"></i></a>';
+			    }}
+			];
+		 
+		 //未读的巡回报告点击后变成已读 保存记录
+			readFunction = function (data){
+				$("a[name='detail']",container).on("click",function(event){
+					var reportId = $(this).parent().parent().attr("data-uniqueid");
+					var index = $(this).parent().parent().attr("data-index");
+					var isRead = data.rows[index].IS_READ;
+					if(isRead == 0){
+					    dmsCommon.ajaxRestRequest({
+							url : dmsCommon.getDmsPath()["manage"] + "/patrolReport/saveReadInfo",
+							type : 'GET',
+							async : false,
+							dataType : 'json',
+							data : {reportId:reportId}
+						});						
+					}
+				});
+			};
+	}else{
+		 columns = [  
+			    {field : "DEALER_CODE",title : "特约店代码"},
+				{field : "DEALER_SHORTNAME",title : "特约店简称"}, 
+				{field : "EVALUATE_NAME",title : "评价表名称"},
+				{field : "EVALUATE_BY_NAME",title : "评价人"},
+				{field : "EVALUATE_DATE",title : "计划评价日期",dateFormat : {format:"YYYY-MM-DD"}},
+				{field : "actualevaluate_date",title : "评价完成时间"},
+				{field : "ycts",title : "延迟天数"},
+				{field : "IS_SHARE",title : "来源",formatter:function(value,row,index){
+					if(value == 1){
+						return "<span style='color:blue'>分享</span>";
+					}else{
+						return "--";
+					}
+				}},
+			    {field : "ID",title : "操作",formatter:function(value,row,index){
+			    	return '<a title="明细" name="detail" class="btn ajaxify" href="manage/patrolReport/findPatrolReportDetail.html" data-onclickEvent="true" data-tableflag="true" data-isdetailflag="true"><i class="fa fa-lg fa-list-alt "></i></a>'
+			        	  +'<a title="导出" name="export" class="btn" onclick="exportReport('+value+')"><i class="fa fa-download"></i></a>';
+			    }}
+			];		
+	}
+		
+	
+	new Datatable().initPagination({
+		src : "dReportList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/patrolReport/findPatrolReport",
+		rowID : "ID",
+		sortName : "IS_READ,IS_SHARE,EVALUATE_DATE",
+		sortOrder : "asc,asc,desc",
+		pageSize:20,
+		isQueryFirst : false,
+		autoHeight : false,
+		columns : columns,
+		onLoadSuccess : readFunction
+	});
+	
+/* 	$("#export",container).on("beforeRequest.dms",function(event,returnResult){
+ 		//获取下拉框的值
+		var select = $("#dealer_id",container).val();
+		if(select == ''){
+			dmsCommon.tip({status:"warning",msg:"请选择特约店！"});
+			returnResult.status = false;
+			return ;
+		}
+		returnResult.status = true;
+	}); */
+});
+
+function exportReport(reportId){
+	if(reportId == null || reportId == undefined){
+		return ;
+	}
+	var url = "/patrolReport/exportPatrolReport/"+reportId;
+	$("#btnExportPatrol").attr("data-url",url);
+	$("#btnExportPatrol").click();
+}
+</script>

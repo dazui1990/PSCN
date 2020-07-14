@@ -1,0 +1,63 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div style="position: absolute; left: 900px; top: 5px"
+			class="modal-close">
+			<a data-dismiss="modal" class="btn btn-lg"></a>
+		</div>
+		<div style="position: absolute; left: 900px; top: 5px"
+			class="modal-close"></div>
+		<input type="hidden" id="agendaDate" name="agendaDate" readonly />
+
+		<div class="row">
+			<div class="panel panel-default table-panel">
+				<div class="panel-body">
+					<table
+						class="table table-striped table-bordered table-hover table-responsive"
+						id="plan_table"></table>
+				</div>
+			</div>
+			<div class="modal-footer center-block">
+				<a href="javascript:;" class="btn blue ajaxrest"
+					data-url="/insurance/yesImport" data-model="manage"
+					data-method="POST" data-callBack="true">
+					<i class="fa fa-print"></i>确认导入
+				</a>
+				<a data-goback="page" href="dataImportAndExport/InsuranceIndex/InsuranceIndexSearch.html" class="btn blue ajaxify">
+						<i class="fa fa-reply"></i>返回
+				</a>
+			</div>
+		</div>
+	</form>
+</div>
+<style>
+</style>
+<script type="text/javascript">
+	$(document).one("onload.dms",function(event, container) {
+		new Datatable().initLocale({
+			src : "plan_table",
+			container : container,
+			url : dmsCommon.getDmsPath()["manage"]+ "/insurance/queryTmpInsuranceIndex",
+			rowID : "ID",
+			columns : [{field : "TIME",title : "年月"},
+						{field : "DEALER_CODE",title : "特约店代码"},
+						{field : "DEALER_SHORTNAME",title : "特约店简称"},
+						{field : "PROTECT_NUM",title : "新保单数"},
+						{field : "PROTECT_MONEY",title : "新保保费"},
+						{field : "RENEW_TARGET",title : "续保目标"},
+						{field : "RENEW_NUM",title : "续保单数"},
+						{field : "RENEW_MONEY",title : "续保费用"}
+						]
+						});
+
+					$("a[data-callBack='true']", container).on("callBack.dms",function(event, response) {
+						dmsCommon.ajaxPageRequest({
+									url : 'dataImportAndExport/InsuranceIndex/InsuranceIndexSearch.html',
+									container : $('#funcId_201101'),//定义容器
+									success : function(html) {
+									},
+								});
+						$("a[data-dismiss='modal']",container).click();
+					});
+						//刷新表格
+				});
+</script>

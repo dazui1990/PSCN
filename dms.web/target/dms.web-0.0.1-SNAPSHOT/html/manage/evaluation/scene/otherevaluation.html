@@ -1,0 +1,494 @@
+<div class="dms-edit">
+	<form class="form-horizontal" >
+	 <input type="hidden" value="{[id]}" name="id" id="id_other" >
+	 <input type="hidden" value="" name="bigitemid" id="bigitemid_other" >
+	 <input type="hidden" value="{[ttevaluate_id]}" name="ttevaluate_id" id="ttevaluate_id_other" >
+	 <input type="hidden" value="{[property_id]}" name="property_id" id="property_id_other" >
+	 <input type="hidden" value="" name="bigitemid_up_other" id="bigitemid_up_other" >
+	      <input type="hidden" value="{[dealer_id]}" name="dealer_id_other" id="dealer_id_other" >
+	  <input type="hidden" value="{[dealer_code]}" name="dealer_code_other" id="dealer_code_other" >
+	        <a id="evaluation_refer" style="display: none;"></a>
+	 
+	 <div>
+	  <div style="float:left;margin-left:20px; color: blue;">
+	 <label>评价时间:{[evaluate_date]}</label></div>
+	 <div style="float:left; ;margin-left:100px; color: blue;">
+	 <label >评价人:{[employee_name]}</label></div>
+	 <div style="float:right; margin-right:10px; color: blue;">
+	 <label>评价表名称:{[evaluate_name]}&nbsp;&nbsp;&nbsp;&nbsp;<a data-goback="page" href="manage/evaluation/scene/otherevlauationsceneList.html" 
+			class="btn btn-sm blue ajaxify"><i class="fa fa-reply"></i>返回</a></label></div>
+	 </div>
+	<table class="table table-bordered table-striped table-condensed" >
+  <thead>
+    <tr id="refreshItemother">
+<!--       <th id="refreshTable1" style="text-align: center;font-size:large;"><a href="#" onclick="refreshTable('1');">人员配备</a></th>
+      <th id="refreshTable2" style="text-align: center;font-size:large;"><a href="#" onclick="refreshTable('2');">硬件设施</a></th>
+      <th id="refreshTable3" style="text-align: center;font-size:large;"><a href="#" onclick="refreshTable('3');">评价流程</a></th>
+      <th id="refreshTable4" style="text-align: center;font-size:large;"><a href="#" onclick="refreshTable('4');">VOC管理</a></th> -->
+    </tr>
+  </thead>
+   <tbody>
+   <tr id="refreshcountother">
+   <!-- <td><label  id="yesevaluate1"  style="float:left;margin-left:10px; color: blue;">已评价项:0</label><label  id="noevaluate1" style="float:right;margin-right:10px; color: red;">未评价项:0</label></td>
+    <td><label id="yesevaluate2" style="float:left;margin-left:10px; color: blue;">已评价项:0</label><label  id="noevaluate2" style="float:right;margin-right:10px; color: red;">未评价项:0</label></td>
+    <td><label id="yesevaluate3" style="float:left;margin-left:10px; color: blue;">已评价项:0</label><label id="noevaluate3" style="float:right;margin-right:10px; color: red;">未评价项:0</label></td>
+    <td><label id="yesevaluate4" style="float:left;margin-left:10px; color: blue;">已评价项:0</label><label  id="noevaluate4" style="float:right;margin-right:10px; color: red;">未评价项:0</label></td>
+      --> </tr>
+   </tbody>
+</table>
+</form>
+	<div class="panel panel-default table-panel">
+		<div class="panel-body" >
+			<table class="table table-striped table-bordered table-hover table-responsive" 
+				id="evaluation_listother"></table>
+		</div>
+	</div>
+</div>
+<style>
+<!--
+#evaluation_listother .table th, .table td { 
+text-align: center;
+vertical-align: middle!important;
+}
+-->
+</style>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	refreshItem(event,container);//加载表头数据
+	 $("#evaluation_refer",container).on("click",function(event){
+			var bigitemid=$("#bigitemid_other").val();
+			refreshTable_o(bigitemid);
+				});
+});
+
+ function initLocaleList(event,container){
+		var ttevaluate_id=$("#ttevaluate_id_other").val();
+		var id=$("#id_other").val();
+		var bigitemid=$("#bigitemid_other").val();
+		if(null==bigitemid || ""==bigitemid){
+			bigitemid=1;
+		}
+		new Datatable().initLocale({
+			src : "evaluation_listother",
+			container:container,
+			url : dmsCommon.getDmsPath()["manage"] + "/evaluation/scene/searchBasicsItemsScene/"+ttevaluate_id+"/"+id+"/"+bigitemid+"/1",
+			rowID : "id",
+			isShowLineNumber: false,
+			sortable : false,
+			selectItemName:"row_id",
+			columns : [
+			    {field : "projectname",title : "评价项项目"
+			    ,formatter:function(value,row,index){
+			     	var a=row.projectname;
+			       	var b=brString(5,a);
+			    	if(row.isrelation==10041001){
+			    	var str='<input type="hidden" value="'+row.evaluateitem_id+'" name="evaluateitem_id" id="evaluateitem_id'+index+'">';
+						return str+'<a class="btn" name="dbsImg1" data-beforeShowEvent="true" data-url="manage/evaluation/scene/targetshow.html" data-toggle="modal" data-width="modal-lg" data-tableflag="true">'+b+'</a>';
+			    	}else{
+			    		var str='<input type="hidden" value="'+row.evaluateitem_id+'" name="evaluateitem_id" id="evaluateitem_id'+index+'">';
+				    	return str+b;
+			    	}	
+			    }}, 
+			    {field : "evaluationitem_benchmarks",title : "评级项项目基准"
+			    ,formatter:function(value,row,index){
+			    	var a=row.evaluationitem_benchmarks;
+			    	a=brString(7,a);
+			    	if(null==row.zburl || ""==row.zburl){
+			    		var str='<input type="hidden" value="'+row.evaluateitem_benchmarks_id+'" name="evaluateitem_benchmarks_id" id="evaluateitem_benchmarks_id'+index+'"><input type="hidden" value="'+row.zburl+'" name="zburl" id="zburl'+index+'">';
+				    	 str=str+a;
+				    	return  str;	
+			    	}else{
+			    	var str='<input type="hidden" value="'+row.evaluateitem_benchmarks_id+'" name="evaluateitem_benchmarks_id" id="evaluateitem_benchmarks_id'+index+'"><input type="hidden" value="'+row.zburl+'" name="zburl" id="zburl'+index+'">';
+			    	 str=str+'<a class="btn btn-outline" data-beforeShowEvent="true" name="dbsImg2"  data-url="manage/evaluation/scene/photosearchjz.html" data-toggle="modal" data-width="modal-lg" title="'+row.evaluationitem_benchmarks+'" >'+a+'</a>';
+			    	return  str;		
+			    	}
+			    	}
+			    },
+			    {field : "isvetovalue",title : "是否</br></br>否决项",inputField:"scenebencharksid",inputHiddenFormat : {hiddenField:"scenebencharksid"}}, 
+			    {field : "evaluate_status",title : "评价",formatter:function(value,row,index){
+					if(row.evaluate_status!=null){
+						return  '<input id="evaluate_status" name="'+index+'evaluate_status'+row.evaluateitem_id+'" data-value="'+row.evaluate_status+'"   type="radio"  data-dictCode="9203"   />';	
+					}else{
+					return  '<input id="evaluate_status" name="'+index+'evaluate_status'+row.evaluateitem_id+'"  type="radio"     data-dictCode="9203"   />';
+					}}}, 
+			        {field : "url",title : "照片",formatter:function(value,row,index){
+			        	//随机生成图片id
+				        var id="";
+				    	var flag=0;
+				    	if(null==row.url){
+				    		id=	createRandomId();
+				    	}else{
+				    		id=row.url;
+				    		flag=1;
+				    	}
+				    	if(row.IsEnclosure==10041001 || row.IsEnclosure_photo==10041001){
+				    		if(row.IsEnclosure==10041001){
+				    		if(flag==1){
+				    		return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn " id="photoid_class'+index+'" style="color:black;" flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"   name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"><span style="color:red;">*</span></i></a>';
+				    		}else{
+				    		return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn " id="photoid_class'+index+'"  flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"  name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"><span style="color:red;">*</span></i></a>';
+				    		}
+				    		}
+				    		if(row.IsEnclosure_photo==10041001){
+					    		if(flag==1){
+					    		return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn " id="photoid_class'+index+'" style="color:black;" flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"   name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"><span style="color:red;">**</span></i></a>';
+					    		}else{
+					    		return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn " id="photoid_class'+index+'"  flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"  name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"><span style="color:red;">**</span></i></a>';
+					    		}
+					    		}
+				    	    
+				    	}else{
+				    		if(flag==1){
+				    				return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn "  id="photoid_class'+index+'" style="color:black;" flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"  name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"></i></a>';
+				    			}else{
+				    				return '<input type="hidden" value="'+row.scenebencharksid+'" name="benphotoid" id="benphotoid'+index+'"><input type="hidden" value="'+id+'" name="photoid" id="photoid'+index+'"><a class="btn "  id="photoid_class'+index+'" flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"  name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/photo.html" title="拍照" data-toggle="modal" data-width="modal-lg" ><i class="fa fa-upload"></i></a>';
+				    			}
+				    		
+				    		
+				    	}
+				    	//return '<a class="btn " name="dbsImg" data-beforeShowEvent="true" data-url="manage/evaluation/scene/evaluation.html" title="上传" data-toggle="modal" data-width="modal-lg" data-tableflag="true"><i class="fa fa-upload"></i></a>';
+				  		//return  '<input type="file" class="importFiles" id="fileupload" multiple name="dmsFile" data-inputName="dmsFileIds">';
+				    }},
+			    {field : "remark",title : "备注",formatter:function(value,row,index){
+			    	var remark="";
+			    	if(null==row.remark){
+			    	}else{
+			    		remark=row.remark;
+			    	}
+			     	return  '<input type="hidden" value="'+row.IsEnclosure_photo+'" name="IsEnclosure_photo" id="IsEnclosure_photo'+index+'"><input type="hidden" value="'+row.IsEnclosure+'" name="IsEnclosure" id="IsEnclosure'+index+'"><input type="hidden" value="'+row.billid+'" name="ruleid" id="billid'+index+'"><input type="text" class="form-control" flagname="'+index+'evaluate_status'+row.evaluateitem_id+'"    id="remark'+index+'" value="'+remark+'" name="remark">';
+					    }},
+			    {field : "projectname1",title : "得分规则名称"
+				    ,formatter:function(value,row,index){
+				    	var a=row.scorerule_name;
+				    	a=brString(6,a);
+				    	var str='<input type="hidden" value="'+row.ruleid+'" name="ruleid" id="ruleid'+index+'">'+a;
+				    	return  str;
+					    	}}, 
+				    {field : "projectname2",title : "权重比"
+					   ,formatter:function(value,row,index){
+							    	return  '<input type="hidden" value="'+row.weight_ratio+'" name="weight_ratio" id="weight_ratio'+index+'"><label>'+row.weight_ratio+'</label>';
+							    	}},
+				{field : "projectname3",title : "得分",formatter:function(value,row,index){
+			    	if(null==row.score){ 
+			    	return  '<label id="evaluate_status'+row.evaluateitem_id+'">0</label>';
+			    	}else{
+			    		return  '<label id="evaluate_status'+row.evaluateitem_id+'">'+row.score+'</label>';
+			    	}}}
+		],	
+		 onLoadSuccess: function (data) {
+				$("a[name='dbsImg']",container).on("beforeShow.dms",function(event,returnResult){
+				/* 	//去这个页面之前
+					 	//时时提交保存数据
+			    	var name=$(this).attr('flagname');
+			    	//截取
+			    	var str = name.split("evaluate_status");
+			    	var index=str[0];
+
+			    	
+			    	var evaluateitem_id="evaluateitem_id"+index;
+			    	var  evaluateitem_value=$("#"+evaluateitem_id).val();//评价项id
+			    	
+			    	var evaluateitem_benchmarks_id="evaluateitem_benchmarks_id"+index;
+			    	var  evaluateitem_benchmarks_value=$("#"+evaluateitem_benchmarks_id).val();//评价项基准id
+			    	
+			    	var remarkstr="remark"+index;
+			    	var remarkvalue=$("#"+remarkstr).val();//备注
+			    	
+			    	var ruleid="ruleid"+index;
+			    	var  ruleid_value=$("#"+ruleid).val();//规则id
+			    	
+			    	var weight_ratio="weight_ratio"+index;
+			    	var  weight_ratio_value=$("#"+weight_ratio).val();//权重值
+			    	
+			    	var scenebencharksid="scenebencharksid"+index;
+			    	var  scenebencharksid_value=$("#"+scenebencharksid).val();//现场评价表基准id
+			    	var photoid="photoid"+index;
+			    	var  photoid_value=$("#"+photoid).val();//照片id
+			      	var scoreid="evaluate_status"+str[1];
+			    	sendajax(index,evaluateitem_value,evaluateitem_benchmarks_value,null,remarkvalue,ruleid_value,weight_ratio_value,scoreid,scenebencharksid_value,photoid_value);
+			    	//refreshTable(1); */
+					
+					
+					var id=$(this).prev().val();
+					var benphotoid=$(this).prev().prev().val();
+					var map={id:id,benphotoid:benphotoid};
+					$(this).data("pageData",map);
+					returnResult.status = true;	
+				});
+				$("a[name='dbsImg1']",container).on("beforeShow.dms",function(event,returnResult){
+					var evaluationitem_id=$(this).prev().val();
+					var dealer_id=$("#dealer_id_other").val();
+					var dealer_code=$("#dealer_code_other").val();
+					var map={evaluationitem_id:evaluationitem_id,dealer_id:dealer_id,dealer_code:dealer_code};
+					$(this).data("pageData",map);
+					returnResult.status = true;	
+				});
+				
+			 	$("a[name='dbsImg2']",container).on("beforeShow.dms",function(event,returnResult){
+					var id=$(this).prev().val();
+					var map={id:id};
+					$(this).data("pageData",map);
+					returnResult.status = true;	
+				});
+		     //合并表格
+			    var data = $('#evaluation_listother').bootstrapTable('getData', true);
+			    mergeCells(data, "projectname", 1, $('#evaluation_listother'));
+			    mergeCells(data, "projectname1", 1, $('#evaluation_listother'));
+			    mergeCells(data, "projectname2", 1, $('#evaluation_listother'));
+			    mergeCells(data, "projectname3", 1, $('#evaluation_listother'));
+	            //合并单元格
+			    $("input[type='radio']",container).click(function(){
+			    	//时时提交保存数据
+			    	var name=$(this).attr('name');
+			    	//截取
+			    	var str = name.split("evaluate_status");
+			    	var index=str[0];
+			    	
+			    	var evaluateitem_id="evaluateitem_id"+index;
+			    	var  evaluateitem_value=$("#"+evaluateitem_id).val();//评价项id
+			    	
+			    	var evaluateitem_benchmarks_id="evaluateitem_benchmarks_id"+index;
+			    	var  evaluateitem_benchmarks_value=$("#"+evaluateitem_benchmarks_id).val();//评价项基准id
+			    	
+			    	var evaluate_status=$(this).val();//评价值
+			    	var remarkstr="remark"+index;
+			    	var remarkvalue=$("#"+remarkstr).val();//备注
+			    	
+			    	var ruleid="ruleid"+index;
+			    	var  ruleid_value=$("#"+ruleid).val();//规则id
+			    	
+			    	var weight_ratio="weight_ratio"+index;
+			    	var  weight_ratio_value=$("#"+weight_ratio).val();//权重值
+			    	
+			    	
+			       	
+			    	var billid="billid"+index;
+			    	var billid_value=$("#"+billid).val();//附件id是否有值
+			    	
+			    	var IsEnclosure="IsEnclosure"+index;
+			    	var IsEnclosure_value=$("#"+IsEnclosure).val();//附件是否必须传
+			    	
+			    	var scenebencharksid="scenebencharksid"+index;
+			    	var  scenebencharksid_value=$("#"+scenebencharksid).val();//现场评价表基准id
+			    	var photoid="photoid"+index;
+			    	var  photoid_value=$("#"+photoid).val();//照片id
+			      	var scoreid="evaluate_status"+str[1];
+			    	
+			    	if(IsEnclosure_value==10041001 ){
+			    		if("null"==billid_value || null==billid_value){
+			    		//弹出提示框
+						dmsCommon.tip({status:"error",msg:"请先上传附件照片!"});
+			    		return  false;
+			    		}
+			    	}
+			    	
+			    	sendajax(index,evaluateitem_value,evaluateitem_benchmarks_value,evaluate_status,remarkvalue,ruleid_value,weight_ratio_value,scoreid,scenebencharksid_value,photoid_value);
+			    	//refreshTable(1);
+			    });
+	            
+			    $("input[name='remark']",container).blur(function(){
+			    	//时时提交保存数据
+			    	var name=$(this).attr('flagname');
+			    	//截取
+			    	var str = name.split("evaluate_status");
+			    	var index=str[0];
+			    	
+			    	var evaluateitem_id="evaluateitem_id"+index;
+			    	var  evaluateitem_value=$("#"+evaluateitem_id).val();//评价项id
+			    	
+			    	var evaluateitem_benchmarks_id="evaluateitem_benchmarks_id"+index;
+			    	var  evaluateitem_benchmarks_value=$("#"+evaluateitem_benchmarks_id).val();//评价项基准id
+			    	
+			    	var remarkstr="remark"+index;
+			    	var remarkvalue=$("#"+remarkstr).val();//备注
+			    	
+			    	var ruleid="ruleid"+index;
+			    	var  ruleid_value=$("#"+ruleid).val();//规则id
+			    	
+			    	var weight_ratio="weight_ratio"+index;
+			    	var  weight_ratio_value=$("#"+weight_ratio).val();//权重值
+			    	
+			    	var scenebencharksid="scenebencharksid"+index;
+			    	var  scenebencharksid_value=$("#"+scenebencharksid).val();//现场评价表基准id
+			    	var photoid="photoid"+index;
+			    	var  photoid_value=$("#"+photoid).val();//照片id
+			      	var scoreid="evaluate_status"+str[1];
+			    	sendajax(index,evaluateitem_value,evaluateitem_benchmarks_value,null,remarkvalue,ruleid_value,weight_ratio_value,scoreid,scenebencharksid_value,photoid_value);
+			    	//refreshTable(1);
+			    });
+			    
+			    
+		   }
+		});
+ }
+
+
+ //查询评价项大类
+function refreshItem(event,container){
+    var ttevaluate_id=$("#ttevaluate_id_other").val();
+	 var id=$("#id_other").val();
+	 var property_id=$("#property_id_other").val();
+ //后台计算值
+		 dmsCommon.ajaxRestRequest({
+			url : dmsCommon.getDmsPath()["manage"]
+					+ "/evaluation/scene/searchEvaluateBigitem",
+			dataType:"json",
+			type : 'GET',
+			data :{'property_id':property_id,'ttevaluate_id':ttevaluate_id,'id':id},
+			sucessCallBack : function(data) {
+				searchevaluateCount();//刷新统计
+			  var html="";
+			  var html1="";
+				//执行绑定
+			$("#bigitemid_other").val(data[data.length-1].id);
+			initLocaleList(event,container);
+		 	 for (var i = 0; i <data.length; i++) {
+		 		 var a=data[i];
+		 		 var b="yesevaluate"+data[i].id;
+		 		 var c="noevaluate"+data[i].id;
+		 		 var d="evaluatescore"+data[i].id
+		 		 html='<th id="refreshTable'+data[i].id+'" style="text-align: center;font-size:large;"><a href="#" id="redclass_e'+data[i].id+'" onclick="refreshTable_o('+data[i].id+');">'+data[i].evaluationitem_name+'</a></th>'+html;
+		 		 html1='<td><label  id="yesevaluate'+data[i].id+'"  style="float:left;margin-left:10px; color: #912CEE;">已评价项:'+a[b]+'</label><label  id="noevaluate'+data[i].id+'" style="float:right;margin-right:10px; color: #FF0000;">未评价项:'+a[c]+'</label><label  id="evaluatescore'+data[i].id+'" style="float:right;margin-right:10px; color:#00CD00">&nbsp;总得分&nbsp;:'+a[d]+'</label></td>'+html1;
+		 	 }  
+				$("#refreshItemother").html(html); 
+				$("#refreshcountother").html(html1); 
+				var strclass="redclass_o"+data[data.length-1].id;
+		  		//将点击的th 设置字体为红色
+		  		$("#"+strclass).css('color','red');
+		  		$("#bigitemid_up_other").val(strclass);
+				
+				    }
+		}); 
+	};
+
+     //时时保存数据
+	function sendajax(index,evaluateitem_value,evaluateitem_benchmarks_value,evaluate_status,remarkvalue,ruleid_value,weight_ratio_value,scoreid,scenebencharksid_value,photoid_value){
+     var bigitemid=$("#bigitemid_other").val();
+     var ttevaluate_id=$("#ttevaluate_id_other").val();
+	 var id=$("#id_other").val();
+	 //后台计算值
+ 		 dmsCommon.ajaxRestRequest({
+				url : dmsCommon.getDmsPath()["manage"]
+						+ "/evaluation/scene/saveScenItem",
+				dataType:"json",
+				type : 'GET',
+				data :{'evaluateitem_value':evaluateitem_value,'evaluateitem_benchmarks_value':evaluateitem_benchmarks_value,
+					'evaluate_status':evaluate_status,'remarkvalue':remarkvalue,'ruleid_value':ruleid_value,'weight_ratio_value':weight_ratio_value,"id":id,"ttevaluate_id":ttevaluate_id,"scenebencharksid_value":scenebencharksid_value,"photoid_value":photoid_value},
+				sucessCallBack : function(data) {
+					searchevaluateCount();//刷新统计项
+			    	var scenebencharksid="scenebencharksid"+index;
+			    	$("#"+scenebencharksid).val(data[0].scenbenchamarkid);//现场评价表基准id
+			    	
+			    	var benphotoid="benphotoid"+index;
+			    	$("#"+benphotoid).val(data[0].scenbenchamarkid);//照片id
+					//执行绑定
+					//alert(data[0].score);
+					$("#"+scoreid).html(data[0].score);
+					dmsCommon.tip({status:"success",msg:"操作成功!"});
+				}
+			}); 
+  	};
+  	
+  	 //查询未完成的项目
+	function searchevaluateCount(){
+     var bigitemid=$("#bigitemid_other").val();
+     var ttevaluate_id=$("#ttevaluate_id_other").val();
+	 var id=$("#id_other").val();
+	 //后台计算值
+ 		 dmsCommon.ajaxRestRequest({
+				url : dmsCommon.getDmsPath()["manage"]
+						+ "/evaluation/scene/searchEvaluateCount",
+				dataType:"json",
+				type : 'GET',
+				data :{'bigitemid':bigitemid,'ttevaluate_id':ttevaluate_id,'id':id},
+				sucessCallBack : function(data) {
+					//执行绑定
+					var yesevaluate="yesevaluate"+bigitemid;
+					var noevaluate="noevaluate"+bigitemid;
+					var evaluatescore="evaluatescore"+bigitemid;
+					$("#"+yesevaluate).html("已评价项:"+data[0].yesevaluate);
+					$("#"+noevaluate).html("未评价项:"+data[0].noevaluate);
+					$("#"+evaluatescore).html("总得分:"+data[0].evaluatescore);
+				}
+			}); 
+  	};
+  	
+  	
+
+  	
+  	//刷新表格
+  	function refreshTable_o(bigitemid){
+
+  		//取到上一次点击的值，将颜色重置
+  		var bigitemid_up =$("#bigitemid_up_other").val();
+  		$("#"+bigitemid_up).css('color','');
+  		
+  		var str="redclass_o"+bigitemid;
+  		//将点击的th 设置字体为红色
+  		$("#"+str).css('color','red');
+  		$("#bigitemid_up_other").val(str);//记录每一次点击的id
+  		
+  		
+  		$("#bigitemid_other").val(bigitemid);
+  		var ttevaluate_id=$("#ttevaluate_id_other").val();
+  		var id=$("#id_other").val();
+  		//改变选中打的选项数属性
+// 		var refreshTable="refreshTable"+bigitemid;
+  //		$("#"+refreshTable).css("color","red");
+  
+        var new_url=dmsCommon.getDmsPath()["manage"] + "/evaluation/scene/searchBasicsItemsScene/"+ttevaluate_id+"/"+id+"/"+bigitemid+"/1";
+		$("#evaluation_listother").bootstrapTable('refresh', {url: new_url });
+  	}
+  	
+  	/**
+  	 * 合并单元格
+  	 * @param data  原始数据（在服务端完成排序）
+  	 * @param fieldName 合并属性名称
+  	 * @param colspan   合并列
+  	 * @param target    目标表格对象
+  	 */
+  	function mergeCells(data,fieldName,colspan,target){
+  	    //声明一个map计算相同属性值在data对象出现的次数和
+  	    var sortMap = {};
+  	    for(var i = 0 ; i < data.length ; i++){
+  	        for(var prop in data[i]){
+  	            if(prop == fieldName){
+  	                var key = data[i][prop]
+  	                if(sortMap.hasOwnProperty(key)){
+  	                    sortMap[key] = sortMap[key] * 1 + 1;
+  	                } else {
+  	                    sortMap[key] = 1;
+  	                }
+  	                break;
+  	            } 
+  	        }
+  	    }
+  	    var index = 0;
+  	    for(var prop in sortMap){
+  	        var count = sortMap[prop] * 1;
+  	        $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+  	        index += count;
+  	    }
+  	};
+  	
+  	
+  	function createRandomId() {
+  	    return (new Date()).getTime().toString().substr(0,7)+Math.random().toString().substr(2,6);
+    };
+    //换行方法
+    function brString(num,str){
+    	var restr=str;
+    	var b="";
+    	if(null!=str && str.length>num){
+    	var end=Math.floor(str.length/num);
+    	for(var i=0;i<=end;i++){
+        	b=b+restr.substring(num*i,num*(i+1))+"</br>";
+    	}
+    	   return b;		
+    	}
+    return restr;	
+    }
+		
+		
+</script>
+	

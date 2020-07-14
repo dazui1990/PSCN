@@ -1,0 +1,365 @@
+<style>
+tr{ background: white;} 
+tr:nth-child(2n){ background: #e5e5e5;}
+
+#niguriList th{
+	vertical-align: middle !important;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="col-xs-12 col-sm-6 col-md-6" id="yearDiv">
+						<div class="form-group">
+							<label class="control-label col-xs-4">年度</label>
+							<div class="col-xs-8">
+								<div class="input-group date year-picker"
+									data-defaultToday="false">
+									<input id="year" name="year" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6" id="quarterDiv">
+						<div class="form-group">
+							<label class="control-label col-xs-4">季度</label>
+							<div class="col-xs-8">
+								<select id="quarter" class="bs-select form-control"
+									name="quarter">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6" id="yearMonth1">
+						<div class="form-group">
+							<label class="control-label col-xs-3">年月一</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth1Start" name="yearMonth1Start" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+							<label class="control-label col-xs-1">至</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth1End" name="yearMonth1End" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-6 col-md-6" id="yearMonth2">
+						<div class="form-group">
+							<label class="control-label col-xs-3">年月二</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth2Start" name="yearMonth2Start" readonly
+										class="form-control" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+							<label class="control-label col-xs-1">至</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth2End" name="yearMonth2End" readonly
+										class="form-control" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row ">
+						<div class="col-xs-12 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">区域</label>
+								<div class="col-xs-8">
+									<select id="orgId" class="bs-select form-control" name="orgId"
+										data-url="/keyIndicatorDisplay/getOrg" data-model="manage"
+										data-labelValue="ORG_ID" data-lableDesc="ORG_NAME"
+										data-live-search="false" data-size="10"
+										data-existsDefault="true">
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+						        <div class="form-group">
+								   <label class="control-label col-xs-4">省份</label>
+								   	<div class="col-xs-8">
+										<select id="provinceId" class="bs-select form-control" parent="orgId"
+											name="provinceId" data-url="/keyIndicatorDisplay/getProvince/{[orgId]}"
+											data-model="manage" data-labelValue="PROVINCE_ID"
+											data-lableDesc="PROVINCE" data-live-search="true"
+											data-size="10" data-existsDefault="true">
+										</select>
+								   </div>
+						       </div>
+					       	</div>
+					       	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+						        <div class="form-group">
+								   <label class="control-label col-xs-4">城市</label>
+								   	<div class="col-xs-8">
+										<select id="cityId" class="bs-select form-control" parent="provinceId"
+											name="cityId" data-url="/keyIndicatorDisplay/getCity/{[orgId]}/{[provinceId]}"
+											data-model="manage" data-labelValue="CITY_ID"
+											data-lableDesc="CITY" data-live-search="true"
+											data-size="10" data-existsDefault="true">
+										</select>
+								   </div>
+						       </div>
+					       	</div> -->
+
+						<div class="col-xs-12 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">督导</label>
+								<div class="col-xs-8">
+									<select id="dudaoId" class="bs-select form-control"
+										parent="orgId" name="dudaoId"
+										data-url="/keyIndicatorDisplay/getDuDao/{[orgId]}"
+										data-model="manage" data-labelValue="employee_id"
+										data-lableDesc="EMPLOYEE_NAME" data-live-search="true"
+										data-size="10" data-existsDefault="true">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">特约店</label>
+								<div class="col-xs-8">
+									<select id="dealerCode" class="bs-select form-control"
+										parent="dudaoId" name="dealerCode"
+										data-url="/keyIndicatorDisplay/getDealer/{[orgId]}/{[dudaoId]}"
+										data-model="manage" data-labelValue="DEALER_CODE"
+										data-lableDesc="DEALER_SHORTNAME" data-live-search="true"
+										data-size="10" data-existsDefault="true">
+									</select>
+								</div>
+								<input type="hidden" id="searhYear" name="searhYear" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row ">
+					<div class="col-xs-12 ">
+						<div class="query-btn">
+							<a href="javascript:;" id="searchdataBTN" class="btn blue"
+								data-onclickEvent="true"> <i class="fa fa-search"></i> 查询
+							</a> <a href="javascript:;" id="resetBTN" class="btn blue"> 重置 </a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel">
+		<div class="panel-heading">
+			<div class="pannel-name"></div>
+		</div>
+		<div class="panel-body" id="tableDiv"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).one("onload.dms",function(event, container) {
+		
+		//动态刷新下拉框的值
+	 	var selectData = new Array();
+		selectData.push({id:"1",name:"一季度"});
+		selectData.push({id:"2",name:"二季度"});
+		selectData.push({id:"3",name:"三季度"});
+		selectData.push({id:"4",name:"四季度"});
+		dmsDict.refreshSelectByData($("#quarter" ,container),selectData,"id","name");
+		//年度选择值的时候，隐藏年月一，年月二，并清空其中的值
+		$("#year", container).change(function(){
+			$("#yearMonth1", container).hide();
+			$("#yearMonth2", container).hide();
+			$("#yearMonth1Start", container).val("");
+			$("#yearMonth1Start", container).removeClass("required");
+			$("#yearMonth1End", container).val("");
+			$("#yearMonth1End", container).removeClass("required");
+			$("#yearMonth2Start", container).val("");
+			$("#yearMonth2Start", container).removeClass("required");
+			$("#yearMonth2End", container).val("");
+			$("#yearMonth2End", container).removeClass("required");
+		});
+		//年月一有值的时候将年度，季度隐藏
+		$("#yearMonth1Start", container).change(function(){
+			$("#quarterDiv", container).hide();
+			$("#yearDiv", container).hide();
+			$("#year", container).val("");
+			$("#year", container).removeClass("required");
+		});
+		//年度 季度 年月一 年月二全部显示
+		$("#resetBTN", container).click(function(){
+			$("#yearDiv", container).show();
+			$("#quarterDiv", container).show();
+			$("#yearMonth1", container).show();
+			$("#yearMonth2", container).show();
+			$("#year", container).addClass("required");
+			$("#yearMonth1Start", container).addClass("required");
+			$("#yearMonth1End", container).addClass("required");
+			$(".form-control", container).val("");
+			$(".filter-option", container).text("请选择");
+		});
+		
+		//点击查询按钮发送AJAX加载表头和数据
+		$("#searchdataBTN", container).click(function(){
+			var year="";
+			if($("#year",container).val()!=""){
+				year=$("#year",container).val()
+			}
+			if($("#yearMonth1End",container).val()!=""&&$("#yearMonth2End",container).val()==""){
+				year = $("#yearMonth1End",container).val().substring(0,4);
+			}
+			if($("#yearMonth1End",container).val()==""&&$("#yearMonth2End",container).val()!=""){
+				year = $("#yearMonth2End",container).val().substring(0,4);
+			}
+			if($("#yearMonth1End",container).val()!=""&&$("#yearMonth2End",container).val()!=""){
+				var year1 = $("#yearMonth1End",container).val().substring(0,4);
+				var year2 = $("#yearMonth2End",container).val().substring(0,4);
+				if(year1>year2){
+					year = year1;
+				}else if(year1<year2){
+					year = year2;
+				}else if(year1==year2){
+					year = year1;
+				}
+			}
+			$("#searhYear",container).val(year);
+			//置空tableDiv
+			$("#tableDiv", container).html("");
+			//添加table标签
+			$("#tableDiv", container).append('<table class="table table-striped table-bordered table-hover table-responsive" id="niguriList"></table>');
+			dmsCommon.ajaxRestRequest({
+				url : dmsCommon.getDmsPath()["manage"]+ "/keyIndicatorDisplay/getPadTableHead",
+				type : 'GET',
+				async : false,
+				data : {year:year},
+				dataType : 'JSON',
+				sucessCallBack : function(data) {
+					var columns1=[];
+					var columns2=[];
+					columns1.push({colspan:1,align: 'center',rowspan:2,title : "特约店名称",field : "dealername"});
+					columns1.push({colspan:1,align: 'center',rowspan:2,title : "店代码",field : "dealerCode"});
+					columns1.push({colspan:1,align: 'center',rowspan:2,title : "大区",field : "orgName"});
+					columns1.push({colspan:1,align: 'center',rowspan:2,title : "区域督导",field : "empName"});
+					columns1.push({colspan:1,align: 'center',rowspan:2,title : "数据截至日期",field : "dataTime"});
+					
+					//加载PAD标题
+					if(data){
+						var columns = data.columns;
+						for(var i=0;i<columns.length;i++){
+							if(columns[i].SECOND_HEAD == ""){
+								columns1.push({rowspan:2, align: 'center', field : columns[i].REMARK, title : columns[i].FIRST_HEAD});
+							}else{
+								columns1.push({align: 'center', field : columns[i].FIRST_HEAD, title :'<a class="showMore" data-beforeShowEvent="true" data-url="keyIndicatorDisplay/KeyIndicatorDisplayPadPage2.html" data-toggle="modal">'+columns[i].FIRST_HEAD+'</a>'});
+								if(columns[i].SHOW_FORMAT == 0 || columns[i].SHOW_FORMAT == 1){
+									columns2.push({align: 'center', field : columns[i].REMARK, title : columns[i].SECOND_HEAD,formatter:function(value,row,index){
+ 										return formatMoney(String(value));
+									}});
+								}
+								//整数  两位小数 显示金额千分格式
+ 								else if(columns[i].SHOW_FORMAT == 0 || columns[i].SHOW_FORMAT == 1){
+ 									columns2.push({field : columns[i].REMARK,align: 'center',title : columns[i].SECOND_HEAD,formatter:function(value,row,index){
+ 										return '<div style="text-align:right">'+formatMoney(String(value))+'</div>';
+									}}); 
+								} 
+								else{
+									columns2.push({field : columns[i].REMARK,align: 'center',title : columns[i].SECOND_HEAD});
+								}
+							}
+						}
+					}
+				
+					//加载数据
+					new Datatable().initPagination({
+						src : "niguriList",
+						container:container,
+						url : dmsCommon.getDmsPath()["manage"] + "/keyIndicatorDisplay/searchdata",
+						pageSize:50,
+						autoHeight:false,
+						//isQueryFirst : true,
+						//height:520,
+						isShowLineNumber:false,
+						fixedColumns: true,//固定列
+				        fixedNumber:5,//固定几列
+						onLoadSuccess:function(data){
+							//点击表头的时候向子页面传值
+							$(".showMore",container).on("beforeShow.dms",function(event,returnResult){
+								var searhYear = $("#searhYear",container).val();
+								var item1 = $(this).html();
+								var tableData = JSON.stringify(data.rows);
+								var falg=true;
+								var map={searhYear:searhYear,item1:item1,tableData:tableData};
+								$(this).data("pageData",map);
+								returnResult.status = true;
+							});
+							
+							$(".showDetail",container).on("beforeShow.dms",function(event,returnResult){										
+								var DEALER_CODE=$(this).next().val();
+								var POST_NAME=$(this).next().next().val();
+								var map={DEALER_CODE:DEALER_CODE,POST_NAME:POST_NAME};
+								$(this).data("pageData",map);
+								returnResult.status = true;
+							});
+							
+						},
+						columns :[columns1,columns2]
+					});
+				}
+			});
+		});
+		
+		
+});
+</script>
+

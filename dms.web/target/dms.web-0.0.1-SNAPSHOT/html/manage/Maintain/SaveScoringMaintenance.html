@@ -1,0 +1,213 @@
+<style type="text/css">
+.col-center-block {
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+<div class="dms-edit ajaxrest"
+	data-url="/Evaluation/SaveScoringMaintenance/{[ID]}" data-model="manage"
+ data-model="manage"
+	data-pageInitCallBack="true">
+	<form class="form-horizontal">
+	<input type="hidden" id="newid" name="newid" value="{[ID]}"/>
+		<div class="modal-header">
+			<div class="modal-title">得分规则维护修改</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row ">
+						<div class="center-block">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-center-block ">
+								<div class="form-group">
+									<label class="control-label col-xs-4">分类:</label>
+									<div class="col-xs-8">
+									<select id="fenlei" name="fenlei"  
+										data-dictCode="9911" data-value="classid"  data-fieldName="classid" >
+										</select>
+								</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">得分规则名称:</label>
+									<div class="col-xs-8">
+										<input type="text" id="scorerule_name" class="form-control"
+											name="scorerule_name" data-fieldName="scorerule_name" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足1项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score1" class="form-control"
+											name="score1" data-fieldName="score1" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足2项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score2" class="form-control"
+											name="score2" data-fieldName="score2" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足3项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score3" class="form-control"
+											name="score3" data-fieldName="score3" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足4项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score4" class="form-control"
+											name="score4" data-fieldName="score4" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足5项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score5" class="form-control"
+											name="score5" data-fieldName="score5" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足6项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score6" class="form-control"
+											name="score6" data-fieldName="score6" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足7项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score7" class="form-control"
+											name="score7" data-fieldName="score7" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn">
+									<label class="control-label col-xs-4 required ">满足8项得</label>
+									<div class="col-xs-2">
+										<input type="text" id="score8" class="form-control"
+											name="score8" data-fieldName="score8" />
+
+									</div>
+									<label class="control-label col-xs-1 required ">分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row   ">
+						<div class="col-xs-12 col-sm-6 col-md-4  col-center-block">
+							<div class="form-group  ">
+								<div class="query-btn  ">
+									<label class="control-label col-xs-4  required " style="color:red">注意:多项目评价基准中否决项若不满足得0分</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<table
+							class="table table-striped table-bordered table-hover table-responsive"
+							id="dmsa_table">
+						</table>
+					</div>
+					<div class="modal-footer">
+						<a id="updateSave" data-model="manage"
+							data-url="/Evaluation/Saveguize" data-method="POST"
+							data-callBack="true" class="btn blue" data-toggle="confirmation"><i
+							class="fa fa-save"></i>保存</a> <a data-dismiss="modal"
+							class="btn blue"><i class="fa fa-undo"></i>返回</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#dms11_table",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+	
+});
+</script>

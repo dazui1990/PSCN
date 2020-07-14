@@ -1,0 +1,5 @@
+com\yonyou\dms\framework\activejdbc\ActiveJdbcTest.class
+com\yonyou\dms\framework\activejdbc\Customer.class
+com\yonyou\dms\framework\filter\XSSRequestTest.class
+com\yonyou\dms\framework\filter\XssObjectMapperTest.class
+com\yonyou\dms\framework\filter\FramworkUtilTest.class

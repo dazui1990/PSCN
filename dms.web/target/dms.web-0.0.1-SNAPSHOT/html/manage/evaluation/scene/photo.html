@@ -1,0 +1,85 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+	<input type="hidden" value="{[id]}" name="id" id="id">
+	<input type="hidden" value="{[benphotoid]}" name="benphotoid" id="benphotoid">
+	<input type="hidden" value="{[billid]}" name="billid" id="billid">
+	<input type="hidden" value="{[photoid_class]}" name="photoid_class" id="photoid_class">
+		<div class="modal-header">
+			<div class="modal-title">图片上传</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div id="filIns2" class="col-xs-12">
+						<input type="file" class="importFiles" id="fileupload" multiple
+							name="dmsFile" data-inputName="planFileid" data-billId="{[id]}" data-billType="10421010">
+					</div>
+							</div>
+							<div class="progress progress-striped">
+  <div class="progress-bar progress-bar-success" role="progressbar"
+       aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+       style="width: 0%;" id="progressBarDiv">
+    <span class="sr-only"></span>
+  </div>
+</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal-footer center-block">
+			<a data-url="/evaluation/scene/savephoto" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue ajaxrest" data-fileUploadBtn="true"> <i class="fa fa-save"></i>上传
+			</a> 
+			<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>取消
+			</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one(
+		"onload.dms",
+		function(event, container) {
+			//新增页面的回调函数
+			$("a[data-callBack='true']", container).on(
+					"callBack.dms",
+					function(event, response) {
+						//关闭窗口
+						$("a[data-dismiss='modal']", container).click();
+					     var id=$("#id").val();
+					     var benphotoid=$("#benphotoid").val();
+					     var billid=$("#billid").val();
+					     var photoid_class=$("#photoid_class").val();
+						//回调上一个页面的方法//点击保存后将值保存到表         
+				 		 dmsCommon.ajaxRestRequest({
+								url : dmsCommon.getDmsPath()["manage"]
+										+ "/evaluation/scene/saveScenItemPhoto",
+								dataType:"json",
+								type : 'GET',
+								data :{'urlid':id,'benphotoid':benphotoid},  
+								sucessCallBack : function(data) {
+									//弹出提示框
+									dmsCommon.tip({status:"success",msg:"操作成功!"});
+									//同时刷新原有的页面值方法
+									//能否将值刷新到这一条记录上
+									$("#"+billid).val(id);
+									//将图标的颜色改变一下
+									$("#"+photoid_class).css('color','black');
+								}
+							});
+				 		
+					});
+		});
+</script>
+
+

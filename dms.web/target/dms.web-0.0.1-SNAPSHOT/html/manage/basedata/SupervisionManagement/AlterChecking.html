@@ -1,0 +1,577 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+			<input type="hidden" id="hidd1" name="hidd1">
+			<input type="hidden" id="hidd2" name="hidd2">
+							<div class="form-group">
+								<label class="control-label col-xs-4">审核年月</label>
+								<div class="col-xs-8">
+									<div class="input-group date month-picker" data-defaultToday = "true"  data-orientation="top left">
+										<input id="auditDate" name="auditDate" readonly
+											class="form-control" type="text" value="" />
+										 <span
+											class="input-group-btn">
+											<button class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+			<div class="row ">
+				<div class="col-xs-12 ">
+					<div class="query-btn">
+						<a id="queryBtn" href="javascript:;" class="btn blue  "> <i
+							class="fa fa-search"></i> 查询
+						</a> <a href="javascript:;" class="btn blue"><i
+							class="fa fa-undo"></i> 重置</a>
+					</div>
+				</div>
+		   </div>
+		  </div>
+		</div>
+		<div class="panel panel-default table-panel">
+			<div class="panel-heading">		
+				<div class="pannel-button">
+						<div class="btn-group btn-group-sm">
+							<a href="javascript:;" class="btn btn-outline" data-url="/supervision/adoptChange" data-model="manage" data-method="POST"
+								data-toggle="confirmation" data-callBack="true" data-beforeRequest="true"> <i
+								class="fa fa-print" ></i>通过
+							</a>
+							<a href="javascript:;" class="btn btn-outline" data-url="/supervision/rejectChange" data-model="manage" data-method="POST"
+								data-toggle="confirmation" data-callBack="true" data-beforeRequest="true"> <i
+								class="fa fa-print" ></i>驳回
+							</a>
+						</div>
+				</div>
+		</div>
+		<div class="panel panel-default table-panel ">
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="userList"></table>
+		</div>
+	</div>
+	</div>
+	</form>
+	
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "userList",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/supervision/queryAgendaChangePlan",
+		rowID : "USER_ID",
+		//sortName : "USER_ID", 排序字段
+		//sortOrder : "asc", 排序类型
+		//isQueryFirst:false,
+		checkboxHeader:true, //全选框
+		selectItemName:"userId", //定义checkbox 或是radio 的名字	
+		onPreBody:function(data){
+			$.each(data,function(index,row){
+				if(row['PLAN']=='变更计划'){
+					row['ORDER_CHECKED']={disabled:false};
+				}else{
+					row['ORDER_CHECKED']={disabled:true};
+				}
+			})
+		},
+
+		columns : [ 
+		    {checkbox:true,field:"ORDER_CHECKED"},
+		    {field : "USER_ID",title : "备注",formatter: function (value, row, index) {
+		    	if(row['PLAN']=='变更计划'){
+		    		return '<input type="text" style="width:65px" id='+value+'>';
+		    	}
+        	}},
+		   	{field : "USER_ID",title : "详情",operateFormat : [ 
+		       {type:"detail",container:$('#funcId_802002'),url:"manage/basedata/SupervisionManagement/AlterCheckingDetail.html",openType:"jump",isShow:function(value, row, index){
+		            	 return true;
+		       }}
+		    ]},
+		    {field : "PLAN",title : "工作事项"},
+			{field : "employee_name",title : "督导"},
+			{field : "day_01_1",title : "1号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_01_2",title : "1号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},				
+			{field : "day_02_1",title : "2号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_02_2",title : "2号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_03_1",title : "3号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_03_2",title : "3号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_04_1",title : "4号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_04_2",title : "4号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_05_1",title : "5号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_05_2",title : "5号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_06_1",title : "6号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_06_2",title : "6号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_07_1",title : "7号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_07_2",title : "7号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_08_1",title : "8号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_08_2",title : "8号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_09_1",title : "9号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_09_2",title : "9号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_10_1",title : "10号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_10_2",title : "10号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_11_1",title : "11号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_11_2",title : "11号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_12_1",title : "12号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_12_2",title : "12号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_13_1",title : "13号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_13_2",title : "13号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_14_1",title : "14号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_14_2",title : "14号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_15_1",title : "15号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_15_2",title : "15号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_16_1",title : "16号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_16_2",title : "16号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_17_1",title : "17号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_17_2",title : "17号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_18_1",title : "18号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_18_2",title : "18号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_19_1",title : "19号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_19_2",title : "19号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_20_1",title : "20号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_20_2",title : "20号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_21_1",title : "21号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_21_2",title : "21号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_22_1",title : "22号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_22_2",title : "22号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_23_1",title : "23号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_23_2",title : "23号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_24_1",title : "24号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_24_2",title : "24号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_25_1",title : "25号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_25_2",title : "25号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_26_1",title : "26号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_26_2",title : "26号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_27_1",title : "27号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_27_2",title : "27号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_28_1",title : "28号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_28_2",title : "28号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_29_1",title : "29号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_29_2",title : "29号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_30_1",title : "30号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_30_2",title : "30号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}},
+			{field : "day_31_1",title : "31号上午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}}, 
+			{field : "day_31_2",title : "31号下午",formatter:function(value,row,index){
+				if(value==null){
+            		return  '<div align="left" ><span></span></div>';
+            	}else{
+            		return  '<div align="left" ><span>'+value+'</span></div>';
+            	}
+				}}
+		]
+		
+	});
+	//批量操作前执行函数
+	$("a[data-beforeRequest='true']",container).on("beforeRequest.dms",function(event,returnResult){
+		
+		var hidd1="";
+		var hidd2="";
+		var selectRow = $("#userList",container).dmsTable().getSelections();
+		if(selectRow!=null){
+			for(var i=0;i<selectRow.length;i++){
+				if(hidd1==""){
+					hidd1=selectRow[i].USER_ID;	
+					if($("#"+selectRow[i].USER_ID).val()==""){
+						hidd2 = "kong";
+					}else{
+						hidd2=$("#"+selectRow[i].USER_ID).val();
+					}
+				}else{
+					hidd1+="!"+selectRow[i].USER_ID;
+					if($("#"+selectRow[i].USER_ID).val()==""){
+						hidd2+="!"+"kong";
+					}else{
+						hidd2+="!"+$("#"+selectRow[i].USER_ID).val();
+					}
+				}			
+			}
+			//如果没选择点击通过，提示请选择至少一条记录
+		}else{
+			alert("请至少选择一条记录！！！");
+			return true;
+		}
+		$("#hidd1").val(hidd1);
+		$("#hidd2").val(hidd2);
+		returnResult.status = true;
+	});
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#userList",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+	
+});
+	
+</script>
+

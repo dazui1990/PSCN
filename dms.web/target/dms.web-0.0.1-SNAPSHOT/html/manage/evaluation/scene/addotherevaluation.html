@@ -1,0 +1,64 @@
+<div class="dms-edit">
+	<form class="form-horizontal">
+	<input type="hidden" value="{[id]}" name="scen_id" id="scen_id">
+	<input type="hidden" value="{[evaluate_date]}" name="evaluate_date" id="evaluate_date">
+		<div class="modal-header">
+			<div class="modal-title">其他评价模板选择</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+				 <div class="row">
+				 <div class="col-xs-12 col-sm-6">
+					<div class="form-group">
+						<label class="control-label col-xs-4">请选择模板:</label>
+						<div class="col-xs-6">
+							<select id="tt_id"
+								class="bs-select form-control required" name="tt_id"
+								data-url="/evaluation/scene/othermodleevaluation/{[evaluate_date]}"
+								data-model="manage" data-labelValue="id"
+								data-lableDesc="evaluate_name" data-live-search="true"  data-size="200" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+				 </div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal-footer center-block">
+		<a data-url="/evaluation/scene/saveotherevaluate" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue" data-toggle="confirmation">
+				<i class="fa fa-save"></i>保存
+			</a>
+			<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>取消
+			</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one(
+		"onload.dms",
+		function(event, container) {
+			//新增页面的回调函数
+			$("a[data-callBack='true']", container).on(
+					"callBack.dms",
+					function(event, response) {
+						//关闭窗口
+						$("a[data-dismiss='modal']", container).click();
+						//刷新前一个表格数据
+						//刷新表格
+						$("#evaluation_listother", getElementContext())
+								.dmsTable().refreshTableWithForm();
+					});
+		});
+</script>
+
+

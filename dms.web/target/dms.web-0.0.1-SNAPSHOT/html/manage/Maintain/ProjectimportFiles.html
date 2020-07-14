@@ -1,0 +1,47 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+	<input type="hidden" value="{[tbid]}" name="id" id="id">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="pannel-name">评价项项目维护图片上传</div>
+			</div>
+			<div class="panel-body">
+				<div class="row" >
+					<div class="col-xs-12 ">	
+						<div class="form-group">
+							<div class="col-xs-12">
+                             	<input type="file" class="importFiles" id="fileupload" multiple
+                             	 data-billId="{[tbid]}" data-billType="10421110"  multiple name="dmsFile" data-inputName="projectFileIds">
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-actions">
+			<a class="btn blue"  data-url="/Evaluation/projectFiles" data-toggle="confirmation" data-model="manage"  data-callBack="true" data-errorCallBack="true" data-fileUploadBtn="true"  data-method="POST">
+				<i class="fa fa-save"></i>保存</a>
+			<a data-goback="page" href="manage/Maintain/projectMaintenance.html" class="btn blue ajaxify">
+			<i class="fa fa-reply"></i>返回</a>
+		</div>
+	</form>
+	
+</div>
+
+
+
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one(
+		"onload.dms",
+		function(event, container) {
+			//新增页面的回调函数
+			
+			$("a[data-callBack='true']", container).on(
+					"callBack.dms",
+					function(event, response) {
+						$("a[data-goback='page']",container).click();
+					});
+		});
+	
+</script>

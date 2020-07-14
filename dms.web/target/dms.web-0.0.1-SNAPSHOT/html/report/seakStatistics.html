@@ -1,0 +1,133 @@
+<div class="dms-search">
+		<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="row ">
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label class="control-label col-xs-4">开始时间</label>
+						<div class="col-xs-8">
+							<div class="input-group date date-picker" data-defaultToday="true"  data-orientation="top left">
+								<input id="Begin" name="Begin" class="form-control" type="text" value="" readonly />
+								 <span class="input-group-btn">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+									<button class="btn default date-reset" type="button">
+                                        <i class="fa fa-times"></i>
+                                    </button> 
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<div class="form-group">
+						<label class="control-label col-xs-4">至</label>
+						<div class="col-xs-8">
+							<div class="input-group date date-picker" data-defaultToday="true" readonly  data-orientation="top left">
+								<input id="End" name="End" class="form-control" type="text" value="" readonly />
+								 <span class="input-group-btn">
+									<button class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+                                    <button class="btn default date-reset" type="button">
+                                        <i class="fa fa-times"></i>
+                                    </button>        
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-2">
+					<label class="control-label col-xs-4">督导：</label>
+					<div class="col-xs-8">
+						<select id="duDaoId" name="duDaoId"
+							class="bs-select form-control" 
+							data-model="manage"
+							data-url="/basedata/select/dudao"
+							data-labelValue="EMPLOYEE_NO" data-lableDesc="EMPLOYEE_NAME"
+							data-size="15" data-live-search="true"   data-existsDefault="true">
+						</select>
+					</div>
+				</div>
+		   </div>
+		   <div class="row">
+				<div class="query-btn">
+					<a id="queryBtn" href="javascript:;" class="btn blue  "> 
+						<i class="fa fa-search"></i> 查询
+					</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:;" data-url="/report/sceneStatistics/export" 
+					data-model="manage"  data-method="downLoad" class="btn blue ajaxrest"   data-validate="false" >
+						<i class="fa fa-download"></i>导出
+					</a>
+				</div>			
+			</div>
+		  </div>
+		</div>
+		<div class="panel panel-default table-panel">
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="tourList"></table>
+		</div>
+	</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="sceneStatistics_list"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+
+	dmsCommon.ajaxRestRequest({
+			url : dmsCommon.getDmsPath()["manage"]
+					+ "/report/sceneStatistics/findqt_modle",
+			dataType:"JSON",
+			type : 'GET',
+			async : false,
+			data :{},
+			sucessCallBack : function(data) {
+				var columns1=[]; 
+				columns1.push({field : "employee_no",title : "人员编号"});
+				columns1.push({field : "EMPLOYEE_NAME",title : "区域督导"});
+				columns1.push({field : "GLDE_NUM",title : "管理店数"});
+				columns1.push({field : "jhxh_sum",title : "计划巡回店数"});
+				columns1.push({field : "sjxh_sum",title : "实际巡回店数"});
+				columns1.push({field : "xcxh_sum",title : "现场评价数量"});
+				columns1.push({field : "ndfd_sum",title : "弱店辅导数量"});
+				columns1.push({field : "hy_sum",title : "会议数量"});
+				columns1.push({field : "qt_sum",title : "其他数量"});
+				columns1.push({field : "nl_sum",title : "N&L评价数量"});
+				for(var i=0;i<data.length;i++){
+					columns1.push({title :data[i].evaluate_name,align: 'center',field : data[i].qt_sum});
+				}
+				columns1.push({field : "yfb_sum",title : "巡回报告发送数量"});
+				columns1.push({field : "jhxm_pc",title : "计划巡回频次量"});
+				columns1.push({field : "xcph_pc",title : "现场评价频次"});
+				columns1.push({field : "ndfd_pc",title : "弱店辅导频次"});
+	//请求其他评价表的数据
+	new Datatable().initPagination({
+		src : "sceneStatistics_list",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/report/sceneStatistics/find",
+		pageSize:50,
+		autoHeight:false,
+		//height:520,
+		rowID : "employee_no",
+		isShowLineNumber:false,
+		fixedColumns: true,//固定列
+        fixedNumber:2,//固定几列
+		onLoadSuccess:function(){
+			
+		},
+		columns : [columns1]	
+	});
+			}
+	}); 
+});
+</script>

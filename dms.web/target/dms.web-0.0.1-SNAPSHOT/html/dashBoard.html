@@ -1,0 +1,235 @@
+   
+   <link href="../assets/indexEvent/css/jquery-accordion-menu.css" rel="stylesheet" type="text/css" />
+<link href="../assets/indexEvent/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+*{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+body{background:#f0f0f0;}
+.content{width:21%;margin-top:100px auto;margin-left: 8%}
+.filterinput{
+	background-color:rgba(249, 244, 244, 0);
+	border-radius:15px;
+	width:90%;
+	height:30px;
+	border:thin solid #FFF;
+	text-indent:0.5em;
+	font-weight:bold;
+	color:#FFF;
+}
+#demo-list a{
+	overflow:hidden;
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	white-space:nowrap;
+	width:100%;
+}
+</style>
+   
+   <script src="../assets/indexEvent/js/jquery-accordion-menu.js" type="text/javascript"></script>   
+                <!-- BEGIN CONTENT BODY -->
+                <div class="page-content">
+                    <!-- BEGIN DASHBOARD STATS 1-->
+                   
+                   	<div class="content">
+
+	<div id="jquery-accordion-menu" class="jquery-accordion-menu blue" style="width: 400%;">
+		<div class="jquery-accordion-menu-header" id="form" style="text-align: center;">
+		<span><strong>今日事项&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+		</div>
+		<ul id="demo-list">
+		 	<li id="agendali"  style="display: none;"><a  id="agendaJump" ><span id="agenda"></span></a></li>
+		 	<li id="changeagendali" style="display: none;"><a  id="changeagendaJump"  ><span id="changeagenda"></span></a></li>
+		 	<li id="changeagenbhli" style="display: none;"><a  id="changeagenbhJump"  ><span id="changeagenbh"></span></a></li>
+		   	<li id="scenevaluationali" style="display: none;"><a id="scenevaluationaJump" ><span id="scenevaluationa"></span></a></li>
+		   	<li id="correctli" style="display: none;"><a id="correctJump" ><span id="correct"></span></a></li>
+		</ul>
+	</div>
+</div>
+                    </div>
+                    <!-- END DASHBOARD STATS 1-->
+                
+                <!-- END CONTENT BODY -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script type="text/javascript">
+	 $(document).one("onload.dms",function(event,container){
+			if (App.isAngularJsApp() === false) { 
+		 	       Dashboard.init(); // init metronic core componets
+		 		}
+			refreshItem(event,container);//动态加载表头数据
+			
+			$("#agendaJump",container).on("click",function(event){
+			 	dmsCommon.ajaxPageRequest({
+			    	url:'manage/basedata/SupervisionManagement/PlanChecking.html',
+			        container:$('#funcId_802001'),//定义容器  
+			        success:function(html){
+			        	 dmsIndex.changeActiveFunc(802001);
+			        },
+			        complete:function(xmlRequest, statusCode){
+			        	   window.setTimeout(function(){
+				     	    	$("#queryBtn").click();
+							},100);
+			    	   } 
+			    }); 
+			});	
+			 $("#changeagendaJump",container).on("click",function(event){
+			 	dmsCommon.ajaxPageRequest({
+			    	url:'manage/basedata/SupervisionManagement/AlterChecking.html',
+			        container:$('#funcId_802002'),//定义容器  
+			        success:function(html){
+			        	 dmsIndex.changeActiveFunc(802002);
+			        },
+			        complete:function(xmlRequest, statusCode){
+			        	   window.setTimeout(function(){
+				     	    	$("#queryBtn").click();
+							},100);
+			    	   } 
+			    });
+				});	 
+			 
+			 $("#scenevaluationaJump",container).on("click",function(event){
+				 	dmsCommon.ajaxPageRequest({
+				    	url:'manage/evaluation/scene/evlauationsceneList.html',
+				        container:$('#funcId_931206'),//定义容器  
+				        success:function(html){
+				        	 dmsIndex.changeActiveFunc(931206);
+				        },
+				        complete:function(xmlRequest, statusCode){
+				        	   window.setTimeout(function(){
+					     	    	$("#queryBtn").click();
+								},100);
+				    	   } 
+				    });
+					});
+			 
+			 $("#correctJump",container).on("click",function(event){
+				 	dmsCommon.ajaxPageRequest({
+				    	url:'manage/correctPlan/makeCorrectPlan.html',
+				        container:$('#funcId_601001'),//定义容器  
+				        success:function(html){
+				        	 dmsIndex.changeActiveFunc(601001);
+				        },
+				        complete:function(xmlRequest, statusCode){
+				        	   window.setTimeout(function(){
+					     	    	$("#queryBtn").click();
+								},100);
+				    	   } 
+				    });
+					});
+			 $("#changeagenbhJump",container).on("click",function(event){
+				 	dmsCommon.ajaxPageRequest({
+				    	url:'manage/basedata/SupervisionManagement/supervisionAgenda.html',
+				        container:$('#funcId_901001'),//定义容器  
+				        success:function(html){
+				        	 dmsIndex.changeActiveFunc(901001);
+				        },
+				        complete:function(xmlRequest, statusCode){
+				        	   window.setTimeout(function(){
+					     	    	$("#queryBtn").click();
+								},100);
+				    	   } 
+				    });
+					});
+		
+	 });
+	 
+			
+	 
+	 function getInfo(year, month) {
+	        var d = new Date();
+	        // what day is first day
+	        d.setFullYear(year, month-1, 1);
+	        var w1 = d.getDay();
+	        if (w1 == 0) w1 = 7;
+	        // total day of month
+	        d.setFullYear(year, month, 0);
+	        var dd = d.getDate();
+	        // first Monday
+	        if (w1 != 1) d1 = 7 - w1 + 2;
+	        else d1 = 1;
+	        week_count = Math.ceil((dd-d1+1)/7);
+	            var monday = d1;
+	            var sunday = monday + 6;
+	            var from = year+"/"+month+"/"+monday;
+	            var to;
+	            if (sunday <= dd) {
+	                to = year+"/"+month+"/"+sunday;
+	            } else {
+	                d.setFullYear(year, month-1, sunday);
+	                to = d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate();
+	            }
+	         return from;
+	    }
+	 function FormatDate (strTime) {
+		    var date = new Date(strTime);
+		    return date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate();
+		}
+	 
+	 //查询数据 未完成评价
+	 function refreshItem(event,container){
+	 		 dmsCommon.ajaxRestRequest({
+	 			url : dmsCommon.getDmsPath()["manage"]
+	 					+ "/evaluation/scene/searchHome",
+	 			dataType:"json",
+	 			type : 'GET',
+	 			data :{},
+	 			sucessCallBack : function(data) {
+	 				 for (var i = 0; i <data.length; i++) {
+	 					if(data[0].flag){
+	 					 if(i==1){
+	 						    if(data[i].statue){
+		 						// 将数据显示到页面
+		 						$("#agendali").css('display','block'); 
+		 	 	 				$("#agenda").html(data[i].agenda); 
+	 						    }else{
+	 						   	$("#agendali").css('display','none'); 
+	 						    }
+	 						    }
+	 					 if(i==2){
+	 						 if(data[i].statue){
+	 							$("#changeagendali").css('display','block'); 
+		 						// 将数据显示到页面
+		 	 	 				$("#changeagenda").html(data[i].changeagenda); 
+		 						}else{
+		 							$("#changeagendali").css('display','none'); 
+		 						}
+		 					 }
+	 					 if(i==3){ 
+	 						if(data[i].statue){
+	 						$("#scenevaluationali").css('display','block'); 
+	 						// 将数据显示到页面
+	 	 	 				$("#scenevaluationa").html(data[i].scenevaluation); }
+	 						else{
+	 							$("#scenevaluationali").css('display','none'); 	
+	 	 	 				}
+	 					 }
+	 					 if(i==4){ 
+		 						if(data[i].statue){
+		 						$("#correctli").css('display','block'); 
+		 						// 将数据显示到页面
+		 	 	 				$("#correct").html(data[i].correct); }
+		 						else{
+		 							$("#correctli").css('display','none'); 	
+		 	 	 				}
+		 					 }
+	 					 if(i==5){ 
+		 						if(data[i].statue){
+		 						$("#changeagenbhli").css('display','block'); 
+		 						// 将数据显示到页面
+		 	 	 				$("#changeagenbh").html(data[i].changeagenbh); }
+		 						else{
+		 							$("#changeagenbhli").css('display','none'); 	
+		 	 	 				}
+		 					 }
+	 					}
+	 				 }
+	 
+	 				    }
+	 		}); 
+	 	};
+	 	
+	 	function ces(){
+	 	    $("#btnJump",container).click();
+	 	}
+	 	
+</script>
+ 

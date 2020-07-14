@@ -1,0 +1,103 @@
+<!-- BEGIN LOGO -->
+<div class="page-logo">
+	<img src="../assets/pages/img/logo_honda.png"
+		alt="logo" class="logo-default" />
+	
+	<div class="menu-toggler sidebar-toggler"></div>
+	
+</div>
+<!-- END LOGO -->
+<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+<form class="navbar-form navbar-text pull-left">
+        <div class="form-group">
+          <div class="form-group" >
+          <marquee onMouseOut="this.start()" scrollamount="3" onMouseOver="this.stop()"><font color=#FFFFFF>欢迎进入xxx系统</font></marquee>
+          </div>
+        </div>
+</form>
+	
+
+<a href="javascript:;" class="menu-toggler responsive-toggler"
+	data-toggle="collapse" data-target=".navbar-collapse"> </a>
+<!-- END RESPONSIVE MENU TOGGLER -->
+<!-- BEGIN TOP NAVIGATION MENU -->
+<div class="top-menu dms-delete">
+		<ul class="nav navbar-nav pull-right">
+		<!-- BEGIN NOTIFICATION DROPDOWN -->
+
+		<li class="dropdown dropdown-user"><a href="javascript:;"
+			class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+			data-close-others="true"><i class="icon-user"></i>  <span
+				class="username username-hide-on-mobile" id="dmsHeaderUserName">{[userInfo.userName]} </span> <i
+				class="fa fa-angle-down"></i>
+		</a>
+			<ul class="dropdown-menu dropdown-menu-default">
+
+				<li><a data-url="/common/login" data-model="web" id="dmsLoginOutBtn"
+					data-method="DELETE" data-callBack="true" class="ajaxrest"><i
+						class="icon-lock"></i>退出 </a></li>
+			</ul>
+			</li>
+
+	</ul>
+</div>
+<!-- END TOP NAVIGATION MENU -->
+<script type="text/javascript">
+	$(function() {
+		dmsIndex.pageHeaderInit(); //执行初始化
+		QuickSidebar.init(); // init metronic core componets
+
+		//注册点击事件
+		$("#pageLanguage").on("click",function(event) {
+			$.cookie('language', null, {
+				path : dmsCommon.getDmsPath()["root"]
+			});
+			$.cookie('language', $(this).attr("nextLanguage"), {
+				expires : 365,
+				path : dmsCommon.getDmsPath()["root"]
+			});
+			window.location.href = "/dms.web/html/index.html";
+			
+		});
+		if ("{[systemParam.1040.Infocc]}"!="10131001"){
+			$("#cc").hide();
+		}
+	/* 	//infocc点击事件
+		$("#infocc").on("click",function(event) {
+			var workingNo = "{[userInfo.dealerCode]}";
+				//workingNo="CF320601";
+			var password = workingNo;
+			
+			var username = "{[userInfo.userName]}";
+			//var username = "施兵";
+			username = encodeURI(username);
+			var empCode = "{[userInfo.employeeId]}";
+			//var empCode = "2011";
+			var phone = "{[userInfo.phone]}";
+			var index = phone.indexOf("{[");
+			if(index==0){
+				phone = "";
+			}
+			var mobile = "{[userInfo.mobile]}";
+			var position = "{[userInfo.positionName]}";
+			index = position.indexOf("{[");
+			if(index==0){
+				position = "";
+			}
+			else{
+				position = encodeURI(position);
+			}
+			//10.180.6.212:8070 为测试库地址, 生产库地址infocc.infocare.com.cn
+
+            var urlcc="http://10.180.6.212:8070/InfoCc/main/Logon/newEntrance4Dealers.page?workingNo="+workingNo+"&password="+password+"&userName="+username+"&empCode="+empCode+"&telephone="+phone+"&mobilePhone="+mobile+"&dmsJob="+position;
+            window.open(urlcc);
+		}); */
+
+
+		//新增页面的回调函数
+		$("a[data-callBack='true']", $("#dmsHeaderContent")).on("callBack.dms", function(event, response) {
+			window.location.href = "login.html";
+		});
+
+	});
+</script>

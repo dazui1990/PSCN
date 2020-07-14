@@ -1,0 +1,322 @@
+<style type="text/css">
+	.maomao{
+	border:0px solid red;
+	width: 100%;
+	height: 100%;
+	}
+	.maomao3{
+		width: 1%;
+	
+	}
+	.maomao1{
+	border:0px solid red;
+	}
+	 td{
+	 background-repeat :no-repeat;
+	 text-align: center;
+	 white-space:nowrap;
+	 }
+     
+</style>
+
+<div class="dms-edit">
+	
+	<form class="form-horizontal">
+	<input class ='maomao' type="text" name="ids" id="ids"  value=''/>
+	<div class="panel panel-default">
+	<div class="panel-body" >
+	<div class="row">
+	<table class="table table-striped table-bordered table-hover table-responsive"  id="NL_table">
+	<tr>
+	
+	 <td colspan=2>接待员</td>
+	  <td colspan=6 align=center> <input type="text"  class ='maomao' style:"border:none" onchange="nowsave('reception');" name="reception"  id='reception' value='' /></td>
+	
+	 <td colspan=8 style='white-space:nowrap;'> <input  class ='maomao1' style:"border:none" onchange="nowsave('month');" type="text" name="month" id='month'   value=''/>月
+	 <input class ='maomao1' style:"border:none" type="text" name="date"  id="date" onchange="nowsave('date');"  value=''/>日
+	 </td>
+	 <td colspan=4 align=center></td>
+	</tr>
+	<!-- <tr>
+	<td  style:"border:none" colspan="7"></td>
+	</tr> -->
+	<tr >
+	<td colspan=4>车牌号</td>
+	<td colspan=4>工单号</td>
+	<td colspan=4>休息方式</td>
+	<td colspan=4>预约</td>
+	<td colspan=4>是否洗车</td>
+	</tr>
+	<tr>
+	<td colspan=4><input class ='maomao' type="text" onchange="nowsave('carnum');"  name="carnum" id="carnum"   value=''/> </td>
+	<td colspan=4 ><input class ='maomao' type="text" onchange="nowsave('worknum');" name="worknum" id="wordnum"  value=''/> </td>
+	
+	<td colspan=2   class="maomao3"  onclick="dianji('wait');  ">等候 <img id="denghou" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt="" style="visibility:hidden" /><input  type="hidden" name="wait" id="wait"  value='97101001'/></td>
+	<td colspan=2  class="maomao3" onclick="dianji('leave');">离店<img id="lidian" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt=""  style="visibility:hidden"/><input  type="hidden" name="leave" id="leave" value='97101002'/></td> 
+	<td colspan=2 class="maomao3" onclick="dianji('have');">有<img id="you" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt=""  style="visibility:hidden"/><input  type="hidden" name="have" id="have" value='98101001'/></td> 
+	<td colspan=2 class="maomao3" onclick="dianji('nohave');">无<img  id="wu" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt=""  style="visibility:hidden"/><input  type="hidden" name="nohave" id="nohave" value='98101002'/></td> 
+	<td colspan=2 class="maomao3" onclick="dianji('yes');">是<img id="shi" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt=""  style="visibility:hidden"/><input  type="hidden" name="yes" id="yes" value='10041001'/></td> 
+	<td colspan=2 class="maomao3" onclick="dianji('noyes');">否<img id="fou" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt="" style="visibility:hidden" /><input  type="hidden" name="noyes" id="noyea" value='10041002'/></td> 
+	</tr>
+	<tr>
+	<td colspan=20 >维修类型</td>
+	</tr>
+	<tr>
+	<td colspan=6 onclick="dianji('firstbao');" >
+	<img id="shoubao" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt=""  style="visibility:hidden"/>首保
+	<input  class ='maomao1' type="hidden" name="firstbao"  id="firstbao"  value='98111001'/></td>
+	<td colspan=6  onclick="dianji('diq');">
+	<img id="dingqi" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt="" style="visibility:hidden"/>定期保养( <input  class ='maomao1' style:"border:none" type="text" name="kilometre"  onchange="nowsave('kilometre');" id="kilometre"  value=''/>km)
+	<input  class ='maomao1' type="hidden" name="diq"  id="firstbao"  value='98111002'/>
+	</td>
+	<td colspan=8 onclick="dianji('weixiu');">
+	<img id="yiban" src="/dms.web/assets/pages/img/check.png;background-repeat: no-repeat;" alt="" style="visibility:hidden"/>
+	一般维修<input  class ='maomao1' type="hidden" name="weixiu" id="firstbao"  value='98111003'/>
+	
+	</td>
+	</tr>
+	<tr>
+	<td colspan=20>↓↓获得作业时间↓↓</td>
+	</tr>
+	<tr>
+	<td colspan=4 rowspan="2">到店</td>
+	<td colspan=4>到店时间</td>
+	<td colspan=4></td>
+	<td colspan=8>备注</td>
+	</tr>
+    <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" type="text" name="goshophours" onchange="nowsave('goshophours');" id="goshophours" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('goshopmin');" name="goshopmin" id="goshopmin"  value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="hidden" name="fname1"  value=''/>
+    <input  class ='maomao1' style:"border:none" type="hidden" name="fname1"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text"  onchange="nowsave('dbeizhu');"  name="dbeizhu"  name="dbeizhu"  value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">接待</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+    <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('jhstar');" name="jhstar" id="jhstar" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jmstar');" name="jmstar"  id="jmstar" value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" onchange="nowsave('jhend');" type="text" name="jhend" id="jhend"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('jmend');" name="jmend" id="jmend"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text" onchange="nowsave('jbeizhu');" name="jbeizhu" id="jbeizhu"  value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">修理作业</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+   <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" onchange="nowsave('xhstar');" type="text"  name="xhstar" id="xhstar"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('xmstar');" name="xmstar"  id="xmstar" value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('xhend');"  name="xhend" id="xhend" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" name="xmend" onchange="nowsave('xmend');" id="xmend"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text" onchange="nowsave('xbeizhu');"  name="xbeizhu" id="xbeizhu"  value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">完工检查</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+     <tr>
+    <td colspan=4><input  class ='maomao1' onchange="nowsave('whstar');" style:"border:none" type="text" name="whstar" id="whstar"  value=''/>:
+    <input  class ='maomao1'   onchange="nowsave('wmstar');"style:"border:none" type="text" name="wmstar" id="wmstar"  value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1'  onchange="nowsave('whend');" style:"border:none" type="text" name="whend" id="whend" value=''/>:
+    <input  class ='maomao1' style:"border:none" onchange="nowsave('wmend');" type="text" name="wmend" id="wmend"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" onchange="nowsave('wbeizhu');" type="text" name="wbeizhu"  value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">洗车作业</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+     <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" onchange="nowsave('xchstar');" type="text" name="xchstar" id="xchstar"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('xcmstar');"  name="xcmstar" id="xcmstar"  value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('xchend');" name="xchend" id="xchend"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('xcmend');" name="xcmend" id="xcmend"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text" onchange="nowsave('xcbeizhu');" name="xcbeizhu" id="xcbeizhu"   value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">结算说明</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+       <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('jshstar');" name="jshstar" id="jshstar" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jsmstar');" name="jsmstar" id="jsmstar"  value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jshend');" name="jshend" id="jshend" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('jsmend');" name="jsmend" id="jsmend" value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text"  onchange="nowsave('jsbeizhu');" name="jsbeizhu" id="jsbeizhu"  value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">结帐</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+      <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jzhstar');" name="jzhstar" id="jzhstar"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text"  onchange="nowsave('jzmstar');" name="jzmstar"  id="jzmstar" value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jzhend');" name="jzhend" id="jzhend"  value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jzmend');" name="jzmend"  id="jzmend" value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text" onchange="nowsave('jzbeizhu');" name="jzbeizhu"  id="jzbeizhu" value=''/></td>
+    </tr>
+    <tr>
+    <td colspan=4 rowspan="2">交车说明</td>
+	<td colspan=4>开始时间</td>
+	<td colspan=4>结束时间</td>
+	<td colspan=8>备注</td>
+    </tr>
+     <tr>
+    <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jchstar');" name="jchstar"  id='jchstar' value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" name="jcmstar" onchange="nowsave('jcmstar');"  id="jcmstar" value=''/>
+    </td>
+  <td colspan=4><input  class ='maomao1' style:"border:none" onchange="nowsave('jchend');" type="text" name="jchend"  id="jchend" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('jcmend');" name="jcmend" id="jcmend"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text"  onchange="nowsave('jcbeizhu');" name="jcbeizhu"  id="jcbeizhu" value=''/></td>
+    </tr>
+    <tr>
+	<td colspan=4 rowspan="2">离店</td>
+		<td colspan=4></td>
+	<td colspan=4>离店时间</td>
+	<td colspan=8>备注</td>
+	</tr>
+    <tr>
+      <td colspan=4><input  class ='maomao1' style:"border:none" type="hidden" name="ldhstar"  id="ldhstar" value=''/>
+  <td colspan=4><input  class ='maomao1' style:"border:none" type="text" onchange="nowsave('ldhstar');" name="ldhstar"  id="ldhstar" value=''/>:
+    <input  class ='maomao1' style:"border:none" type="text" name="ldmstar" onchange="nowsave('ldmstar');" id="ldmstar"  value=''/>
+    </td>  
+  
+    <td  colspan=8><input  class ='maomao' style:"border:none" type="text"  onchange="nowsave('ldbeizhu');" name="ldbeizhu" id="ldbeizhu"  value=''/></td>
+    </tr>
+    
+	</table> 
+	</div>
+	<div class="form-actions">
+			<a class="btn blue" data-url="/NLAnalysis/savequan" data-model=manage data-method="POST" data-callBack="true"  class="btn blue" data-toggle="confirmation" ><i class="fa fa-save"></i>保存</a>
+			<a data-goback="page" href="N&L/N&LEntryQuery.html" class="btn blue ajaxify">
+			<i class="fa fa-reply"></i>返回</a>
+		</div> 
+	  </div>		
+	  </div>  
+	  
+	</form>
+	
+<!-- 	<div class="pane panel-default table-panel ">
+		<div class="panel-heading">
+			<div class="pannel-name">
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="dms_table"></table>
+		</div>
+		
+	</div -->
+</div>
+<script type="text/javascript">
+
+function dianji(value){
+	var obj=$("#"+value).val();
+	var  ids=$("#ids").val();
+	if(obj==97101001){
+	    $("#denghou").css("visibility","visible");
+	    $("#lidian").css("visibility","hidden");
+	}else if(obj==97101002){
+		 $("#lidian").css("visibility","visible");
+		 $("#denghou").css("visibility","hidden");
+	}
+	if(obj==98101001){
+		   $("#you").css("visibility","visible");
+		    $("#wu").css("visibility","hidden");
+	}else if(obj==98101002){
+		 $("#you").css("visibility","hidden");
+		    $("#wu").css("visibility","visible");
+	}
+	if(obj==10041001){
+		 $("#shi").css("visibility","visible");
+		    $("#fou").css("visibility","hidden");
+	} else if(obj==10041002){
+		$("#shi").css("visibility","hidden");
+	    $("#fou").css("visibility","visible");
+	}
+	if(obj==98111001){
+		$("#shoubao").css("visibility","visible");
+	    $("#dingqi").css("visibility","hidden");
+	    $("#yiban").css("visibility","hidden");
+	} else if(obj==98111002){
+		$("#shoubao").css("visibility","hidden");
+	    $("#dingqi").css("visibility","visible");
+	    $("#yiban").css("visibility","hidden");
+	}else if(obj==98111003){
+		$("#shoubao").css("visibility","hidden");
+	    $("#dingqi").css("visibility","hidden");
+	    $("#yiban").css("visibility","visible");
+	}
+	
+	dmsCommon.ajaxRestRequest({
+		
+		url:dmsCommon.getDmsPath()["manage"] + "/NLAnalysis/save",
+		type : 'GET',
+		data : {key:obj,value:value,ids:ids},
+		async : false,
+		dataType: 'JSON',
+		sucessCallBack : function(data) {//成功回调
+			var id = data.id;
+			$("#ids").val(id);
+		}
+		
+	});
+	
+} 
+function nowsave(obj){
+	var value=$("#"+obj).val();
+	var  ids=$("#ids").val();
+	alert("maomao");
+	alert(ids);
+	dmsCommon.ajaxRestRequest({
+		url:dmsCommon.getDmsPath()["manage"] + "/NLAnalysis/saveNL",
+		type : 'GET',
+		data : {key:obj,value:value,ids:ids},
+		async : false,
+		dataType: 'JSON',
+		sucessCallBack : function(data) {//成功回调
+			var id = data.id;
+		      alert(id);
+			$("#ids").val(id);
+		}
+	});
+}
+
+</script> 

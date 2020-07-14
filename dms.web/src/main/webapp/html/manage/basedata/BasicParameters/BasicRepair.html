@@ -1,0 +1,445 @@
+<div class="dms-edit ajaxrest" data-url="/basedata/BasicParameters/basicCommunal" data-model="manage">
+			<form class="form-horizontal">
+					<div class="modal-body" data-formTable ="paramList">
+					   <div class="panel panel-default">
+					     <div class="panel-heading">
+							<div class="pannel-name">流程管理</div>
+					     </div>
+						<div class="row" >
+						<!-- panel开始 -->
+							 <div class="col-xs-12 ">
+					            <label class="control-label col-xs-4 col-sm-3">参数</label>
+					             <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 "></label>
+						        <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					         </div>
+						 <!-- panel结束 -->
+						
+					   <div class="col-xs-12 ">
+							<div class="form-group">
+							    <label class="control-label col-xs-3">维修和索赔 分别开工单</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel=""  data-dictCode="1013" data-fieldName="Repair_partorder.PARAM_VALUE" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-6">
+									    <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_partorder.PARAM_ID" />
+									    <label class="control-label">客户接待</label>
+									</div>
+							  </div>
+					    </div>
+						    <!--/span-->
+						   <div class="col-xs-12 ">
+							 <div class="form-group">
+							    <label class="control-label col-xs-3">竣工自动提交结算</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel=""  data-fieldName="Repair_autosettle.PARAM_VALUE" data-dictCode="1013" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-6">
+									    <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_autosettle.PARAM_ID" />
+									    <label class="control-label ">车间派工管理，提交结算</label>
+									</div>
+							  </div>
+					      </div>						  
+						    <!--/span-->
+					
+					</div>
+				</div>
+				<!-- -/span -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">缺省参数</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+					  <div class="col-xs-12 ">
+					       <label class="control-label col-xs-4 col-sm-3">参数</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 ">功能值</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					 </div>
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">车牌号前缀</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_LicensePlate.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_LicensePlate.PARAM_VALUE" maxlength="10" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">客户接待</label>
+								</div>
+					</div>
+				</div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">缺省维修类型</label>
+								<div class="col-xs-3">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_type.PARAM_ID" />
+								        <select id="paramValue" name="paramValue" data-fieldName="Repair_type.PARAM_VALUE"
+									      class="bs-select form-control"
+									      data-url="/basedata/repairtypes/getRepairTypes/item"
+									      data-model="manage" data-labelValue="REPAIR_TYPE_CODE"  
+									      data-lableDesc="REPAIR_TYPE_NAME">
+								</select>
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">客户接待</label>
+								</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">工时单价</label>
+								<div class="col-xs-3">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="parts_perHourCost.PARAM_ID" />
+								        	<select id="paramValue" name="paramValue" class="bs-select form-control "
+								        	   data-fieldName="parts_perHourCost.PARAM_VALUE"
+									          data-url="/basedata/labours/laboursPriceDict/dicts" data-model="repair"
+									        data-labelValue="LABOUR_PRICE_CODE" data-lableDesc="LABOUR_PRICE">
+									       </select>
+
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">客户接待
+								  </label>
+								</div>
+					</div>
+				</div>
+					<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">缺省仓库</label>
+								<div class="col-xs-3">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_warehouse.PARAM_ID" />
+								        <select  class="bs-select form-control" id="paramValue" name="paramValue" 
+								           data-url="/basedata/store/accessories/Warehouses" data-model="part"
+								           data-labelValue="STORAGE_CODE" data-lableDesc="STORAGE_NAME" data-fieldName="Repair_warehouse.PARAM_VALUE" ></select>
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">客户接待,维修领料,配件销售</label>
+								</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					     <div class="col-xs-12">
+					     <HR class="divider"/>
+					    </div>
+				</div>
+					<!--/span-->
+					<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">是否洗车</label>
+								<div class="col-xs-3 ">
+									<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_carWash.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_carWash.PARAM_ID" />
+								   <label class="control-label">勾选,客户接待 默认显示为已勾选</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">是否质检</label>
+								<div class="col-xs-3 ">
+									<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_qualitycheck.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_qualitycheck.PARAM_ID" />
+								   <label class="control-label">勾选,客户接待 默认显示为已勾选</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">是否带走旧件</label>
+								<div class="col-xs-3 ">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_oldparts.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_oldparts.PARAM_ID" />
+								   <label class="control-label">勾选,客户接待 默认显示为已勾选</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">是否显示派工工时</label>
+								<div class="col-xs-3 ">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_workingHours.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_workingHours.PARAM_ID" />
+								   <label class="control-label">勾选,客户接待 会显示该值;不勾选则不显示</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">是否显示行管代码</label>
+								<div class="col-xs-3 ">
+									<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_pipecode.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_pipecode.PARAM_ID" />
+								   <label class="control-label">勾选,客户接待 会显示该值;不勾选则不显示</label>
+								</div>
+					</div>
+				  </div>
+				  <div class="col-xs-12">
+					     <div class="col-xs-12">
+					     <HR class="divider"/>
+					    </div>
+				 </div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">定保时间间隔</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_timeInterval.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_timeInterval.PARAM_VALUE" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">(天)客户接待,车主车辆管理</label>
+								</div>
+					</div>
+				</div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">定保里程间隔 </label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_mileageInterval.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_mileageInterval.PARAM_VALUE" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">(公里)客户接待,车主车辆管理</label>
+								</div>
+					</div>
+				</div>
+				<!--/span-->
+				</div>
+			</div>
+		</div>
+		<!--  -->
+	<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">预约管理</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+					  <div class="col-xs-12 ">
+					       <label class="control-label col-xs-4 col-sm-3">参数</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 "></label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					 </div>
+					 
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">提前多少分钟以上进厂,视为提前进厂</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_aheadMinuteInfactory.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_aheadMinuteInfactory.PARAM_VALUE" maxlength="4" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">预约,客户接待</label>
+								</div>
+					</div>
+				</div>
+				<!--/span-->
+				<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">延迟多少分钟以上进厂,视为延迟进厂</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_delayMinuteInfactory.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_delayMinuteInfactory.PARAM_VALUE"  maxlength="4" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">预约,客户接待</label>
+								</div>
+					</div>
+				</div>
+				<!--/span--> 
+			   <div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">至少提前多少小时,方可预约</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_aheadHourReservation.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_aheadHourReservation.PARAM_VALUE"  maxlength="2" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">预约,客户接待</label>
+								</div>
+					</div>
+				</div>
+				<!--/span--> 
+				 <div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">至少提前多少分钟,方可预约</label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_aheadMinuteReservation.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_aheadMinuteReservation.PARAM_VALUE"  maxlength="4"/>
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">预约,客户接待</label>
+								</div>
+					</div>
+				</div>
+				<!--/span--> 
+			 </div>
+			 </div>
+</div>
+		<!--  -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">车间管理</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+					  <div class="col-xs-12 ">
+					       <label class="control-label col-xs-4 col-sm-3">参数</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 "></label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					 </div>
+					 
+				 <div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">显示收费工时/工时费</label>
+								<div class="col-xs-3 ">
+									<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_workingHoursFee.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_workingHoursFee.PARAM_ID" />
+								   <label class="control-label">勾选,车间派工管理 会显示出该数据;不勾选,则不显示</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span-->
+				 <div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">显示配件单价/配件费</label>
+								<div class="col-xs-3 ">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel="" data-dictCode="1013" data-fieldName="Repair_partsFee.PARAM_VALUE" data-allFlag="false" data-value="" />
+								</div>
+								<div class="col-xs-6">
+								   <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_partsFee.PARAM_ID" />
+								   <label class="control-label">勾选,车间派工管理 会显示出该数据;不勾选,则不显示</label>
+								</div>
+					</div>
+				  </div>
+				<!--/span--> 
+			 </div>
+			 </div>
+</div>
+<!--  -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">维修结算</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 ">
+					       <label class="control-label col-xs-4 col-sm-3">参数</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 ">功能值</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					   </div>
+						
+						 <div class="form-group">
+						  <label class="control-label col-xs-3">结算精度</label>
+								<div class="col-xs-3">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_accuracy.PARAM_ID" />
+									    <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="Repair_accuracy.PARAM_VALUE" data-dictCode="1012" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">维修结算管理</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					<div class="form-group">
+						  <label class="control-label col-xs-3">结算圆整方式</label>
+								<div class="col-xs-3">
+								 <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_mode.PARAM_ID" />
+								 <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="Repair_mode.PARAM_VALUE" data-dictCode="1014" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">维修结算管理</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					
+					<div class="form-group">
+						  <label class="control-label col-xs-3">缺省发票类型</label>
+								<div class="col-xs-3">
+								 <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_invoicetype.PARAM_ID" />
+								 <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="Repair_invoicetype.PARAM_VALUE" data-dictCode="1207" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">维修结算管理</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					<div class="form-group">
+						  <label class="control-label col-xs-3">缺省付款方式</label>
+								<div class="col-xs-3">
+								 <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_paymentMethod.PARAM_ID" />
+								 <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="Repair_paymentMethod.PARAM_VALUE" data-dictCode="1208" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">维修结算管理</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					<div class="col-xs-12">
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">应收款可调幅度 </label>
+								<div class="col-xs-3 ">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_paymentRange.PARAM_ID" />
+								        <input type="text" id="paramValue" name="paramValue" class="form-control" data-fieldName="Repair_paymentRange.PARAM_VALUE" />
+								</div>
+								<div class="col-xs-6">
+								   <label class="control-label">维修结算管理,应收账款管理</label>
+								</div>
+					</div>
+				</div>
+				<!--/span-->
+				<!--/span-->
+					<div class="form-group">
+						  <label class="control-label col-xs-3">工单应收金额为0时 </label>
+								<div class="col-xs-3">
+								 <input type="hidden" id="paramId" name="paramId" data-fieldName="Repair_amountReceivable.PARAM_ID" />
+								 <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="Repair_amountReceivable.PARAM_VALUE" data-dictCode="1209" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">维修结算管理</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+			       </div>
+			   </div>
+			</div>
+    </div>
+	<div class="modal-footer center-block">
+			<a data-url="/basedata/BasicParameters/basicInsertOrUp" data-model="manage" data-method="PUT"
+				data-callBack="true" class="btn blue"
+				data-toggle="confirmation"> <i class="fa fa-save"></i>保存
+			</a>  <a data-goback="page" href="manage/basedata/BasicParameters/BasicParametersTab.html" class="btn blue ajaxify">
+			<i class="fa fa-undo"></i>取消</a>
+		</div>		
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//新增页面的回调函数
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		$("a[data-goback='page']",container).click();
+		
+	});
+});
+</script>

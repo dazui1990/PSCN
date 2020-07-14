@@ -1,0 +1,119 @@
+<style type="text/css">  
+.col-center-block {  
+    float: none;  
+    display: block;  
+    margin-left: auto;  
+    margin-right: auto;  
+} 
+</style> 
+<div class="dms-edit ajaxrest"
+	data-url="/Evaluation/edit/{[id]}" data-model="manage"
+	data-pageInitCallBack="true">
+	<form class="form-horizontal">
+	 <input type="hidden" value="{[id]}" name="id_e" id="id_e" >
+	<div class="modal-header">
+			<div class="modal-title">评价项大类维护修改</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+                     <div class="center-block">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="form-group">
+							<div class="query-btn">
+							<label class="control-label col-xs-4">评价项大类:</label>
+							<div class="col-xs-8"><input id="id" name="id" type="hidden"
+							data-fieldName="id" /> 				
+							<input type="text" class="form-control required" id="evaluationitemName" name="evaluationitemName"
+							data-fieldName="evaluationitem_name"/></div>
+						</div>
+						</div>
+					</div>
+
+							<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="form-group  ">
+							<div class="query-btn">
+							<label class="control-label col-xs-4">属性:</label>
+							<div class="col-xs-8">
+						              <select id="sex111" name="sex111" class="bs-select form-control required"
+										data-dictCode="1037"  data-fieldName="property_id" >
+									</select>
+						</div>
+						</div>
+					</div>
+                  </div>
+                  </div>
+				</div>
+			
+		</div>
+    </div>
+    
+	
+			<div class="panel-body" >
+				<table
+					class="table table-striped table-bordered table-hover table-responsive"
+					id="tmp_table"></table>
+			</div>
+		
+	<div class="modal-footer">
+			<input type="button"  class="btn blue" value="保存" onclick="conf2();"/>
+			 <a id="maomao" data-dismiss="modal" class="btn blue"><i class="fa fa-undo"></i>取消
+			 </a>
+		       </div>
+		</div>
+		</div>
+    
+	</form>
+</div>
+
+<script type="text/javascript">
+ $(document).one("onload.dms",function(event,container){
+
+}); 
+ function conf2(event,container){
+	 var a=$("#evaluationitemName").val();
+     var b=$("#sex111").val(); 
+     var c=$("#id_e").val(); 
+		if(a==""){
+			dmsCommon.tip({status:"warning",msg:"评价项大类是必填项"});
+			
+			return ;
+		}
+		if(b==""){
+			dmsCommon.tip({status:"warning",msg:"评价属性是必填项"});
+			
+			return ;
+		}
+		dmsCommon.ajaxRestRequest({
+					url:dmsCommon.getDmsPath()["manage"] + "/Evaluation/editbao1",
+					type : 'GET',
+					async : false,
+					dataType:"json",
+					container:container,
+					data :{'a':a,'b':b,"c":c},
+					sucessCallBack : function(data) {//成功回调
+						var msg=data.msg;
+					  
+						if(msg=='1'){
+							dmsCommon.tip({status:"warning",msg:"评价项大类存在，请修改其他名字"});
+						}else{
+							
+							//关闭窗口
+							$("a[data-dismiss='modal']",container).click();
+							//刷新表格
+							$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+						}
+					}
+					
+				});	
+				
+				
+		}
+			
+</script>

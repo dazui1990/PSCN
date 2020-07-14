@@ -1,0 +1,38 @@
+<style>
+.file-caption-main{
+	display: none;
+}
+.file-actions{
+	display: none;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">附件查看</div>
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div id="fileDiv" class="form-group">
+						<input type="file" class="importFiles" id="fileupload" multiple
+							name="dmsFile" data-inputName="reportFileIds" disabled
+							data-billId="{[billId]}" data-billType="{[billType]}">
+					</div>
+				</div>
+			</div>
+		</div>
+</form>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//点击图片预览
+	$("#fileDiv",container).on("click","img",function(){
+		$(this).parent().next().children(".file-actions").children(".file-footer-buttons").children(".kv-file-zoom").click();
+	});
+});
+</script>
+</div>

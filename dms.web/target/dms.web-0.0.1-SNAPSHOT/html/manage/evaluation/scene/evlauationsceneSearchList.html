@@ -1,0 +1,75 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4 ">特约店代码</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control"  name="dealer_shortname">
+							<input type="hidden" class="form-control"  name="property_id" value="10371001">
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+							<div class="form-group">
+								<label class="control-label col-xs-4">评价状态</label>
+								<div class="col-xs-8">
+									<select id="evaluate_flag" name="evaluate_flag"
+										class="bs-select form-control " data-dictCode="9201"
+										data-value="92011002" data-existsDefault="false">
+									</select>
+								</div>
+							</div>
+						</div>
+			</div>
+			<div class="row ">
+				<div class="col-xs-12">
+					<div class="query-btn">
+						<a href="javascript:;" class="btn blue  "> <i
+							class="fa fa-search"></i> 查询
+						</a> <a href="javascript:;" class="btn blue"><i
+							class="fa fa-undo"></i> 重置</a>
+					</div>
+				</div>
+		   </div>
+		  </div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="evaluation_listsearch"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "evaluation_listsearch",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/evaluation/scene/itemsck",
+		rowID : "id",
+		columns : [ 
+			{field : "dealer_code",title : "特约店代码"}, 
+			{field : "dealer_shortname",title : "特约店简称"},
+			{field : "evaluate_name",title : "评价表名称"},
+			{field : "evaluate_date",title : "计划评价日期"},
+			{field : "actualevaluate_date",title : "评价完成时间"},
+			{field : "ycts",title : "延迟天数"},
+			{field : "evaluate_flagcn",title : "状态"},
+			{field : "property_value",title : "评级表属性"},
+			{field : "id",title : "操作",operateFormat : [ 
+			   {type:"detail",title:"查看",url:"manage/evaluation/scene/evaluationsearch.html",openType:"jump"
+				,isShow:function(value, row, index){
+				return true;
+	        }}]}
+           
+		]	
+	});
+});
+	
+</script>

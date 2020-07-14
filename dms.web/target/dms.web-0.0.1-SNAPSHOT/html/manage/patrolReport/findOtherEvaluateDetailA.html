@@ -1,0 +1,175 @@
+<!-- 巡回报告制作 其他评价表详情 -->
+<style>
+#findOtherEvaluateDetailA tr td{
+	text-align: center;
+	vertical-align: middle!important;
+}
+/* 评价项大类 标签样式 */
+#findOtherEvaluateDetailA li a{
+	margin-bottom: 8px !important;
+}
+/* 激活样式*/
+#findOtherEvaluateDetailA ul > li.active > a{
+	font-size: 14px;
+   	color: #FFF !important;
+	border-color: #3598dc !important;
+    background-color: #3598dc !important;
+}
+
+#pOtherDetailList td{
+	white-space:normal;
+	word-wrap:break-word;
+  	word-break:break-all;
+}
+/* 评价项项目 */
+#pOtherDetailList td:nth-child(2){
+	max-width:240px;
+}
+/* 评价项基准 */
+#pOtherDetailList td:nth-child(3){
+	max-width:300px;
+}
+/* 得分规则 */
+#pOtherDetailList td:nth-child(7){
+	max-width:300px;
+}
+</style>
+<div class="dms-search" id="findOtherEvaluateDetailA">
+<form class="form-horizontal">
+	<div class="modal-header">
+		<div class="modal-title">其他评价表-详情</div>
+	</div>
+	<br>
+	<div class="panel panel-default table-panel">
+		<div class="panel-body">
+			<ul id="otherItem" class="nav col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			</ul>
+			<table class="table table-striped table-bordered table-hover table-responsive" id="pOtherDetailList"></table>
+		</div>
+	</div>
+</form>
+	<div class="form-actions">	
+		<a id="btnBack" class="btn blue ajaxify" data-beforeShowEvent="true" 
+			href="manage/patrolReport/addPatrolReport.html">返回</a>
+	</div>
+	<!-- 评价表ID -->
+	<input type="hidden" id="otherId" value={[OTHER_ID]}>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+
+	var otherId = $("#otherId",container).val();
+	if(otherId.lenth==0 || otherId.indexOf("{[") > -1){
+		otherId = 0;
+	}
+ 	var itemId = 0;
+	//加载其他评价表 评价项大类
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findItemIdsById/"+otherId,
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			data.forEach(function(value,index){
+				$("#otherItem",container).append("<li class='col-xs-3'><a id='otherItem"+index+"' data-toggle='tab' class='btn blue btn-outline' onclick='changeOther("+otherId+","+value.bigitemid+");'>"+value.bigitemname+"</a></li>");
+				//默认查询第一个
+				if(index == 0){
+					itemId = value.bigitemid;
+					$("#otherItem0",container).click();
+				}
+			})
+		}
+	});
+	
+   	//其他评价表
+	var otherUrl = dmsCommon.getDmsPath()["manage"] + "/patrolReport/findEvaluateDetail/"+otherId+"/"+itemId; 
+		new Datatable().initLocale({
+			src : "pOtherDetailList",
+			container : container,
+		    url : otherUrl,
+			autoHeight : false,
+			columns : [ 
+			    {field : "PROJECT_NAME",title : "评价项项目"},
+				{field : "BENCHMARKS_NAME",title : "评价项项目基准"},
+				{field : "EVALUATE_STATUS",title : "评价",codeFormat : {type:"dict",codeType:"9203"}},
+	 		    {field : "URL",title : "照片/视频",formatter:function(value,row,index){
+ 			         if(row.FILE_SIZE != null){
+			 		    return '<input type="hidden" id="billId'+index+'" value="'+row.URL+'">'
+						    +'<a class="btn" name="queryFile" data-beforeShowEvent="true" data-url="manage/patrolReport/findReportFile.html" data-toggle="modal" data-width="modal-lg">查看</a>';
+			         }else{
+			        	 return '';
+			         }
+				}},				
+				{field : "REMARK",title : "备注"},
+				{field : "RULE_NAME",title : "得分规则名称"},
+				{field : "WEIGHT_RATIO",title : "权重"},
+				{field : "SCORE",title : "得分"}
+			],
+			 onLoadSuccess: function (data) {
+					$("#pOtherDetailList a[name='queryFile']",container).on("beforeShow.dms",function(event,returnResult){
+						var billId = formatNull($(this).prev().val());
+						//评价项项目维护附件
+						var billType = 10421010;
+						var map={billId:billId,billType:billType};
+						$(this).data("pageData",map);
+						returnResult.status = true;
+					});
+					
+		            //合并单元格
+				    var data = $('#pOtherDetailList').bootstrapTable('getData', true);
+		            mergeCells(data, "PROJECT_NAME", 1, $('#pOtherDetailList'));
+			}
+	}); 
+
+	$("#btnBack",container).on("beforeShow.dms",function(event,returnResult){
+		//页面初始化参数传入详情页面用于返回
+	 	var map={   ID:{[ID]},AGENDA_ID:{[AGENDA_ID]},
+					DEALER_ID:{[DEALER_ID]},DEALER_CODE:"{[DEALER_CODE]}",DEALER_SHORTNAME:"{[DEALER_SHORTNAME]}",
+					EVALUATE_NAME:"{[EVALUATE_NAME]}",EVALUATE_DATE:{[EVALUATE_DATE]},
+			 		EVALUATE_BY:"{[EVALUATE_BY]}",EVALUATE_BY_NAME:"{[EVALUATE_BY_NAME]}"
+			 	}; 
+			
+		$(this).data("pageData",map);
+		returnResult.status = true;
+			
+		//返回其他评价表画面
+		setTimeout(function(){
+			$("#btnO",container).click();
+		},100); 
+	});
+	
+});
+
+//其他评价表 标签切换
+function changeOther(otherId,itemId){
+	var otherUrl = dmsCommon.getDmsPath()["manage"] + "/patrolReport/findEvaluateDetail/"+otherId+"/"+itemId; 
+	$("#pOtherDetailList",getElementContext()).bootstrapTable('refresh',{url : otherUrl} );
+} 
+
+/**
+ * 合并单元格
+ * @param data  原始数据
+ * @param fieldName 合并属性名称
+ * @param colspan   合并列
+ * @param target    目标表格对象
+ */
+function mergeCells(data,fieldName,colspan,target){
+	//合并起始行
+    var index = 0;
+	//合并行数
+    var count = 1;
+    for(var i = 1 ; i < data.length ; i++){
+   		if(data[i-1][fieldName] == data[i][fieldName]){
+   			count += 1;
+   		}else{
+  	        $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+  	        index += count;
+  	        count = 1;
+   		}
+   		
+   		if(i == data.length-1){
+   		    $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+   		}
+    }
+}
+</script>

@@ -1,0 +1,55 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default table-panel">
+		<div class="row">
+			<div class="col-xs-4">
+				<label class="control-label col-xs-4">特约店简称：</label>
+				<label id="dealerName" class="control-label col-xs-4"></label>
+			</div>
+			<div class="col-xs-4">
+				<label class="control-label col-xs-4">开始时间：</label>
+				<label class="control-label col-xs-4">{[STARTDATE]}</label>
+			</div>
+			<div class="col-xs-4">
+				<label class="control-label col-xs-4">结束时间：</label>
+				<label class="control-label col-xs-4">{[ENDDATE]}</label>
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="approvalDetailList"></table>
+			
+		</div>
+		<div class="modal-footer">
+			<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回</a>
+		</div>		
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	var dealerName = "{[DEALER_SHORTNAME]}";
+	if(dealerName.match("DEALER_SHORTNAME")){
+		$("#dealerName").html("-");
+	}else{
+		$("#dealerName").html(dealerName);
+	}
+	new Datatable().initLocale({
+		src : "approvalDetailList",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/tour/queryApprovalDetail/{[AGENDA_ID]}",
+		rowID : "AGENDA_ID",
+		
+		columns : [ 
+			{field : "EMPLOYEE_NAME",title : "操作人"},
+			{field : "CREATED_DATE",title : "时间",dateFormat : {format:"YYYY-MM-DD HH:mm:ss"}},
+			{field : "APPROVAL",title : "状态"},
+			{field : "TYPE_VALUE",title : "事项"},
+			{field : "REMAKE",title : "备注"}
+		]
+	});
+	
+});
+	
+</script>

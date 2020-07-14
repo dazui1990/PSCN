@@ -1,0 +1,351 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">员工信息新增</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">员工基本信息</div>
+					<div class="pannel-tools">
+						<a href="javascript:;" class="expand"> <i class="fa fa-chevron-down"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">员工编号</label>
+								<div class="col-xs-8" >
+									  <div class="input-group">
+										  <span class="input-group-addon">{[userInfo.dealerCode]}</span>
+										  <input id="employeeNo"  name="employeeNo" maxlength="10" class="form-control required systemCode" type="text" />
+									  </div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">员工姓名</label>
+								<div class="col-xs-8">
+									<input id="employeeName" name="employeeName"
+										class="form-control required" maxlength="30" type="text" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">部门</label>
+								<div class="col-xs-8">
+								     <div class="input-group">
+										    <input id="orgName" readonly name="orgName"class="form-control required" type="text" />
+										    <input id="organizationId"  name="organizationId"class="form-control " type="hidden" />
+											
+											<span class="input-group-btn">
+												<button class="btn default btn-sm" type="button" data-url="manage/basedata/employee/selectDept.html"
+													data-toggle="modal" data-width="modal-sm"> <i class="fa fa-sitemap"></i>
+												</button>
+												<button class="btn default input-clear" type="button">
+	                                            	<i class="fa fa-close"></i>
+	                                    		</button>
+										   </span>
+									   </div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">职务</label>
+								<div class="col-xs-8">
+									<select id="positionCode" name="positionCode"
+										class="bs-select form-control"
+										data-url="/basedata/positions/duty/dicts" data-model="manage"
+										data-labelValue="POSITION_CODE" data-lableDesc="POSITION_NAME">
+									</select>
+								</div>
+
+							</div>
+						</div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">班组</label>
+								<div class="col-xs-8">
+									<select id="workgroupCode" name="workgroupCode"
+										class="bs-select form-control"
+										data-url="/basedata/workgroups/dicts/select" data-model="repair"
+										data-labelValue="WORKGROUP_CODE" data-lableDesc="WORKGROUP_NAME">
+									</select>
+								</div>
+
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">性别</label>
+								<div class="col-xs-8">
+									<select id="gender" name="gender"
+										class="bs-select form-control" data-dictCode="1002"
+										data-value="10021001" data-existsDefault="false" >
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6  col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">出生日期</label>
+								<div class="col-xs-8">
+									<div class="input-group date date-picker" data-orientation="top right">
+										<input id="birthday" name="birthday" readonly
+											class="form-control" type="text" value="" /> <span
+											class="input-group-btn">
+											<button class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+                                              <button class="btn default date-reset" type="button">
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+										</span>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">身份证号</label>
+								<div class="col-xs-8">
+									<input id="certificateId" name="certificateId"
+										class="form-control IDNumber" type="text" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">手机</label>
+								<div class="col-xs-8">
+									<input id="mobile" name="mobile" type="text"
+										class="form-control phone required" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">电话</label>
+								<div class="col-xs-8">
+									<input id="phone" name="phone" type="text" class="form-control" maxlength="15"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">E_MAIL</label>
+								<div class="col-xs-8">
+									<input id="eMail" name="eMail" type="text" class="form-control email" />
+								</div>
+							</div>
+						</div>
+
+						
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">邮编</label>
+								<div class="col-xs-8">
+									<input id="zipCode" name="zipCode" type="text"
+										class="form-control zipCode" />
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">在职状态</label>
+								<div class="col-xs-8">
+									<select id="isOnjob" name="isOnjob"
+										class="bs-select form-control" data-existsDefault="false" data-dictCode="1008"
+										data-value="10081001">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">离职日期</label>
+								<div class="col-xs-8">
+									<div class="input-group date date-picker">
+										<input id="dimissionDate" name="dimissionDate" disabled
+											class="form-control" type="text" value="" /> <span
+											class="input-group-btn">
+											<button disabled class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+                                              <button disabled class="btn default date-reset" type="button">
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+										</span>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">建档日期</label>
+								<div class="col-xs-8">
+									<div class="input-group date date-picker" id="datetimepicker2"  data-orientation="top right"data-defaultToday="true" >
+										<input id="foundDate" name="foundDate" disabled class="form-control" type="text" /> 
+										<span class="input-group-btn">
+											<button class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+											<button class="btn default date-reset" type="button">
+												<i class="fa fa-times"></i>
+											</button>
+										</span>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-sm-12 col-md-8">
+							<div class="form-group">
+								<label class="control-label col-xs-4 col-sm-2">地址</label>
+								<div class="col-xs-8 col-sm-10">
+									<input id="address" name="address" type="text"
+										class="form-control" maxlength="180"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">技能信息</div>
+					<div class="pannel-tools">
+						<a href="javascript:;" class="expand"> <i class="fa fa-chevron-down"></i></a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6  col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4 col-md-3">工种</label>
+								<div class="col-xs-8 col-md-9">
+									<select id="workerTypeCode" name="workerTypeCode"
+										class="bs-select form-control"
+										data-url="/basedata/workerTypes/employees/dicts" data-model="repair"
+										data-labelValue="WORKER_TYPE_CODE"
+										data-lableDesc="WORKER_TYPE_NAME">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6  col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4 col-md-3">技师等级</label>
+								<div class="col-xs-8 col-md-9">
+									<select id="technicianGrade" name="technicianGrade" class="bs-select form-control"
+										data-dictCode="1007" data-value="">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6  col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4 col-md-3">主维修工位</label>
+								<div class="col-xs-8 col-md-9">
+									<select id="defaultPosition" name="defaultPosition"
+										class="bs-select form-control"
+										data-url=/basedata/repairpositions/employee/dicts data-model="repair"
+										data-labelValue="LABOUR_POSITION_CODE"
+										data-lableDesc="LABOUR_POSITION_NAME">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12">
+							<div class="form-group">
+							<label class="control-label col-xs-2 col-md-1">职位</label>
+								<div class="col-xs-10 col-md-11">
+									<input id="employeeRoles" name="employeeRoles" type="checkbox"
+									data-dictCode="1006"  data-allFlag="false"
+									data-value=""  />
+								</div>
+								<div>
+									<label class="col-xs-10 col-md-11"></label>
+									<div class="col-xs-10 col-md-11">
+										<input id="employeeRoles" name="employeeRoles" type="checkbox"
+										 />
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a data-url="/basedata/employees" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue"
+				data-toggle="confirmation"><i class="fa fa-save"></i>保存</a> <a
+				data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>取消</a>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	var currentDate;
+	+function(){
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        currentDate= year + seperator1 + month + seperator1 + strDate;
+	}();
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		$("a[data-dismiss='modal']",container).click();
+		$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+	$("#foundDate",container).val(currentDate);
+	$("#isOnjob",container).bindChange(function(obj){
+		var isOnJob=$("#isOnjob",container).val();
+		if(isOnJob=="10081002"){
+			$("#dimissionDate",container).val(currentDate);
+		}else{
+			$("#dimissionDate",container).val("");
+		}
+		
+	});
+});
+
+</script>

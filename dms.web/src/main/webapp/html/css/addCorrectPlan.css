@@ -1,0 +1,7 @@
+/* 弱项选择 */
+#planDetailList td:nth-child(6){
+	min-width:100px;
+}
+
+
+

@@ -1,0 +1,248 @@
+ 
+<style type="text/css">  
+.col-center-block {  
+    float: none;  
+    display: block;  
+    margin-left: auto;  
+    margin-right: auto;  
+} 
+</style> 
+<div class="dms-add">
+	<form class="form-horizontal">
+	<input type="hidden" id="selectTargets" name="selectTargets">
+	<div class="modal-header">
+			<div class="modal-title">评价项项目维护新增</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="center-block">
+						<div class="col-xs-12 col-sm-6 col-md-4  ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">评价项大类:</label>
+								<div class="col-xs-8">
+								<select id="dalei11" class="bs-select form-control required"
+									name="dalei11" data-url="/Evaluation/daleiquanbu" 
+									data-model="manage" data-labelValue="id"
+									data-lableDesc="evaluationitem_name"  
+									 data-size="10" >
+								</select>
+							</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">评价项领域:</label>
+								<div class="col-xs-8">
+								<select id="lingyu" class="bs-select form-control required" parent="dalei11"
+									name="lingyu" data-url="/Evaluation/Largeclassname/{[dalei11]}"
+									data-model="manage" data-labelValue="id" 
+									data-lableDesc="evaluationitem_name" data-live-search="true"
+								    data-size="10" >
+								</select>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-md-4 required ">评价项分类:</label>
+								<div class="col-xs-8">
+								<select class="bs-select form-control required" parent="lingyu"
+									id="classificationId" name="classificationId" 
+									data-url="/Evaluation/Largecclassification/{[lingyu]}"
+									data-model="manage" data-size="10" 
+									data-lableDesc="evaluationitem_name" data-labelValue="id" 
+									data-live-search="true">
+								</select>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">评价项项目:</label>
+								<div class="col-xs-8">
+									<input type="text" id="projectName" name="projectName" class="form-control required" value="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="row   ">
+					<div class="col-xs-12 col-sm-6 col-md-4  ">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">得分规则:</label>
+									<div class="col-xs-8">
+								<select  class="bs-select form-control required" 
+									id="ruleId" name="ruleId" 
+									data-url="/Evaluation/Score"
+									data-model="manage" data-size="10"
+									data-labelValue="id" data-lableDesc="scorerule_name" 
+									data-live-search="true">
+								</select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="row" >
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group  ">
+							<div class="query-btn">
+								<label class="control-label col-xs-4 required ">评价项目基准: </label>
+								<div class="col-xs-8 ">
+									<input type="text" id="benchmarksName" name="benchmarksName" class="form-control required"  value="" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4 " id="org">
+						<div class="form-group  ">
+							<div class="query-btn">
+							<label class="control-label col-xs-4 required ">否决项: </label>
+									<div class="col-xs-8">
+									<input name="isVeto" type="radio" 
+										data-dictCode="1004" data-value="10041002"  
+										data-fieldName="is_veto"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4 " id="org">
+						<div class="form-group  ">
+							<div class="query-btn">
+							<label class="control-label col-xs-4 required ">OK项须传附件:</label>
+									<div class="col-xs-8">
+									<input name="isEnclosure" type="radio" 
+										data-dictCode="1004" data-value="10041002"    
+										data-fieldName="IsEnclosure"  />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<label class="control-label col-xs-4">关联指标数: </label>
+							<div class="col-xs-8">
+								<input type="hidden" id="selectTargets" name="selectTargets"  >
+								<input type="text" class="form-control" id="hasTargetsNum" name="hasTargetsNum" readonly value="0">
+							</div>
+						</div>
+						
+							<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group  ">
+							<div class="query-btn">
+							<label class="control-label col-xs-4 required "> </label>
+									<div class="col-xs-8">
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 " id="org">
+						<div class="form-group  ">
+							<div class="query-btn">
+							<label class="control-label col-xs-4 required ">NG项须传照片:</label>
+									<div class="col-xs-8">
+									<input name="isEnclosuArePhoto" type="radio" 
+										data-dictCode="1004" data-value="10041002"  
+										data-fieldName="isEnclosuArePhoto"  />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="btn-group btn-group-sm">
+							<a  class="btn btn-outline" href="javascript:;" data-beforeShowEvent="true" data-onclickEvent="true">
+								<i class="fa fa-plus-square"></i> 追加一行
+							</a>
+						</div>
+				</div>	
+				
+					<div class="panel-body">
+					<table
+						class="table table-striped table-bordered table-hover table-responsive"
+						id="addressList">
+					</table>
+				</div>
+				<div class="modal-footer">
+				
+			<a id="zhibiao" class="btn blue" data-url="manage/Maintain/SvaeIndexAssociation.html" 
+				data-beforeShowEvent="true" data-width="modal-md"
+				data-toggle="modal" > 
+				<i class="fa fa-plus-square" ></i> 指标关联
+			</a> 	
+			<a  class="btn blue" data-model="manage" data-url="/Evaluation/saveProject" 
+				data-method="POST" data-callBack="true" data-toggle="confirmation">
+				<i class="fa fa-save"></i>保存
+			</a> 
+			<a data-dismiss="modal" class="btn blue">
+				<i class="fa fa-undo"></i>返回
+			</a>
+		</div>
+		     </div>
+			</div>
+		
+			</div>
+		
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initLocale({
+		src : "addressList",
+		container:container,
+		columns : [ 
+		           {field : "XIANGMUJIBEN",inputField:"XIANGMUJIBEN",title : "评价项目基准",minWidth:20,inputTextFormat : {defaultValue:""}},
+		           {field : "FOUJUEXIANG", title : "否决项",inputRadioFormat : {type : "dict",codeType : "1004",defaultValue:"10041002"}},
+		           {field : "IsEnclosure", title : "OK项须传附件",inputRadioFormat : {type : "dict",codeType : "1004",defaultValue:"10041002"}},
+		           {field : "IsEnclosuArePhoto", title : "NG项须传照片",inputRadioFormat : {type : "dict",codeType : "1004",defaultValue:"10041002"}}
+			       
+		         ]
+	});
+	
+	
+	//事件点击
+	$("a[data-onclickEvent='true']",container).on("dms.click",function(event){
+		$("#addressList",getElementContext()).dmsTable().appendBlankRow();
+	});
+	
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#dms_table12",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+	
+	//点击指标关联后操作
+	$("#zhibiao",container).on("beforeShow.dms",function(event,result){
+		//新增 评价项项目为空
+	    var map={projectId:""};
+	    $(this).data("pageData",map);
+	    result.status = true;
+	});
+	
+});
+</script>

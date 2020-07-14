@@ -1,0 +1,4 @@
+com\yonyou\dms\common\service\monitor\OperateLogServiceImpl.class
+com\yonyou\dms\common\domains\PO\monitor\OperateLogPO.class
+com\yonyou\dms\common\service\monitor\OperateLogService.class
+com\yonyou\dms\common\domains\DTO\monitor\OperateLogDto.class

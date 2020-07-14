@@ -1,0 +1,495 @@
+<div class="dms-search">
+	<form class="form-horizontal" >
+		<div class="panel panel-default">
+			<div class="panel-body" >
+				<div class="row ">
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="query-btn">
+							<label class="control-label col-xs-4 ">区域</label>
+							<div class="col-xs-8">
+							     <div class="input-group">
+									    <input id="orgName" readonly name="orgName"class="form-control" type="text" />
+									    <input id="orgId"  name="orgId"class="form-control" type="hidden" value="" />
+										<span class="input-group-btn">
+											<button class="btn default btn-sm" type="button" data-url="niguriManage/basedata/common/selectdepartment.html"
+												data-toggle="modal" data-width="modal-sm"> <i class=" fa fa-sitemap"></i>
+											</button>
+											<button class="btn default input-clear" type="button">
+                                            			<i class="fa fa-close"></i>
+                                    		</button>
+									   </span>
+								   </div>
+							</div>
+						</div>	
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="query-btn">
+							<label class="control-label col-xs-4 ">特约店:</label>
+							<div class="col-xs-8" data-tableSelectConfig="true" id="dealerInfo">
+								<div class="input-group" >
+										<input id="dealerName" readonly type="text"  name="dealerName" class="form-control" data-fieldName="dealerName" /> 
+										<input id="dealerId"  type="hidden" name="dealerId" data-fieldName="dealerId" />
+										<span class="input-group-btn">
+										<button class="btn default btn-sm" type="button"
+											data-url="niguriManage/basedata/common/singleDealerChoose.html"
+											data-toggle="modal" data-width="modal-lg">
+											<i class="fa fa-sitemap"></i>
+										</button>
+										<button class="btn default input-clear" type="button">
+											<i class="fa fa-close"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="query-btn">
+							<label class="control-label col-xs-4 ">车型:</label>
+							<div class="col-xs-8" data-tableSelectConfig="true" id="modelInfo">
+								<div class="input-group" >
+										<input id="modelName" readonly type="text"  name="modelName" class="form-control" data-fieldName="modelName" /> 
+										<input id="niguriGroupId"  type="hidden" name="niguriGroupId" data-fieldName="niguriGroupId" />
+										<span class="input-group-btn">
+										<button class="btn default btn-sm" type="button"
+											data-url="niguriManage/basedata/common/singleModelChoose.html"
+											data-toggle="modal" data-width="modal-lg">
+											<i class="fa fa-car"></i>
+										</button>
+										<button class="btn default input-clear" type="button">
+											<i class="fa fa-close"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+					<div class="row ">
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="form-group">
+							<label class="control-label col-xs-4  col-sm-2">下表日期</label>
+							<div class="col-xs-8 col-sm-10">
+								<div class="input-group input-daterange" data-maxDays="120" data-opens="rigth">
+									<input type="text" class="form-control" readonly name="createdAtFrom"> 
+										<span class="input-group-addon">至</span>
+									<input type="text" class="form-control" readonly name="createdAtTo"> <span class="input-group-btn">
+										<button class="btn default input-clear" type="button">
+											<i class="fa fa-close"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">年份月份</label>
+								<div class="col-xs-8">
+									<div class="input-group date month-picker" data-defaultToday = "true"  data-orientation="top left">
+										<input id="agendaDate" name="agendaDate" readonly
+											class="form-control" type="text" value="" />
+										 <span
+											class="input-group-btn">
+											<button class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+                                           
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">是否状态</label>
+								<div class="col-xs-8">
+									<input id="statusRadio" name="statusRadio" type="radio" class=""
+										data-dictCode="1004"  />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row ">
+						   <div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group">
+							<label class="control-label col-xs-4">大区:</label>
+							<div class="col-xs-8">
+								<select id="bigOrg" class="bs-select form-control"
+									name="bigOrg" data-url="/question/bigOrg"
+									data-model="manage" data-labelValue="ORG_ID"
+									data-lableDesc="ORG_NAME" data-live-search="true" data-size="10"  >
+								</select>
+							</div>
+						</div>
+				   </div> 
+				     <div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group">
+							<label class="control-label col-xs-4">小区:</label>
+							<div class="col-xs-8">
+								<select id="smallOrg" class="bs-select form-control"
+									name="smallOrg" data-url="/question/smallOrg"
+									data-model="manage" data-labelValue="ORG_ID"
+									data-lableDesc="ORG_NAME" data-live-search="true" data-size="10"  >
+								</select>
+							</div>
+						</div>
+				   </div> 
+					<div class="col-xs-12 col-sm-6 col-md-4 ">
+						<div class="form-group">
+							<label class="control-label col-xs-4">特约店:</label>
+							<div class="col-xs-8">
+								<select id="shop"
+									class="bs-select form-control" name="shop"
+									data-url="/question/duty/dicts"
+									data-model="manage" data-labelValue="DEALER_ID"
+									data-lableDesc="DEALER_SHORTNAME" multiple data-live-search="true" data-size="10" data-existsDefault = "false">
+								</select>
+							</div>
+						</div>
+					</div> 
+					</div>
+					<div class="row " >
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">有效状态</label>
+								<div class="col-xs-8">
+									<select id="status" name="status"
+										class="bs-select form-control " data-dictCode="1001"
+										data-value="10011002" data-existsDefault="false">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">年龄</label>
+								<div class="col-xs-8">
+									<input id="age" name="age" type="text" class="form-control  digits" max="99" min ="20" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">地区类型</label>
+								<div class="col-xs-8">
+									<input id="region" name="region" type="checkbox" class="" minlength = "2"
+										data-dictCode="1000" data-allFlag="false"
+										data-value="10001002,10001001" />
+								</div>
+							</div>
+						</div>
+					</div>
+					
+						
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">参数URL</label>
+								<div class="col-xs-8">
+									<input id="paramUrl" name="paramUrl" type="text" class="form-control" value = ""
+									 data-valueUrl="/basedata/BasicParameters/1017/basicom_county" data-valueType="parameter" data-callBack="true"/>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4"> 日期时间控件</label>
+								<div class="col-xs-8">
+									<div class="input-group date datetime"  data-pickerPosition="top-left">
+					                    <input class="form-control" size="16" type="text" value="" readonly>
+					                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+					                    <span class="input-group-addon"><span class="fa fa-times"></span></span>
+					                </div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4"> 时间控件</label>
+								<div class="col-xs-8">
+									<div class="input-group" >
+                                          <input type="text" class="form-control timepicker" id="timetext" name="timetext"  readonly >
+                                          <span class="input-group-btn">
+                                              <button class="btn default time-set" type="button">
+                                                  <i class="fa fa-clock-o"></i>
+                                              </button>
+                                              <button class="btn default date-reset" type="button">
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+                                          </span>
+                                    </div>
+								</div>
+							</div>
+						</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">身份证号校验</label>
+								<div class="col-xs-8">
+									<input id="idNumber" name="idNumber" type="text"
+										class="form-control IDNumber" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">车牌号校验</label>
+								<div class="col-xs-8">
+									<input id="license" name="license" type="text"
+										class="form-control license" />
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 ">
+							<div class="form-group">
+								<label class="control-label col-xs-4">会计年度</label>
+								<div class="col-xs-8">
+									<div class="input-group date year-picker" data-defaultToday = "true">
+										<input id="funcYear" name="funcYear" readonly
+											class="form-control" type="text" value="" />
+										 <span
+											class="input-group-btn">
+											<button class="btn default date-set" type="button">
+												<i class="fa fa-calendar"></i>
+											</button>
+                                              <button class="btn default date-reset" type="button">
+                                                  <i class="fa fa-times"></i>
+                                              </button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+					<div class="col-xs-12 ">
+						<div class="query-btn">
+							<a href="javascript:;" class="btn blue" data-onclickEvent="true"> <i
+								class="fa fa-search" ></i> 查询
+							</a> 
+							<a href="javascript:;" class="btn blue"><i
+								class="fa fa-undo"></i> 重置
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+	<div class="panel panel-default table-panel">
+			<div class="panel-heading">
+				<div class="pannel-name" >用户信息列表</div>
+				<div class="pannel-button">
+						<div class="btn-group btn-group-sm">
+							<a class="btn btn-outline" data-url="demo/addUser.html" data-width="modal-lg" data-toggle="modal"> <i class="fa fa-plus-square" data-validateUrl="" data-validateMethod="" data-validateModel=""></i> 新增
+							</a> 
+							<a class="btn btn-outline" data-url="demo/addUser2.html" data-width="modal-lg"
+								data-toggle="modal"> <i class="fa fa-plus-square"></i> 多表单新增
+							</a> 
+							<a href="demo/addUser3.html" class="btn btn-outline ajaxify" > <i
+								class="fa fa-plus-square"></i>跳转新增
+							</a>
+							<a href="demo/tab.html" class="btn btn-outline ajaxify" > <i
+								class="fa fa-plus-square"></i> tab页
+							</a>
+							<a href="demo/printUser.html" class="btn btn-outline" > <i
+								class="fa fa-print"></i>打印
+							</a>
+							<a href="demo/importUser.html" class="btn btn-outline ajaxify"> <i
+								class="fa fa-upload"></i>导入
+							</a>
+							<a href="demo/importFiles.html" class="btn btn-outline ajaxify"> <i
+								class="fa fa-upload"></i>附件上传
+							</a>
+							<a href="javascript:;" data-url="/demoUsers/export/excel" data-model="demo" data-method="downLoad" data-toggle="confirmation"
+								class="btn btn-outline " ><i class="fa fa-download"></i>导出</a>
+						
+						   <a href="javascript:;" data-url="/basedata/download/template/partInfoTemplate" data-model="web" data-method="downLoad"
+								class="btn btn-outline ajaxrest" data-validate = "false"><i class="fa fa-plus-square"></i> 模板下载</a>
+								
+							<a data-goback="page" href="demo/buttonModel.html"
+							   class="btn btn-sm btn-outline ajaxify"><i class="fa fa-plus-square"></i> 按钮模板</a>
+							   
+							<a class="btn btn-sm btn-outline" data-onclickEvent1="true"><i class="fa fa-plus-square"></i> 更新表格数据</a>
+					
+						</div>
+				</div>
+		</div>
+		<div class="panel-body">
+		<table class="table table-striped table-bordered table-hover table-responsive"
+				id="userList"></table>
+				</div>
+				<div class="panel-heading">
+			<div class="pannel-name" >折柱图</div>
+		</div>
+		<div class="panel-body">
+			 <div id="echart" style="width: 600px;height:400px;"></div>
+		</div>
+	</div>
+<a href="#" id="username" >用户名</a>
+			
+</div>
+<script type="text/javascript">
+    $(document).one("onload.dms",function(event,container){
+    	 var myChart = echarts.init(document.getElementById("echart"));
+    	 option = {
+    	     tooltip: {
+    	         trigger: 'axis',
+    	         axisPointer: {
+    	             type: 'cross',
+    	             crossStyle: {
+    	                 color: '#999'
+    	             }
+    	         }
+    	     },
+    	     toolbox: {
+    	         feature: {
+    	             dataView: {show: true, readOnly: false},
+    	             magicType: {show: true, type: ['line', 'bar']},
+    	             restore: {show: true},
+    	             saveAsImage: {show: true}
+    	         }
+    	     },
+    	     legend: {
+    	         data:['蒸发量','降水量','平均温度']
+    	     },
+    	     xAxis: [
+    	         {
+    	             type: 'category',
+    	             data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    	             axisPointer: {
+    	                 type: 'shadow'
+    	             }
+    	         }
+    	     ],
+    	     yAxis: [
+    	         {
+    	             type: 'value',
+    	             name: '水量',
+    	             min: 0,
+    	             max: 250,
+    	             interval: 50,
+    	             axisLabel: {
+    	                 formatter: '{value} ml'
+    	             }
+    	         },
+    	         {
+    	             type: 'value',
+    	             name: '温度',
+    	             min: 0,
+    	             max: 25,
+    	             interval: 5,
+    	             axisLabel: {
+    	                 formatter: '{value} °C'
+    	             }
+    	         }
+    	     ],
+    	     series: [
+    	         {
+    	             name:'蒸发量',
+    	             type:'bar',
+    	             data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+    	         },
+    	         {
+    	             name:'降水量',
+    	             type:'bar',
+    	             data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+    	         },
+    	         {
+    	             name:'平均温度',
+    	             type:'line',
+    	             yAxisIndex: 1,
+    	             data:[2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+    	         }
+    	     ]
+    	 };
+    	 myChart.setOption(option);
+    });
+    $(document).one("onload.dms",function(event,container){
+    	new Datatable().initPagination({
+			src : "userList",
+			container:container,
+			url : dmsCommon.getDmsPath()["demo"] + "/demoUsers",
+			rowID : "USER_ID",
+			detailView : false, //当需要显示明细时，打开此开关，否则不需要写
+			sortName : "USER_NAME,AGE", //当需要默认排序时写，否则不写，默认情况下不写，sortOrder同样
+			sortOrder : "asc,desc",
+			isQueryFirst:true,
+			autoHeight:false,
+			pageSize:5,
+			mergeTotal:{
+				megerCellNumber:1,
+				megerCellName:"合计"
+			},
+			//当需要开启显示明细时才实现，否则不实现
+			detailFormatter : function(index, row, element) {
+				return row.NAME;
+			},
+			columns : [ 
+			    {field : "USER_ID",title : "操作",inputField:"userId",inputHiddenFormat : {}, operateFormat : [
+                       {type:"edit",url:"demo/editUser.html",openWidth:"modal-lg",doubleClick:true,isShow:function(value, row, index){
+                    	   return true;
+                       },attr:'data-validateUrl="" data-validateMethod="" data-validateModel=""'}, //默认不支持双击操作
+                       {type:"edit",title:"修改2",url:"demo/editUser2.html",openType:"jump",isShow:function(value, row, index){
+                    	   return true;
+                       }},
+                       {type:"detail",url:"demo/editUser2.html",openType:"jump",isShow:function(value, row, index){
+                    	   return true;
+                       }},//打开方式默认弹出:open
+                       {type:"del",url:"/demoUsers/{[USER_ID]}",model:"demo",callBack:function(response){
+                    	   $("#userList",container).dmsTable().refreshTableWithForm();
+                       },isShow:function(value, row, index){
+                    	   if(row.SEX=="10021001"){
+                    		   return true;
+                    	   }else{
+                    		   return false;
+                    	   }
+                       },disableHidden:false}, //disableHidden：用来控制对于disabled 的按钮是否需要隐藏,默认不隐藏，如果需要隐藏，请设置为true
+                       {type:"edit",url:"demo/editUser4.html",openType:"jump",title:"结案",operateIcon:'<i class="glyphicon glyphicon-lg glyphicon-remove"></i>'}
+                   ]
+                },  
+			    {field : "USER_NAME",title : "用户名2",sortable : false, maxLengthFormat : {length:10}},
+				{field : "NAME",title : "姓名",inputField:"name",inputHiddenFormat : {hiddenField:"AGE"}}, 
+				{field : "AGE",title : "年龄",numberFormat : {}},
+				{field : "BIRTHDAY",title : "出生日期",dateFormat : {}}, 
+				{field : "SALARY",title : "薪水",inputHiddenFormat : {},numberFormat : {decimal:2}}, 
+				{field : "AGE_PERCENT",title : "年龄/薪水",inputHiddenFormat : {},numberFormat : {decimal:4,numberType:"percent"}}, 
+				{field : "ENTRY_TIME",title : "工作开始时间",dateFormat : {format:"YYYY-MM-DD HH:mm:ss"},isVisible:function(column){
+					return false;
+				}}, 
+				{field : "SEX",title : "性别",inputHiddenFormat : {},codeFormat : {type:"dict",codeType:"1002"}} 
+			],
+			onLoadSuccess : function() {
+				$("#userList",container).dmsTable().bootstrapTable('resetView');
+			}
+		});
+    	
+    	
+    	//绑定onchange 事件
+		$("[name='isCheck']",container).bindChange(function(obj){
+			var isChecked = $(obj).is(':checked');
+			
+		});
+    	
+    	//绑定查询按钮回调
+		$("a[data-onclickEvent='true']",container).on("dms.click",function(event){
+// 			console.log("into callBack");
+		});
+    	
+		//绑定onchange 事件
+		$("[name='isCheckRadio']",container).bindChange(function(obj){
+// 			console.log("into callBack");
+		});
+		
+		//动态修改表格中对应单元格的数据
+		$("a[data-onclickEvent1='true']",container).on("dms.click",function(event){
+			$("#userList",container).dmsTable().updateRowByIndex(0,{USER_NAME:"张宪超"});
+		});
+		 $('#username').editable();
+    });
+
+</script>

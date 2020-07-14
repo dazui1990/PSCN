@@ -1,0 +1,74 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+			  <input type="hidden" value="{[POST_NAME]}" name="POST_NAME" id="POST_NAME" >
+			  <input type="hidden" value="{[DEALER_CODE]}" name="DEALER_CODE" id="DEALER_CODE" >
+			  	  <input type="hidden" value="{[YEAR]}" name="YEAR" id="YEAR" >
+		<div class="modal-header">
+			<div class="modal-title">人员信息</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i>
+				</a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive"
+				id="targetshow_detail"></table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal-footer center-block">
+			<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回
+			</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one(
+		"onload.dms",
+		function(event, container) {
+			new Datatable().initPagination({
+				src : "targetshow_detail",
+				container:container,
+				url : dmsCommon.getDmsPath()["manage"] + "/evaluation/scene/targetshow_detail",
+				pageSize:50,
+				autoHeight:false,
+				Height:400,
+				width:800,
+				isQueryFirst : true,
+				isShowLineNumber:false,
+				rowID : "id",
+				columns : [ 
+                     {
+                                field: '',
+                                title: '照片',
+                                align: 'center',
+                                formatter: function(value,row,index){
+                                	var url='http://172.19.0.1/wdhacinfo/MainServlet?action=DOWNLOAD&FILE_ID='+row.FILE_ID+'&FILE_OWNER='+row.FILE_OWNER+'';
+                                    return '<img  src="'+url+'" style="width: 150px;height: 150px;" class="img-rounded" >';
+                                }
+                            }, 
+					{field : "EMPLOEE_NAME",title : "姓名"}, 
+					{field : "POST_NAME",title : "岗位名称"}, 
+					{field : "PHONE",title : "手机"},
+					{field : "CREATE_DATE",title : "本店入职日期"},
+					{field : "QUALIFICATION_NAME",title : "岗位资格"},
+					{field : "id",title : "培训履历",operateFormat : [{type:"edit",url:"manage/evaluation/scene/targetshowDetail_NL.html",openWidth:"modal-lg",doubleClick:true,isShow:function(value, row, index){
+		         	   return true;
+		            }}]}
+				],
+				 onLoadSuccess: function (data) {
+						$(".pagination-detail").hide();
+						$(".pagination").hide();
+				   }	
+			});
+			
+		});
+</script>
+
+

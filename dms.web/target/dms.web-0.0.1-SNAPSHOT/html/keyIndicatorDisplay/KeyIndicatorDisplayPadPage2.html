@@ -1,0 +1,109 @@
+<div class="dms-search">
+	<form class="form-horizontal" >
+    <div class="panel panel-default table-panel">
+		 <div class="modal-header">
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		 <div class="panel-body">
+			 <table class="table table-striped table-bordered table-hover table-responsive" id="tablePage2"></table>
+		 </div>
+		 <div>
+		 	<input type="hidden" value={[searhYear]} name="searhYear" id="searhYear"/>
+		 	<input type="hidden" value={[item1]} name="item1" id="item1"/>
+		 </div>
+	</div>
+	
+	</form>
+</div>
+<style>
+ @media screen and (min-width:768px) {
+	.modal-dialog {
+		width: 800px;
+		margin: 50px auto;
+	}
+}
+
+.modal-md {
+	max-width: 800px;
+}
+
+.fixed-table-container{
+	height: 400px !important; 
+}
+
+tr{ background: white;} 
+tr:nth-child(2n){ background: #e5e5e5;}
+
+</style>
+<script type="text/javascript">
+
+    $(document).one("onload.dms",function(event,container){
+    	dmsCommon.ajaxRestRequest({
+			url : dmsCommon.getDmsPath()["manage"]+ "/keyIndicatorDisplay/getPadTableHead2",
+			type : 'GET',
+			async : false,
+			data : {year:{[searhYear]},item1:"{[item1]}"},
+			dataType : 'JSON',
+			sucessCallBack : function(data) {
+				var columns1=[];
+				var columns2=[];
+				columns1.push({colspan:1,align: 'center',rowspan:2,title : "特约店名称",field : "dealername"});
+				columns1.push({colspan:1,align: 'center',rowspan:2,title : "店代码",field : "dealerCode"});
+				columns1.push({colspan:1,align: 'center',rowspan:2,title : "大区",field : "orgName"});
+				columns1.push({colspan:1,align: 'center',rowspan:2,title : "区域督导",field : "empName"});
+				columns1.push({colspan:1,align: 'center',rowspan:2,title : "数据截至日期",field : "dataTime"});
+				if(data){
+					var item1="{[item1]}";
+					columns1.push({colspan:data.length,align: 'center',title : item1});
+					for(var i=0;i<data.length;i++){
+						//关键岗位 超链接
+						if(data[i].FIRST_HEAD == '关键岗位' && data[i].IS_HREF == 2){
+							var secondHead = data[i].SECOND_HEAD;
+							columns2.push({field : data[i].REMARK,align: 'center',title : data[i].SECOND_HEAD,formatter:function(value,row,index){
+								if(!row.dealername || !value){
+									return value;
+								}else{
+									return"<a class=\"showDetail\" data-beforeShowEvent=\"true\" data-url=\"manage/evaluation/scene/targetshowDetail.html\"  data-width=\"modal-lg\" data-toggle=\"modal\">"+value+"</a><input type=\"hidden\" value=\""+row.dealerCode+"\"><input type=\"hidden\" value='"+secondHead+"'>";
+								}
+							}});
+						}
+						//整数  两位小数 显示金额千分格式
+						else if(data[i].SHOW_FORMAT == 0 || data[i].SHOW_FORMAT == 1){
+							columns2.push({field : data[i].REMARK,align: 'center',title : data[i].SECOND_HEAD,formatter:function(value,row,index){
+								return '<div style="text-align:right">'+formatMoney(String(value))+'</div>';
+							}}); 
+						} 
+						else{
+							columns2.push({field : data[i].REMARK,align: 'center',title : data[i].SECOND_HEAD});
+						}						
+					}
+				};
+				
+				new Datatable().initLocale({
+						src : "tablePage2",
+						container:container,
+						data:{[tableData]},
+						rowID : "ID",
+						isShowLineNumber:false,
+						fixedColumns: true,//固定列
+				        fixedNumber:2,//固定几列
+						onLoadSuccess:function(data){
+							$(".showDetail",container).on("beforeShow.dms",function(event,returnResult){										
+								var DEALER_CODE=$(this).next().val();
+								var POST_NAME=$(this).next().next().val();
+								var map={DEALER_CODE:DEALER_CODE,POST_NAME:POST_NAME};
+								$(this).data("pageData",map);
+								returnResult.status = true;
+							});
+						},
+						columns : [columns1,columns2]
+					});
+				}
+			    
+			});
+    	
+    });
+</script>

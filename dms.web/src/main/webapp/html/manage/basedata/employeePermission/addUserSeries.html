@@ -1,0 +1,104 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">新增人员</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">登录账号:</label>
+								<div class="col-xs-8">
+									<input id="employeeNo" name="employeeNo"
+										class="form-control required" maxlength="30" type="text" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">姓名:</label>
+								<div class="col-xs-8">
+									<input id="employeeName" name="employeeName"
+										class="form-control required" maxlength="30" type="text" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					    <div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="form-group">
+							<label class="control-label col-xs-4">性别</label>
+							<div class="col-xs-8 ">
+									<select id="gender" name="gender"
+										class="bs-select form-control" data-dictCode="1002" >
+									</select>
+							</div>
+						</div>
+					</div>
+				  </div>
+				 <div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">电话:</label>
+								<div class="col-xs-8">
+									<input id="phone" name="phone"
+										class="form-control" maxlength="30" type="text" />
+								</div>
+							</div>
+						</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a id="save" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue" data-beforeRequest="true"
+				data-toggle="confirmation"><i class="fa fa-save"></i>保存</a> <a
+				data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回</a>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	$("a[data-beforeRequest='true']", container).on("beforeRequest.dms",function(event, returnResult) {
+		$("#save",container).attr("data-url","/basedata/employees/userSave");
+		returnResult.status = true;
+	});
+
+	$("input[name='employeeNo']").bind('input propertychange',function(){
+		var employeeNo = $("#employeeNo",container).val();
+		
+		dmsCommon.ajaxRestRequest({
+    		//所查询数据合计
+    		url : dmsCommon.getDmsPath()["manage"] + "/basedata/employees/returnName/"+employeeNo,
+			dataType:"json",
+			type:"GET",
+			container:container,
+			sucessCallBack : function(data) {//成功回调
+				if(data!=null && data !=""){
+					$("#employeeName",container).val(data[0].EMPLOYEE_NAME);
+				}
+			} 
+    	});
+	});
+	
+	//新增页面的回调函数
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+});
+
+</script>

@@ -1,0 +1,19 @@
+//定义系统路径
+var DMS_PATH={
+	root:"/dms.web",
+	demo:"/dms.demo/gmsWebRest/demo",
+	manage:"/dms.manage/gmsWebRest/manage",
+	repair:"/dms.repair/gmsWebRest/repair",
+	customer:"/dms.customer/gmsWebRest/customer",
+	potenCus:"/dms.potenCus/gmsWebRest/potenCus",
+	part:"/dms.part/gmsWebRest/part",
+	retail:"/dms.retail/gmsWebRest/retail",
+	vehicle:"/dms.vehicle/gmsWebRest/vehicle",
+	report:"/dms.report/gmsWebRest/report",
+	finance:"/dms.finance/gmsWebRest/finance",
+	monitor:"/dms.monitor/gmsWebRest/monitor",
+	valueAdded:"/dms.valueAdded/gmsWebRest/valueAdded",
+	basedata:"/dms.basedata/gmsWebRest/basedata",
+	sysAuth:"/dms.sysAuth/dmsWebRest/sysAuth",
+	web:"/dms.web/gmsWebRest/web"
+};

@@ -1,0 +1,132 @@
+<div class="dms-edit ajaxrest" data-url="/basedata/BasicParameters/basicCommunal" data-model="manage">
+			<form class="form-horizontal">
+					<div class="modal-body" data-formTable ="paramList">
+					   <div class="panel panel-default">
+					     <div class="panel-heading">
+							<div class="pannel-name">流程管理</div>
+					     </div>
+						<div class="row" >
+						<!-- panel开始 -->
+							 <div class="col-xs-12 ">
+					            <label class="control-label col-xs-4 col-sm-3">参数</label>
+					             <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 "></label>
+						        <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					         </div>
+						 <!-- panel结束 -->
+						
+					   <div class="col-xs-12 ">
+							<div class="form-group">
+							    <label class="control-label col-xs-3">是否需要销售经理审核</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel=""  data-dictCode="1013" data-dictLabel=""  data-fieldName="vehicle_sale_audit.PARAM_VALUE" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-5">
+									    <input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_sale_audit.PARAM_ID" />
+									    <label class="control-label">销售订单审核,勾选则必须销售经理审核,不勾则不需要销售经理审核</label>
+									</div>
+							  </div>
+					    </div>
+						    <!--/span-->
+						   <div class="col-xs-12 ">
+							<div class="form-group">
+							    <label class="control-label col-xs-3">是否需要财务经理审核</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel=""  data-fieldName="vehicle_finance_audit.PARAM_VALUE" data-dictCode="1013" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-6">
+									    <input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_finance_audit.PARAM_ID" />
+									    <label class="control-label">销售订单财务审核,勾选则必须财务经理审核,不勾选则不需要财务经理审核</label>
+									</div>
+							  </div>
+					  </div>
+						    <!--/span-->
+						     <div class="col-xs-12 ">
+							<div class="form-group">
+							    <label class="control-label col-xs-3">是否结清再派工</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" data-dictLabel=""  type="checkbox" data-dictCode="1013" data-fieldName="vehicle_dispatch.PARAM_VALUE" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-6">
+										<input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_dispatch.PARAM_ID" />
+									    <label class="control-label">勾选则结清才可以进行派工</label>
+									</div>
+							  </div>
+					  </div>
+						    <!--/span-->
+						    <div class="col-xs-12 ">
+							<div class="form-group">
+							    <label class="control-label col-xs-3">是否自动交车确认</label>
+									<div class="col-xs-3">
+										<input id="paramValuebox" name="paramValuebox" type="checkbox" data-dictLabel=""  data-dictCode="1013" data-fieldName="vehicle_handcar.PARAM_VALUE" data-allFlag="false" data-value="" />
+									</div>
+									<div class="col-xs-6">
+									    <input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_handcar.PARAM_ID" />
+									    <label class="control-label">交车确认,勾选则自动交车确认,不勾选则需手工</label>
+									</div>
+							  </div>
+					        </div>
+						    <!--/span-->
+						</div>
+					
+				</div>
+			<!-- -/span -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="pannel-name">结算管理</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+					  <div class="col-xs-12 ">
+					       <label class="control-label col-xs-4 col-sm-3">参数</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-2 ">功能值</label>
+						   <label class="control-label col-xs-4 col-sm-4 col-md-pull-4">备注</label>
+					 </div>
+					<!--/span-->
+					 <div class="form-group">
+						  <label class="control-label col-xs-3">结算精度</label>
+								<div class="col-xs-3">
+								        <input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_settlementAccuracy.PARAM_ID" />
+									    <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="vehicle_settlementAccuracy.PARAM_VALUE" data-dictCode="1012" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">销售结算</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					<div class="form-group">
+						  <label class="control-label col-xs-3">结算圆整方式</label>
+								<div class="col-xs-3">
+								 <input type="hidden" id="paramId" name="paramId" data-fieldName="vehicle_settlementMode.PARAM_ID" />
+								 <select  class="bs-select form-control" id="paramValue" name="paramValue" data-fieldName="vehicle_settlementMode.PARAM_VALUE" data-dictCode="1014" data-value=""  ></select>
+								</div>
+								<div class="col-xs-4">
+								   <label class="control-label ">销售结算</label>
+								</div>
+							   
+					</div>
+					<!--/span-->
+					
+				</div>
+			</div>
+		</div>
+	</div>			
+		<div class="modal-footer center-block">
+			<a data-url="/basedata/BasicParameters/basicInsertOrUp" data-model="manage" data-method="PUT"
+				data-callBack="true" class="btn blue"
+				data-toggle="confirmation"> <i class="fa fa-save"></i>保存
+			  </a>
+		   <a data-goback="page" href="manage/basedata/BasicParameters/BasicParametersTab.html" class="btn blue ajaxify">
+			<i class="fa fa-undo"></i>取消</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//新增页面的回调函数
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		$("a[data-goback='page']",container).click();
+		
+	});
+});
+</script>

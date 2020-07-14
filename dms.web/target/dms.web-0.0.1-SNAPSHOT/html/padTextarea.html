@@ -1,0 +1,48 @@
+<!-- PAD端弹出的TextArea页面 -->
+<style>
+textarea{
+	width:98%;
+	height:50px;
+	margin: 8px;
+}
+</style>
+<div class="dms-search">
+	<div class="modal-header">
+		<div class="modal-close">
+			<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> 
+				<i class="fa fa-remove"></i>
+			</a>
+		</div>
+	</div>
+	<textarea id="ta"></textarea>
+	<div class="form-actions">
+		<a id="saveTextArea" class="btn blue">保存</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	//加载已有的建议整改措施
+	var textareaVal = '{[textareaVal]}';
+ 	//处理textarea换行
+	var reg=new RegExp("<br>","g"); //创建正则RegExp对象  
+	if($.trim(textareaVal)){
+		textareaVal = textareaVal.replace(reg,"\r\n");
+	}
+	$("#ta").val(textareaVal);
+	
+	var textareaName = '{[textareaName]}';
+	
+	$("#saveTextArea",container).click(function(){
+		var textVal = $("#ta").val();
+		//保存至父窗口的TD元素
+		//SPAN显示标签
+		$("#"+textareaName,getElementContext()).text(textVal); 
+		//INPUT传入后台标签
+		$("#"+textareaName,getElementContext()).next().val(textVal); 
+		
+		//关闭当前页面
+		$("#btnClose",container).click();
+	});
+});
+</script>

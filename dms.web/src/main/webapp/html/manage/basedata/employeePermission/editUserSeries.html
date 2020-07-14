@@ -1,0 +1,174 @@
+<div class="dms-edit ajaxrest"
+	data-url="/basedata/employees/findName/{[EMPLOYEE_ID]}" data-model="manage"
+	data-pageInitCallBack="true">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">员工职位修改</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">工号:</label>
+								<div class="col-xs-8">
+								<input id="employeeId" name="employeeId" type="hidden"
+									data-fieldName="employee_id" /> 							
+								<input id="employeeNo" disabled
+									name="employeeNo" class="form-control" type="text"
+									data-fieldName="employee_no" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">姓名:</label>
+								<div class="col-xs-8">
+									<input type="text" class="form-control" id="employeeName"
+										name="employeeName" data-fieldName="employee_name" disabled>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">督导:</label>
+								<div class="col-xs-8">
+									<input id="nameDu1" name="nameDu1" type="hidden"
+										data-fieldName="ROLE_NAME_DU" /> 
+									<input id="duDao1" name="btSelectAll" type="checkbox" value="1"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">系长:</label>
+								<div class="col-xs-8">
+									<input id="nameXi" name="nameXi" type="hidden"
+										data-fieldName="ROLE_NAME_XI" /> 
+									<input id="xiZhang" name="btSelectAll" type="checkbox" value="2"/>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">科长:</label>
+								<div class="col-xs-8">
+									<input id="nameKe" name="nameKe" type="hidden"
+										data-fieldName="ROLE_NAME_KE" /> 
+									<input id="keZhang" name="btSelectAll" type="checkbox" value="3"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4">
+							<div class="form-group">
+								<label class="control-label col-xs-4">部长:</label>
+								<div class="col-xs-8">
+									<input id="nameBu" name="nameBu" type="hidden"
+										data-fieldName="ROLE_NAME_BU" /> 
+									<input id="buZhang" name="btSelectAll" type="checkbox" value="4"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a id="updateSave" data-model="manage" data-method="POST"
+				data-callBack="true" class="btn blue" data-beforeRequest="true"
+				data-toggle="confirmation"><i class="fa fa-save"></i>保存</a> 
+				<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回</a>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	var employeeId;
+	setTimeout(function(){
+		employeeId = $("#employeeId",container).val();
+		var nameDu1 = $("#nameDu1",container).val();
+		var nameXi = $("#nameXi",container).val();
+		var nameKe = $("#nameKe",container).val();
+		var nameBu = $("#nameBu",container).val();
+		
+		if(nameDu1!=""){
+			$("input:checkbox[value='1']").attr('checked','true');
+		}
+		
+		if(nameXi!=""){
+			$("input:checkbox[value='2']").attr('checked','true');
+		}
+		
+		if(nameKe!=""){
+			$("input:checkbox[value='3']").attr('checked','true');	
+		}
+		
+		if(nameBu!=""){
+			$("input:checkbox[value='4']").attr('checked','true');
+		}
+	},300); 
+	
+	$("a[data-beforeRequest='true']", container).on("beforeRequest.dms",function(event, returnResult) {
+		var a = document.getElementById("duDao1");;
+		var duDao1;
+		var xiZhang;
+		var keZhang;
+		var buZhang;
+		if(a.checked){
+			duDao1 = 1;
+		}else{
+			duDao1 = 2;
+		}
+		
+		var b = document.getElementById("xiZhang");
+		if(b.checked){
+			xiZhang = 1;
+		}else{
+			xiZhang = 2;
+		}
+		
+		var c = document.getElementById("keZhang");
+		if(c.checked){
+			keZhang = 1;
+		}else{
+			keZhang = 2;
+		}
+		
+		var d = document.getElementById("buZhang");
+		if(d.checked){
+			buZhang = 1;
+		}else{
+			buZhang = 2;
+		}
+		if(duDao1 == 2 && xiZhang == 2 && keZhang == 2 && buZhang == 2){
+			dmsCommon.tip({status:"warning",msg:"至少选择一个职位!"});
+			return true;
+		}else{
+			$("#updateSave",container).attr("data-url","/basedata/employees/userSeriesUpdateSave/"+duDao1+"/"+xiZhang+"/"+keZhang+"/"+buZhang+"/"+employeeId);
+		}
+		returnResult.status = true;
+	});
+	
+	//新增页面的回调函数
+	$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){
+		//关闭窗口
+		$("a[data-dismiss='modal']",container).click();
+		//刷新表格
+		$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+	});
+});
+
+</script>

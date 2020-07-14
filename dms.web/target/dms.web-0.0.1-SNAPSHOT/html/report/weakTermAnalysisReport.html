@@ -1,0 +1,707 @@
+<style>
+#weakTermTable th {
+	vertical-align: middle !important;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="col-xs-12 col-sm-3 col-md-2 " id="yearDiv">
+						<div class="form-group">
+							<label class="control-label col-xs-4">年度</label>
+							<div class="col-xs-8">
+								<div class="input-group date year-picker"
+									data-defaultToday="false">
+									<input id="year" name="year" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2" id="quarterDiv">
+						<div class="form-group">
+							<label class="control-label col-xs-4">季度</label>
+							<div class="col-xs-8">
+								<select id="quarter" class="bs-select form-control"
+									name="quarter">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4 " id="yearMonth1">
+						<div class="form-group">
+							<label class="control-label col-xs-3">年月一</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth1Start" name="yearMonth1Start" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+							<div class="col-xs-1">
+								<label>--</label>
+							</div>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth1End" name="yearMonth1End" readonly
+										class="form-control required" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-6 col-md-4 " id="yearMonth2">
+						<div class="form-group">
+							<label class="control-label col-xs-3">年月二</label>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth2Start" name="yearMonth2Start" readonly
+										class="form-control" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+							<div class="col-xs-1">
+								<label>--</label>
+							</div>
+							<div class="col-xs-4">
+								<div class="input-group date month-picker"
+									data-defaultToday="false">
+									<input id="yearMonth2End" name="yearMonth2End" readonly
+										class="form-control" type="text" value="" /> <span
+										class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row ">
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="form-group">
+								<label class="control-label col-xs-4">区域</label>
+								<div class="col-xs-8">
+									<select id="orgId" name="orgId"
+										class="bs-select form-control" 
+										data-model="manage"
+										data-url="/keyIndicatorDisplay/getOrg" 
+										data-labelValue="ORG_ID" data-lableDesc="ORG_NAME"
+										data-live-search="false" data-size="5"
+										data-existsDefault="true">
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+						        <div class="form-group">
+								   <label class="control-label col-xs-4">省份</label>
+								   	<div class="col-xs-8">
+										<select id="provinceId" class="bs-select form-control" parent="orgId"
+											name="provinceId" data-url="/keyIndicatorDisplay/getProvince/{[orgId]}"
+											data-model="manage" data-labelValue="PROVINCE_ID"
+											data-lableDesc="PROVINCE" data-live-search="true"
+											data-size="10" data-existsDefault="true">
+										</select>
+								   </div>
+						       </div>
+					       	</div>
+					       	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+						        <div class="form-group">
+								   <label class="control-label col-xs-4">城市</label>
+								   	<div class="col-xs-8">
+										<select id="cityId" class="bs-select form-control" parent="provinceId"
+											name="cityId" data-url="/keyIndicatorDisplay/getCity/{[orgId]}/{[provinceId]}"
+											data-model="manage" data-labelValue="CITY_ID"
+											data-lableDesc="CITY" data-live-search="true"
+											data-size="10" data-existsDefault="true">
+										</select>
+								   </div>
+						       </div>
+					       	</div> -->
+
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="form-group">
+								<label class="control-label col-xs-4">督导</label>
+								<div class="col-xs-8">
+									<select id="dudaoId" name="dudaoId" parent="orgId" 
+										class="bs-select form-control"
+										data-model="manage" 
+										data-url="/keyIndicatorDisplay/getDuDao/{[orgId]}"
+										data-labelValue="employee_id" data-lableDesc="EMPLOYEE_NAME"
+										data-live-search="true" data-size="10" data-existsDefault="true">
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="form-group">
+								<label class="control-label col-xs-4">特约店</label>
+								<div class="col-xs-8">
+									<select id="dealerCode" name="dealerCode" parent="dudaoId" 
+									 	class="bs-select form-control"
+									 	data-model="manage"
+										data-url="/keyIndicatorDisplay/getDealer/{[orgId]}/{[dudaoId]}"
+										data-labelValue="DEALER_CODE" data-lableDesc="DEALER_SHORTNAME"
+										 data-live-search="true"
+										data-size="15" data-existsDefault="true">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+							<div class="form-group">
+								<label class="control-label col-xs-4">弱项维度</label>
+								<div class="col-xs-8">
+									<select id="targetType" class="bs-select form-control required"
+										name="targetType">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-xs-12 ">
+						<div class="query-btn">
+							<a id="searchdataBTN" class="btn blue" data-beforeShowEvent="true">
+								 <i class="fa fa-search"></i> 查询
+							</a> 
+							 <a id="resetBTN" class="btn blue"> 重置 </a>
+							 <a data-url="/report/ItinerantEffectAnalysis/exportWeakTerm"
+								data-model="manage" data-method="downLoad"
+								data-toggle="confirmation" class="btn blue "
+								data-beforeRequest="true"><i class="fa fa-download"></i>导出</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel">
+		<div class="panel-heading">
+			<div class="pannel-name"></div>
+		</div>
+		<div class="panel-body" id="tableDiv">
+			<table
+				class="table table-striped table-bordered table-hover table-responsive"
+				id="weakTermTable">
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event, container) {
+	var pageData = $(container).data("pageData");
+
+	//如果是督导 默认加载大区和督导下拉框
+	var isSupervisor = pageData.userInfo.isSupervisor;
+	if(!!isSupervisor && isSupervisor == 1){
+		if(!!pageData.userInfo.orgId){
+			$("#orgId",container).attr("data-value",pageData.userInfo.orgId);
+		}
+		if(!!pageData.userInfo.employeeId){
+			$("#dudaoId",container).attr("data-value",pageData.userInfo.employeeId);
+		}
+	}	
+	
+				//动态刷新下拉框的值
+				var selectData = new Array();
+				selectData.push({
+					id : "1",
+					name : "一季度"
+				});
+				selectData.push({
+					id : "2",
+					name : "二季度"
+				});
+				selectData.push({
+					id : "3",
+					name : "三季度"
+				});
+				selectData.push({
+					id : "4",
+					name : "四季度"
+				});
+				dmsDict.refreshSelectByData($("#quarter", container),
+						selectData, "id", "name");
+
+				var selectData2 = new Array();
+				selectData2.push({
+					id : "1",
+					name : "全国目标"
+				});
+				selectData2.push({
+					id : "2",
+					name : "全国平均"
+				});
+				selectData2.push({
+					id : "3",
+					name : "区域平均"
+				});
+				dmsDict.refreshSelectByData($("#targetType", container),selectData2, "id", "name");
+				//年度选择值的时候，隐藏年月一，年月二，并清空其中的值
+				$("#year", container).change(function(){
+					$("#yearMonth1", container).hide();
+					$("#yearMonth2", container).hide();
+					$("#yearMonth1Start", container).val("");
+					$("#yearMonth1Start", container).removeClass("required");
+					$("#yearMonth1End", container).val("");
+					$("#yearMonth1End", container).removeClass("required");
+					$("#yearMonth2Start", container).val("");
+					$("#yearMonth2Start", container).removeClass("required");
+					$("#yearMonth2End", container).val("");
+					$("#yearMonth2End", container).removeClass("required");
+				});
+				//年月一有值的时候将年度，季度隐藏
+				$("#yearMonth1Start", container).change(function(){
+					$("#quarterDiv", container).hide();
+					$("#yearDiv", container).hide();
+					$("#year", container).val("");
+					$("#year", container).removeClass("required");
+				});
+				//年度 季度 年月一 年月二全部显示
+				$("#resetBTN", container).click(function(){
+					$("#yearDiv", container).show();
+					$("#quarterDiv", container).show();
+					$("#yearMonth1", container).show();
+					$("#yearMonth2", container).show();
+					$("#year", container).addClass("required");
+					$("#yearMonth1Start", container).addClass("required");
+					$("#yearMonth1End", container).addClass("required");
+					$(".form-control", container).val("");
+					$(".filter-option", container).text("请选择");
+				});
+				
+				//对比区域平均 查询条件必须选择区域
+				$("#searchdataBTN",container).on("beforeShow.dms",function(event,returnResult){
+					var targetType = $("#targetType  option:selected",container).val();
+					var orgId = $("#orgId  option:selected",container).val();
+					if(orgId == '' && targetType == 3){
+						dmsCommon.tip({status:"warning",msg:"查询区域平均请选择区域！"});
+						returnResult.status = false;
+						$("#searchdataBTN",container).attr("disabled",false);
+						return ;
+					} 
+					 returnResult.status = true;
+				});
+
+				new Datatable().initPagination({
+					src : "weakTermTable",
+					container : container,
+					rowID : "ID",
+					url : dmsCommon.getDmsPath()["manage"] + "/report/ItinerantEffectAnalysis/searchWeakTerm",
+					pageSize : 30,
+					autoHeight : false,
+					isQueryFirst : false,
+					isShowLineNumber : false,
+					//fixedColumns: true,//固定列
+					//fixedNumber:5,//固定几列
+					onLoadSuccess : function() {
+						$("#showReport",container).on("click",function(event){
+							var AGENDA_ID=$(this).nextAll()[0].value;
+							var REPORT_ID=$(this).nextAll()[1].value;
+							var DEALER_SHORTNAME=$(this).nextAll()[2].value;
+							var EVALUATE_ID=$(this).nextAll()[3].value;
+							var EVALUATE_NAME=$(this).nextAll()[4].value;
+							var EVALUATE_DATE=$(this).nextAll()[5].value;
+							var EVALUATE_BY=$(this).nextAll()[6].value;
+							var EVALUATE_BY_NAME=$(this).nextAll()[7].value;
+							var map={AGENDA_ID:AGENDA_ID,ID:REPORT_ID,DEALER_SHORTNAME:DEALER_SHORTNAME,
+									 EVALUATE_ID:EVALUATE_ID,EVALUATE_NAME:EVALUATE_NAME,EVALUATE_DATE:EVALUATE_DATE,
+									 EVALUATE_BY:EVALUATE_BY,EVALUATE_BY_NAME:EVALUATE_BY_NAME,IS_SHOW_BACK:1,IS_SHARE:1};
+							var loadContainer = dmsIndex.changeActiveFunc("701002");
+							   dmsCommon.ajaxPageRequest({
+							    url:'manage/patrolReport/findPatrolReportDetail.html',
+							       container:loadContainer,//定义容器 
+							       pageData:map
+							   });  
+						});
+
+						$("#weakTermTable tbody tr").each(function() {
+							if ($(this).find("td").find("a").html() == "巡回时间") {
+								$(this).css("background-color", "yellow");
+							}
+						});
+					},
+					columns : [
+						{align: 'center',title : "特约店名称",field : "dealername"},
+						{align: 'center',title : "特约店代码",field : "dealerCode"},
+						{align: 'center',title : "大区",field : "orgName"},
+						{align: 'center',title : "区域督导",field : "empName",formatter:function(value,row,index){
+							if(value=="巡回时间"){
+								return"<a id='showReport' class='btn' data-goback='page' data-onclickEvent='true'>"+value+"</a>"
+								 	 +"<input type='hidden' value="+row.agendaID+">"
+								 	 +"<input type='hidden' value="+row.reportId+">"
+								 	 +"<input type='hidden' value="+row.dealerName+">"
+								 	 +"<input type='hidden' value="+row.evaluateID+">"
+								 	 +"<input type='hidden' value="+row.evaluateName+">"
+								 	 +"<input type='hidden' value="+row.evaluateDate+">"
+								 	 +"<input type='hidden' value="+row.evaluateBy+">"
+								 	 +"<input type='hidden' value="+row.evaluateByName+">";
+							}else{
+								return value;
+							}									
+						}},
+						{align: 'center',title : "数据截至日期",field : "dataTime"},
+						{align: 'center',title : "进厂达成率",field : "进厂台次进厂达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "保养达成率",field : "保养台次保养达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET2){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "二保维系率",field : "客户维系二保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET3){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "保养客户留存率",field : "客户维系保养客户留存率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET4){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "忠诚客户占比",field : "客户维系忠诚客户占比",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET5){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "首保维系率",field : "客户维系首保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET6){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "定保维系率",field : "客户维系定保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET7){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "过保维系率",field : "客户维系过保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET8){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "客户维系率",field : "客户维系客户维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET9){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "机油订货成交率",field : "保养件订货机油订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET10){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "轮胎订货成交率",field : "保养件订货轮胎订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET11){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "添加剂订货成交率",field : "保养件订货添加剂订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET12){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "电瓶订货成交率",field : "保养件订货电瓶订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET13){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "活性炭滤芯订货成交率",field : "保养件订货活性炭滤芯订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET14){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "空调养护订货成交率",field : "保养件订货空调养护订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET15){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "保养件单台",field : "订货单台保养件单台",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET16){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "外观件单台",field : "订货单台外观件单台",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET17){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "用品单台金额",field : "订货单台用品单台金额",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET18){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "新保渗透率",field : "保险新保渗透率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET19){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "续保目标达成率",field : "保险续保目标达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET20){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "延保渗透率",field : "延保延保渗透率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET21){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "IMS系统使用率",field : "平板接待IMS系统使用率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET22){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "在线调查综合得分",field : "在线调查综合得分",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET23){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "总经理",field : "关键岗位总经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET24){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "服务经理",field : "关键岗位服务经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET25){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "零部件经理",field : "关键岗位零部件经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET26){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "客服经理",field : "关键岗位客服经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET27){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "保险经理",field : "关键岗位保险经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET28){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "保修鉴定员",field : "关键岗位保修鉴定员",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET29){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "IDT讲师（业务类）",field : "关键岗位IDT讲师（业务类）",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET30){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "IDT讲师（机电类）",field : "关键岗位IDT讲师（机电类）",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET31){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "人员数量满足度",field : "人员数量满足度",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < row.TARGET32){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}         
+						}},
+					]
+				});
+				
+				//导出校验
+				$("a[data-beforeRequest='true']",container).on("beforeRequest.dms",function(event,returnResult){
+					
+					var year="";
+					if($("#year",container).val()!=""){
+						year=$("#year",container).val()
+					}
+					if($("#yearMonth1End",container).val()!=""&&$("#yearMonth2End",container).val()==""){
+						year = $("#yearMonth1End",container).val().substring(0,4);
+					}
+					if($("#yearMonth1End",container).val()==""&&$("#yearMonth2End",container).val()!=""){
+						year = $("#yearMonth2End",container).val().substring(0,4);
+					}
+					if($("#yearMonth1End",container).val()!=""&&$("#yearMonth2End",container).val()!=""){
+						var year1 = $("#yearMonth1End",container).val().substring(0,4);
+						var year2 = $("#yearMonth2End",container).val().substring(0,4);
+						if(year1>year2){
+							year = year1;
+						}else if(year1<year2){
+							year = year2;
+						}else if(year1==year2){
+							year = year1;
+						}
+					}
+					$("#searhYear",container).val(year);
+					returnResult.status = true;
+				});
+
+			});
+</script>
+

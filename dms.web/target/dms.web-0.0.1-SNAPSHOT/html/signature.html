@@ -1,0 +1,82 @@
+<style>
+#signature{
+	border:1px solid;
+	margin: 10px 5px;
+}
+</style>
+<script type="text/javascript" src="../html/js/jSignature/jSignature.min.js"></script>
+<script type="text/javascript" src="../html/js/jSignature/flashcanvas.js"></script>
+
+<div class="dms-add">
+	<div class="modal-header">
+		<div class="modal-title">电子签名板</div>
+		<div class="modal-close">
+			<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> 
+				<i class="fa fa-remove"></i></a>
+		</div>
+	</div>
+	<div class="row">
+		<div id="signature"></div>
+	</div>
+	<form class="form-horizontal">
+		<input type="hidden" name="evaluateId" value="{[evaluateId]}">
+		<input type="hidden" name="billType"  value="{[billType]}">
+		<input type="hidden" name="imgBase64" >
+	</form>
+	<div class="form-actions">
+		<a id="saveSign" class="btn blue ajaxrest" data-method="POST" data-model="manage" 
+	   		data-url="/patrolReport/saveSign"  data-beforeRequest="true" data-callBack="true">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a id="clearSign" class="btn blue">重置</a>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	$(function(){
+    	//初始化插件
+		$("#signature").jSignature({width:880,height:500,lineWidth:2});
+	});
+	
+	$("#saveSign",container).on("beforeRequest.dms",function(event,returnResult){
+		//判断是否签名
+		var signLength = $('#signature').jSignature('getData', 'native').length;
+		if(signLength == 0){
+	    	dmsCommon.tip({status:"error",msg:"签名不能为空！"});
+	    	returnResult.status = false;
+	    	return ;
+		}
+		var datapair = $("#signature").jSignature("getData", "image"); 
+		var imgBlob = convertBase64UrlToBlob(datapair[1]); 
+	    $("input[name='imgBase64']",container).val(datapair[1]);
+	    
+	    returnResult.status = true; 
+	});
+	
+	$("#saveSign",container).on("callBack.dms",function(event,returnResult){
+		//关闭窗口
+		$("#btnClose",container).click();
+ 		//刷新父窗口
+		$("#refreshPage",getElementContext()).click(); 
+	});
+
+	$("#clearSign",container).click(function(){
+	      var signdiv = $("#signature");
+	      signdiv.jSignature("reset");
+	});
+
+	
+});
+
+function convertBase64UrlToBlob(srcBase64){
+    var bytes = window.atob(srcBase64);        //去掉url的头，并转换为byte
+    //处理异常,将ascii码小于0的转换为大于0
+    var ab = new ArrayBuffer(bytes.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+    }
+    return new Blob( [ab] , {type : 'image/png'});
+}
+ 
+</script>

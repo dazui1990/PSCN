@@ -1,0 +1,244 @@
+ <style>
+.fc-content{
+width:100% !important;
+ height:auto !important; 
+ white-space:normal !important; 
+ word-wrap:break-word !important;
+  word-break:break-all !important;
+}
+.fc-time {
+    display: none;
+}
+</style>
+ <link href="../assets/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
+ <link href="../assets/fullcalendar/fancybox.css" rel="stylesheet" type="text/css" />
+ <div class="dms-search">
+                <!-- BEGIN CONTENT BODY -->
+                    <div class="panel panel-default table-panel">
+			</div> 
+                <div class="page-content">
+                <div class="row">
+               	 <form class="form-horizontal"> 
+               	 		<input type="hidden" id="agendaDate" name="agendaDate" value='{[dateF]}' />
+               	 		<input type="hidden" id="changeDate" name="changeDate" value='' />
+               	 		<input type="hidden" id="tour" name="tour"/>
+               	 		<input type="hidden" id="planId" name="planId"/>
+                  	</form>
+                  </div>
+                  <br>
+                 
+                  <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="portlet light calendar bordered">
+                                <div class="portlet-title " style="line-height: 32px">
+                                    <div class="caption">
+                                        <i class="icon-calendar font-green-sharp"></i>
+                                        <span class="caption-subject font-green-sharp bold uppercase">日程表</span>
+                                    	
+                                    </div>
+                                     <div class="col-md-10 col-sm-12">
+                                     	<span  style="width:1px;   background-color: #696969;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span>未提交/驳回</span>
+									     &nbsp;
+									     <span  style="width:10px;   background-color: #FFA500;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span>提交未审核</span>
+									    &nbsp;
+									     <span  style="width:10px;   background-color: blue;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span>审核通过</span>
+									    &nbsp;
+									    <span  style="width:10px;   background-color: #008B00;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span>按计划执行</span>
+									    &nbsp;
+									      <span  style="height:10px;  ">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span><!-- 变更待删除 --></span>
+									    &nbsp;
+									     <span  style="height:10px;   ">
+									    &nbsp;&nbsp;&nbsp;&nbsp;
+									    </span>
+									    &nbsp;
+									    <span><!-- 变更内容 --></span>
+									    </div> 
+                                </div>
+                                <div style="line-height: 32px">
+                                	&nbsp;<span>事项简称:Y-移动；X-巡店；H-会议；R-弱店辅导；Q-其他；</span>
+                                </div>
+                                 <div class="portlet-title " style="line-height: 32px">
+                                                                		 <a data-url="/supervision/submitAudit" data-model="manage" data-method="POST" id="add1" data-callBack="true"  class="btn blue" data-toggle="confirmation"> 
+									           提交申请
+									    </a>  
+									    <a data-url="/supervision/submitRecall" data-model="manage" data-method="POST" id="addRecall" data-callBack="true"  class="btn blue" data-toggle="confirmation"   > 
+									          撤回
+									    </a>
+									     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									 	<span id="dismissal" style="color: red;display: none"></span>
+									    <!-- <a  data-beforeShowEvent="true" data-width="modal-lg" data-url="manage/basedata/SupervisionManagement/tour.html" data-toggle="modal"  class="btn blue "> 
+									          <i class="fa fa-search"></i> 本月巡回事项及附件查看
+									    </a> -->
+                                 </div>
+                                <div class="portlet-body">
+                                    <div id="calendar1" > </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div> 
+                    
+                </div>
+                <!-- END CONTENT BODY -->
+</div>
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+ <script src="../assets/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+ <script src="../assets/fullcalendar/lang-all.js" type="text/javascript"></script>
+ <script src="../assets/fullcalendar/jquery.fancybox-1.3.1.pack.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+	 $(document).one("onload.dms",function(event,container){
+			var str;
+	 		$('#calendar1').fullCalendar({
+	            lang: 'zh-cn',	
+	            dayClick: function(date, jsEvent, view) {
+	            	
+   					dmsCommon.ajaxPageRequest({
+   	    				url:'manage/basedata/SupervisionManagement/event.html',
+   	    	        	container:$('#funcId_901001'),//定义容器
+   	    	        	success:function(html){
+   	    	        		
+   	    	        	},
+   	    	        	complete:function(xmlRequest, statusCode){
+   	    	        		$("#agendaDatePlan",getParentModal(container)).val(date.format('YYYY-MM-DD'));
+   	    	        	}
+   	    			});	
+	    			
+	            },
+	            eventClick: function(event, jsEvent, view) {
+	            	var date = event.start.format('YYYY-MM-DD');
+	            	dmsCommon.ajaxPageRequest({
+	    				url:'manage/basedata/SupervisionManagement/event.html',
+	    				container:$('#funcId_901001'),//定义容器
+	    	        	success:function(html){
+	    	        		
+	    	        	},
+	    	        	complete:function(xmlRequest, statusCode){
+	    	        		$("#agendaDatePlan",getParentModal(container)).val(date.format('YYYY-MM-DD'));
+	    	        	}
+	    			});	
+	            },
+	 		  events: function(start, end, timezone,callback) {
+	 			  //获取当前月份
+	 			 var dateStr = this.getDate().format('YYYY-MM');
+	 			$('#agendaDate').val(dateStr);
+	 			if($('#changeDate').val()==''){
+	 				$('#changeDate').val(dateStr);
+	 			}
+	 			//当前时间是否有领导驳回申请备注
+	 			dmsCommon.ajaxRestRequest({
+    				url:dmsCommon.getDmsPath()["manage"]+"/supervision/dismissal/"+dateStr,
+    				type:'GET',
+    				async:true,
+    		        sucessCallBack:function(data){
+    		        	if(data!=""){
+    		        		$("#dismissal").html("申请驳回原因："+data);
+    		        		$("#dismissal").show();
+    		        	}
+    		        }
+	 			});
+    			//进行ajax 请求
+    			dmsCommon.ajaxRestRequest({
+    				url:dmsCommon.getDmsPath()["manage"]+"/supervision/month/"+dateStr,
+    				type:'GET',
+    				async:true,
+    		        sucessCallBack:function(data){
+    		           var agendaList=data['agendaList'];
+       	               var events = [];
+       	               var color;
+       	               for(var i=0;i<agendaList.length;i++){
+       	            	//未提交
+       	            	if(agendaList[i].STATE==90021001){
+   	                 	 	color='#696969';
+   	                	}
+       	            	//待审核
+       	            	if(agendaList[i].STATE==90021002){
+   	                 	 	color='#FFA500';
+   	                	}
+       	            	//通过
+       	            	if(agendaList[i].STATE==90021005||agendaList[i].STATE==90021003||agendaList[i].STATE==90021004||agendaList[i].STATE==90021008){
+   	                 	 	color='blue';
+   	                	}
+       	            	//已执行
+       	            	if(agendaList[i].STATE==90021006){
+   	                 	 	color='#008B00';
+   	                	}
+       	           		//日程被驳回
+       	            	if(agendaList[i].STATE==90021007){
+   	                 	 	color='#696969';
+   	                	}
+       	            	
+   	                    events.push({
+	                        title: agendaList[i].TYPE_VALUE,
+	                        start: agendaList[i].DATE_TIME_MM, // will be parsed
+	                        backgroundColor:color
+	                    }); 
+   	                 	
+       	               }
+       	            	callback(events);   
+       	            	$(".fc-today").css('backgroundColor','#E8FFC4');
+       	            	$("td").css('border-color','#ccc');
+    		        }
+    			});
+    			
+    			
+    			//进行ajax查询所在月份有状态为“提交未审核”的计划,如果存在则点亮按钮
+    		/* 	dmsCommon.ajaxRestRequest({
+    				url:dmsCommon.getDmsPath()["manage"]+"/supervision/month/"+dateStr,
+    				type:'GET',
+    				async:true,
+    		        sucessCallBack:function(data){
+       	            	//默认按钮就是灰显
+       	            	
+    		        }
+    			}); */
+    			
+    			
+    	    }
+	            
+	        }); 
+	 		$("#calendar1").fullCalendar('gotoDate', $("#changeDate").val());
+	 		$('#calendar1').fullCalendar('refetchEvents');
+	 		//加载页面按钮
+	 		dmsCommon.handleFormStatic(container);
+	 		
+	 		
+	 		
+	 		$("a[data-callBack='true']",container).on("callBack.dms",function(event,response){		
+	 			$('#calendar1').fullCalendar('refetchEvents');
+			}); 
+	 });
+ 	   function  DateDiff(sDate1,  sDate2){    //sDate1和sDate2是2006-12-18格式  
+ 	       var  aDate,  oDate1,  oDate2,  iDays  
+ 	       aDate  =  sDate1.split("-")  
+ 	       oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2006格式  
+ 	       aDate  =  sDate2.split("-")  
+ 	       oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
+ 	       iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数  
+ 	       return  iDays  
+ 	   } 
+ 	  
+</script>
+
+
+ 

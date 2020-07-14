@@ -1,0 +1,10 @@
+com\yonyou\dms\schedule\test\common\ScheduleTest.class
+com\yonyou\dms\schedule\test\f4\TaskGenetor$2.class
+com\yonyou\dms\schedule\test\f4\TaskGenetor$1.class
+com\yonyou\dms\schedule\test\f4\TaskGenetor$3.class
+com\yonyou\dms\schedule\test\f4\AnnotationTestTask.class
+com\yonyou\dms\schedule\test\f4\TaskGenetor.class
+com\yonyou\dms\schedule\test\f4\OperatorDBJob.class
+com\yonyou\dms\schedule\test\f4\SayHelloJob.class
+com\yonyou\dms\schedule\test\f4\GSTask.class
+com\yonyou\dms\schedule\test\f4\TSTask.class

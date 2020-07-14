@@ -1,0 +1,78 @@
+	<div class="dms-search">
+	<form class="form-horizontal">
+	<input type="hidden" id="nlid" name="nlid" value="{[id]}">
+	<div class="modal-header">
+			<div class="modal-title">N&L汇总查看 </div>
+			
+		</div>
+		<div class="row ">
+		<label class="control-label col-xs-2">数据录入</label>
+		</div>
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive" id="dNlList"></table>
+			</div>
+		</div>
+			<div class="modal-footer">
+			<a id="maomao" href="javascript:;"  data-onclickEvent="true" data-url="/patrolReport/exportPatrolReport1" data-model="manage" data-method="downLoad" 
+								class="btn blue ajaxrest" ><i class="fa fa-download"></i>导出</a>
+				<a data-goback="page" 
+	 href="N&L/NLDquey.html" 
+			class="btn btn-sm blue ajaxify"><i class="fa fa-reply"></i>返回</a>
+		</div>
+	</form> 
+</div>
+<script type="text/javascript">
+	//N&L评价表
+	 $(document).one("onload.dms",function(event,container){
+	dmsCommon.ajaxRestRequest({
+		
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findCountInNlEvaluate/{[agenda_id]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			var columns1=[];
+			var columns2=[];
+			columns1.push({field : "COLUMN1",rowspan: 2,colspan : 1,align : "center"});
+			columns1.push({field : "COLUMN2",rowspan: 2,colspan : 1,align : "center"});
+			if(data > 0){
+				for(var i=1; i<=data; i++){
+					columns1.push({field : "CAR_"+i,title : "第"+i+"台",rowspan: 1,colspan : 2,align : "center"});
+					columns2.push({field : "CAR_"+i+"_B",title : "开始",align : "center"});
+					columns2.push({field : "CAR_"+i+"_E",title : "结束",align : "center"});
+				}
+			}
+			columns1.push({field : "COLUMN3",rowspan: 1,colspan : 1,align : "center"});
+			
+			
+			new Datatable().initLocale({
+				src : "dNlList",
+				url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findNlEvaluateDetail/{[AGENDA_ID]}",
+				container : container,
+				rowID : "ID",
+				autoHeight : false,
+				isShowLineNumber : false,
+				columns : [columns1,columns2],
+				onLoadSuccess : function(){
+					//奇数行(XX损失时间) 单元格合并
+					for(var index=0;index<=17;index++){
+						if(index%2 != 0){
+							$("#dNlList tr[data-index="+index+"]",container).css("background-color","#D3D3D3");
+							for(var i=1;i<=data;i++){
+				  	        	$("#dNlList",container).bootstrapTable('mergeCells',{index:index, field:"CAR_"+i+"_B", colspan: 2, rowspan: 1});   
+							}
+						}
+					}
+				}
+			});
+		}
+	});
+	$("a[data-onclickEvent='true']",container).on("dms.click",function(event){
+		$("#maomao",container).attr("data-url","/patrolReport/exportPatrolReport1/"+"{[id]}");
+	});
+	
+	
+	 }); 
+	</script>
+	

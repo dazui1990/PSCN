@@ -1,0 +1,619 @@
+<style>
+#addPatrolReport tr td{
+	text-align: center;
+	vertical-align: middle!important;
+}
+/* 评价项大类 标签样式 */
+#addPatrolReport li a{
+	margin-bottom: 8px !important;
+}
+/* 激活样式*/
+#addPatrolReport ul > li.active > a{
+	font-size: 14px;
+   	color: #FFF !important;
+	border-color: #3598dc !important;
+    background-color: #3598dc !important;
+}
+/* 整改计划书样式*/
+#addPatrolReport #pCorrectList span{
+	white-space:pre-wrap !important;
+	word-wrap:break-word;
+  	word-break:break-all;
+}
+#addPatrolReport #pCorrectList td{
+	vertical-align:middle;
+}	
+/* 评价项大类 */
+#addPatrolReport #pCorrectList td:nth-child(2){
+	min-width:100px;
+}
+/* 评价项项目 */
+#addPatrolReport #pCorrectList td:nth-child(3){
+	min-width:120px;
+}
+/* 评价项项目基准 */
+#addPatrolReport #pCorrectList td:nth-child(4){
+	min-width:140px;
+}
+/* 建议实施措施 */
+#addPatrolReport #pCorrectList td:nth-child(5){
+	min-width:180px;
+	text-align:left !important;
+}
+/* 本店实施措施 */
+#addPatrolReport #pCorrectList td:nth-child(6){
+	min-width:180px;
+	text-align:left !important;
+}
+/* 责任人 */
+#addPatrolReport #pCorrectList td:nth-child(7){
+	min-width:75px;
+}	
+</style>
+<div class="dms-add" id="addPatrolReport">
+<div class="panel panel-default">
+  <div class="row" style="padding: 20px 0px">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="col-xs-3">
+			<label class="control-label col-xs-10" id="titleName"></label>
+		</div>
+		<div class="col-xs-3">
+			<label class="control-label col-xs-10" id="titleDate"></label>
+		</div>
+		<div class="col-xs-3">
+			<label class="control-label col-xs-10" id="titleBy"></label>
+		</div>
+		<div class="col-xs-3" style="text-align:center;">
+			<a id="btnF" class="btn blue" style="width:100px;float:left" 
+				data-toggle="modal" data-url="manage/patrolReport/addReportFile.html" 
+				data-beforeShowEvent="true" data-width="modal-lg">
+				<i class="fa fa-paperclip"> 附件上传</i>
+			</a>
+	    </div>
+	</div>
+  </div>
+  <!-- 操作按钮 -->
+  <div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+		<div class="col-xs-3" style="text-align: center;"> 
+		<a id="btnE" class="btn blue" style="width: 100px">巡回评价表
+	    </a>
+	    </div>
+		<div class="col-xs-3" style="text-align: center;">
+		<a id="btnNL" class="btn blue" style="width: 100px">N&L评价
+	    </a>
+		</div>	    
+		<div class="col-xs-3" style="text-align: center;">
+		<a id="btnO" class="btn blue" style="width: 100px">其他评价
+	    </a>
+		</div>
+		<div class="col-xs-3" style="text-align: center;">
+		<a id="btnC" class="btn blue" style="width: 100px">整改计划书
+	    </a>
+		</div>
+	</div>
+  </div><br>
+  <form class="form-horizontal">
+	<input type="hidden" name="dealerId" value="{[DEALER_ID]}">
+	<input type="hidden" name="dealerCode" value="{[DEALER_CODE]}">
+	<input type="hidden" name="dealerName" value="{[DEALER_SHORTNAME]}">
+	<input type="hidden" id="agendaId" name="agendaId" value="{[AGENDA_ID]}">
+	<input type="hidden" id="evaluateId" name="evaluateId" value="{[ID]}">
+	<input type="hidden" name="evaluateName" value="{[EVALUATE_NAME]}">
+	<input type="hidden" name="evaluateDate" value="{[EVALUATE_DATE]}">
+	<input type="hidden" name="evaluateBy" value="{[EVALUATE_BY]}">
+	<input type="hidden" id="FLAG" name="FLAG" value="{[FLAG]}">
+	<!-- 巡回评价表 -->
+	<div id="evaluate">
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<ul id="eItem" class="nav col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+				<table class="table table-striped table-bordered table-hover table-responsive" id="pEvaluateList"></table>
+			</div>
+		</div>
+	</div>
+	<!-- N&L评价表 -->
+	<div id="nl">
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+ 				<table class="table table-striped table-bordered table-hover table-responsive" id="pNlList"></table>
+ 			</div>
+		</div>
+	</div>
+	<!-- 其他评价表 -->
+	<div id="other">
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive" id="pOtherList"></table>
+			</div>
+		</div>
+	</div>
+	<!-- 整改计划书 -->
+	<div id="correct">
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive" id="pCorrectList"></table>
+			</div>
+		</div>
+	</div><br>
+	<!-- 报告说明 -->
+	<div id="message" > 
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+			<div class="modal-header">
+				<div class="modal-title">报告说明</div>
+			</div>
+			<input type="hidden" id="msgId" name="msgId">
+			<textarea id="reportMsg" name="reportMsg" onkeyup="checkLength(this)" 
+				class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 80px;"></textarea>
+			</div>
+		</div>
+	</div>
+	</form> 
+	<div class="form-actions">
+		<a id="btnSave" class="btn blue" data-url="/patrolReport/save" data-model="manage" data-method="POST" 
+			data-callBack="true" data-toggle="confirmation">保存</a>&nbsp;&nbsp;
+		<a id="btnPublish" class="btn blue" data-url="/patrolReport/publish" data-model="manage" data-method="POST" 
+			data-callBack="true" data-toggle="confirmation">发布</a>&nbsp;&nbsp;	
+		<a class="btn blue ajaxify" data-goback="page" href="manage/patrolReport/makePatrolReport.html">
+			<i class="fa fa-reply"></i>返回
+		</a>		
+		<a id="btnJump" style="display:none;" class="btn" data-goback="page" data-onclickEvent='true'></a>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	
+	$("#titleName",container).html("售后运营评价表  -> 巡回评价表");
+	$("#titleDate",container).html(showZhDate("计划评价日期",{[EVALUATE_DATE]}));
+	$("#titleBy",container).html("评价人 ：" + "{[EVALUATE_BY_NAME]}");
+	var flag= $("#FLAG",container).val();
+	
+/* 	//根据巡店计划Id查询N&L评价表Id和其他评价表Id
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findNlAndOtherByAgendaId/{[AGENDA_ID]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			$("#nlId",container).val(data.nlId);
+			$("#otherId",container).val(data.otherId);
+		}
+	}); */
+	
+	var evaluateId1 = 0;
+	if(flag==1){
+	//加载巡店评价表 评价项大类
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findItemIdsById/{[ID]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			data.forEach(function(value,index){
+				$("#eItem",container).append("<li class='col-xs-3'><a id='eItem"+index+"' name='eItem' data-toggle='tab' class='btn blue btn-outline' onclick='changeEvaluate("+value.bigitemid+");'>"+value.bigitemname+"</a></li>");
+				//默认查询第一个
+				if(index == 0){
+					evaluateId1 = value.bigitemid;
+					$("#eItem0",container).click();
+				}
+			})
+		}
+	});
+		
+	//巡回评价表
+	var evaluateUrl = dmsCommon.getDmsPath()["manage"] + "/patrolReport/findEvaluateDetail/{[ID]}/"+evaluateId1; 
+	new Datatable().initLocale({
+		src : "pEvaluateList",
+		container : container,
+		url : evaluateUrl,
+		autoHeight : false,
+		height:320,
+		columns : [ 
+		    {field : "PROJECT_NAME",title : "评价项项目"},
+			{field : "BENCHMARKS_NAME",title : "评价项项目基准"},
+			{field : "EVALUATE_STATUS",title : "评价",codeFormat : {type:"dict",codeType:"9203"}},
+ 		    {field : "URL",title : "照片/视频",formatter:function(value,row,index){
+ 		    	if(row.FILE_SIZE != null){
+ 			         return '<input type="hidden" id="billId'+index+'" value="'+row.URL+'">'
+ 				    +'<a class="btn" name="queryFile" data-beforeShowEvent="true" data-url="manage/patrolReport/findReportFile.html" data-toggle="modal" data-width="modal-lg">查看</a>';
+ 		    	}else{
+ 		    		return '';
+ 		    	}
+			}},				
+			{field : "REMARK",title : "备注"},
+			{field : "RULE_NAME",title : "得分规则名称"},
+			{field : "WEIGHT_RATIO",title : "权重"},
+			{field : "SCORE",title : "得分"}
+		],
+		 onLoadSuccess: function (data) {
+				$("#pEvaluateList a[name='queryFile']",container).on("beforeShow.dms",function(event,returnResult){
+					var billId = formatNull($(this).prev().val());
+					//评价项项目维护附件
+					var billType = 10421010;
+					var map={billId:billId,billType:billType};
+					$(this).data("pageData",map);
+					returnResult.status = true;
+				});
+				
+ 	            //合并单元格
+			    var data = $('#pEvaluateList').bootstrapTable('getData', true);
+	            mergeCells(data, "", "PROJECT_NAME", 1, $('#pEvaluateList'));
+	            mergeCells(data, "PROJECT_NAME", "RULE_NAME", 1, $('#pEvaluateList'));
+	            mergeCells(data, "PROJECT_NAME", "WEIGHT_RATIO", 1, $('#pEvaluateList'));
+	            mergeCells(data, "PROJECT_NAME", "SCORE", 1, $('#pEvaluateList'));
+		}
+	});
+	}
+	//N&L评价表
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findCountInNlEvaluate/{[AGENDA_ID]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			var columns1=[];
+			var columns2=[];
+			columns1.push({field : "COLUMN1",rowspan: 2,colspan : 1,align : "center"});
+			columns1.push({field : "COLUMN2",rowspan: 2,colspan : 1,align : "center"});
+			if(data > 0){
+				for(var i=1; i<=data; i++){
+					columns1.push({field : "CAR_"+i,title : "第"+i+"台",rowspan: 1,colspan : 2,align : "center"});
+					columns2.push({field : "CAR_"+i+"_B",title : "开始",align : "center"});
+					columns2.push({field : "CAR_"+i+"_E",title : "结束",align : "center"});
+				}
+			}
+		
+			new Datatable().initLocale({
+				src : "pNlList",
+				url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findNlEvaluateDetail/{[AGENDA_ID]}",
+				container : container,
+				autoHeight : false,
+				height:480,
+				isShowLineNumber : false,
+				columns : [columns1,columns2],
+				onLoadSuccess : function(){
+					//奇数行(XX损失时间) 单元格合并
+					for(var index=0;index<=17;index++){
+						if(index%2 != 0){
+							$("#pNlList tr[data-index="+index+"]",container).css("background-color","#D3D3D3");
+							for(var i=1;i<=data;i++){
+				  	        	$("#pNlList",container).bootstrapTable('mergeCells',{index:index, field:"CAR_"+i+"_B", colspan: 2, rowspan: 1});   
+							}
+						}
+					}
+				}
+			});
+		}
+	});
+	
+/* 	//N&L评价表
+	 new Datatable().initLocale({
+		src : "pNlList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findNlEvaluate/{[AGENDA_ID]}",
+		autoHeight : false,
+		columns : [
+			{field : "NL_SURFACE_NAME",title : "评价表名称"},
+			{field : "NL_NEWADD_DATE",title : "评价完成时间",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD HH:mm");
+			}},
+			{field : "CREATED_BY_NAME",title : "评价人"},
+		    {field : "ID",title : "详情", formatter:function(value,row,index){
+		    	return '<a id="btnNLD" class="btn ajaxify" title="详情" href="manage/patrolReport/findNlEvaluateDetailA.html"'
+				  +'data-beforeShowEvent="true" value='+value+'><i class="fa fa-lg fa-list-alt"></i></a>';
+		    }}
+		],
+		onLoadSuccess: function (data) {
+			$("#pNlList #btnNLD",container).on("beforeShow.dms",function(event,returnResult){
+				//页面初始化参数传入详情页面用于返回
+				var nlId = $(this).attr("value");
+				var map= {  NL_ID:nlId,ID:{[ID]},AGENDA_ID:{[AGENDA_ID]},
+							DEALER_ID:{[DEALER_ID]},DEALER_CODE:"{[DEALER_CODE]}",DEALER_SHORTNAME:"{[DEALER_SHORTNAME]}",
+							EVALUATE_NAME:"{[EVALUATE_NAME]}",EVALUATE_DATE:{[EVALUATE_DATE]},
+		 					EVALUATE_BY:"{[EVALUATE_BY]}",EVALUATE_BY_NAME:"{[EVALUATE_BY_NAME]}"
+						 };
+				$(this).data("pageData",map);
+				returnResult.status = true; 
+			});
+		}
+	}); */ 
+	
+	//其他评价表
+	 new Datatable().initLocale({
+		src : "pOtherList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findOtherEvaluate/{[AGENDA_ID]}",
+		autoHeight : false,
+		height:480,
+		columns : [
+			{field : "EVALUATE_NAME",title : "评价表名称"},
+			{field : "EVALUATE_DATE",title : "计划评价时间",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+			}},
+			{field : "EVALUATE_BY_NAME",title : "评价人"},
+		    {field : "ID",title : "详情", formatter:function(value,row,index){
+		    	return '<a id="btnOtherD" class="btn ajaxify" title="详情" href="manage/patrolReport/findOtherEvaluateDetailA.html"'
+				  +'data-beforeShowEvent="true" value='+value+'><i class="fa fa-lg fa-list-alt"></i></a>';
+		    }}
+		],
+		onLoadSuccess: function (data) {
+			$("#pOtherList #btnOtherD",container).on("beforeShow.dms",function(event,returnResult){
+				//页面初始化参数传入详情页面用于返回
+				var otherId = $(this).attr("value");
+				var map= {  OTHER_ID:otherId,ID:{[ID]},AGENDA_ID:{[AGENDA_ID]},
+							DEALER_ID:"{[DEALER_ID]}",DEALER_CODE:"{[DEALER_CODE]}",DEALER_SHORTNAME:"{[DEALER_SHORTNAME]}",
+							EVALUATE_NAME:"{[EVALUATE_NAME]}",EVALUATE_DATE:{[EVALUATE_DATE]},
+						 	EVALUATE_BY:"{[EVALUATE_BY]}",EVALUATE_BY_NAME:"{[EVALUATE_BY_NAME]}"
+						 };
+				$(this).data("pageData",map);
+				returnResult.status = true; 
+			});
+		}
+	});
+		
+	if(flag==1){
+	//整改计划书
+	new Datatable().initLocale({
+		src : "pCorrectList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/correctPlan/findCorrectPlanDetail/{[ID]}",
+		autoHeight : false,
+		height:480,
+		columns : [ 
+		    {field : "ITEM_NAME",title : "评价项大类",formatter:function(value,row,index){
+				return "<span id='ITEM_NAME"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+		    {field : "PROJECT_NAME",title : "评价项项目",formatter:function(value,row,index){
+		    	return "<span id='PROJECT_NAME"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+		    {field : "BENCHMARKS_NAME",title : "评价项项目基准",formatter:function(value,row,index){
+		    	return "<span id='BENCHMARKS_NAME"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+			{field : "IMPLEMENT_MEASURE",title : "建议实施措施",formatter:function(value,row,index){
+				return "<span id='IMPLEMENT_MEASURE"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+			{field : "REAL_MEASURE",title : "本店实施措施",formatter:function(value,row,index){
+				return "<span id='REAL_MEASURE"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+			{field : "RESPONSIBLE_BY",title : "责任人",formatter:function(value,row,index){
+				return "<span id='RESPONSIBLE_BY"+index+"'>"+formatNull(value)+"</span>";
+		    }},
+			{field : "PLAN_FINISH_DATE",title : "计划完成时间",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+			}},
+			{field : "REAL_FINISH_DATE",title : "实际完成时间",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+			}},
+  		    {field : "FILE_ID",title : "附件",formatter:function(value,row,index){
+  		         return '<input type="hidden" id="billId'+index+'" value="'+row.ID+'">'
+  				    +'<a class="btn" name="queryFile" data-beforeShowEvent="true" data-url="manage/patrolReport/findReportFile.html" data-toggle="modal" data-width="modal-lg">查看</a>';
+  			}},	 
+  			{field : "AUDIT_DATE",title : "审批日期",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+			}},
+			{field : "CLOSE_DATE",title : "关闭日期",formatter:function(value,row,index){
+				return formatNull(value)==""?"":formatDate(value,"YYYY-MM-DD");
+			}},
+			{field : "CORRECT_STATUS",title : "状态",codeFormat : {type : "dict",codeType : "9204"}}
+		],
+		 onLoadSuccess : function(){
+			$("#pCorrectList tbody tr",container).each(function(index,element){
+				var correctStatus = $(this).find("td").eq(12).text();
+				if(correctStatus == "店端已上传"){
+					$(this).css("background-color","#ffff99");
+				}
+ 				//逾期未完成显示为红色
+ 				//修复非GOOGLE浏览器 无法date(XXXX-XX-XX)格式的日期 
+				var planDateStr = $(this).find("td").eq(7).text().replace(new RegExp(/-/gm) ,"/");
+				var finishDateStr = $(this).find("td").eq(8).text().replace(new RegExp(/-/gm) ,"/");
+				if(finishDateStr!=null && finishDateStr!=""){
+					var planDate = new Date(planDateStr);
+					var finishDate = new Date(finishDateStr);
+					if(finishDate.getTime() > planDate.getTime()){
+						$(this).css("background-color","#ff9999");
+					}
+				}
+			});
+			
+			//查看附件
+			$("#pCorrectList a[name='queryFile']",container).on("beforeShow.dms",function(event,returnResult){
+				var billId = formatNull($(this).prev().val());
+				//整改计划附件
+				var billType = 10421002;
+				var data={billId:billId,billType:billType};
+				$(this).data("pageData",data);
+				returnResult.status = true;
+			});
+			
+            //合并单元格
+		    var data = $('#pCorrectList').bootstrapTable('getData', true);
+            mergeCells(data, "ITEM_NAME", 1, $('#pCorrectList'));
+            mergeCells(data, "PROJECT_NAME", 1, $('#pCorrectList'));
+		}  
+	});
+	}
+	
+	//巡回报告说明
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/patrolReport/findFirstPatrolReportMsg/{[AGENDA_ID]}",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			//处理textarea换行
+			var reg=new RegExp("&lt;br&gt;","g"); //创建正则RegExp对象  
+			var reportMsg = data.reportMsg;
+			if($.trim(reportMsg)){
+				reportMsg = reportMsg.replace(reg,"\r\n");
+			}
+			$("#reportMsg").val(reportMsg);
+			$("#msgId").val(data.msgId);
+		}
+	});
+		
+	//初始显示巡回评价表
+	$("#nl",container).css("display","none");
+	$("#other",container).css("display","none");
+	$("#correct",container).css("display","none");
+	
+	//事件点击
+	$("#btnE",container).click(function(){
+		$("#titleName",container).html("售后运营评价表  -> 巡回评价表");
+		$("#titleDate",container).html(showZhDate("计划评价日期",{[EVALUATE_DATE]}));
+		$("#titleBy",container).html("评价人 ：" + "{[EVALUATE_BY_NAME]}");
+		$("#evaluate",container).css("display","block");
+		$("#nl",container).css("display","none");
+		$("#other",container).css("display","none");
+		$("#correct",container).css("display","none");
+	});
+	$("#btnNL",container).click(function(){
+		$("#titleName",container).html("售后运营评价表  -> N&L评价表");
+		$("#titleDate",container).html("");
+		$("#titleBy",container).html("");
+		$("#evaluate",container).css("display","none");
+		$("#nl",container).css("display","block");
+		$("#other",container).css("display","none");
+		$("#correct",container).css("display","none");
+	});
+	$("#btnO",container).click(function(){
+		$("#titleName",container).html("售后运营评价表  -> 其他评价表");
+		$("#titleDate",container).html("");
+		$("#titleBy",container).html("");
+		$("#evaluate",container).css("display","none");
+		$("#nl",container).css("display","none");
+		$("#other",container).css("display","block");
+		$("#correct",container).css("display","none");
+	});
+	$("#btnC",container).click(function(){
+		$("#titleName",container).html("售后运营评价表  -> 整改计划书");
+		$("#titleDate",container).html("");
+		$("#titleBy",container).html("");
+		$("#evaluate",container).css("display","none");
+		$("#nl",container).css("display","none");
+		$("#other",container).css("display","none");
+		$("#correct",container).css("display","block");
+	});
+	
+	 //点击附件上传时 将巡回计划ID传入附件子窗口
+	 $("#btnF",container).on("beforeShow.dms",function(event,returnResult){
+		 var agendaId = {[AGENDA_ID]};
+		 var data = {agendaId:agendaId};
+		 $(this).data("pageData",data); 
+		 returnResult.status = true;
+	 });
+	 
+	//跳转到查看页面
+	$("#btnJump",container).on("click",function(event){
+		var loadContainer = dmsIndex.changeActiveFunc(701002);
+	   	dmsCommon.ajaxPageRequest({
+	    	url:'manage/patrolReport/findPatrolReport.html',
+	        container:loadContainer,//定义容器 
+	   	    complete:function(xmlRequest, statusCode){
+	     	    window.setTimeout(function(){
+	     	    	$("#dealer_id").selectpicker('val',"{[DEALER_ID]}");
+	     	    	$("#search").click();
+				},100);
+	    	   } 
+	    }); 
+	});
+	
+	
+	//保存回调
+	$("#btnSave",container).on("callBack.dms",function(event,response){
+		//刷新当前新增页面
+		dmsCommon.refreshPageByUrl("manage/patrolReport/addPatrolReport.html",container);
+	});
+		
+	//发布回调
+	$("#btnPublish",container).on("callBack.dms",function(event,response){
+		//跳转到查看页面
+	    $("#btnJump",container).click();
+		//关闭制作页面
+		$("a[href='#funcId_701001'] i").click();
+	});
+	
+}); 
+
+//巡回评价表 标签切换
+function changeEvaluate(itemId){
+	var evaluateUrl = dmsCommon.getDmsPath()["manage"] + "/patrolReport/findEvaluateDetail/{[ID]}/"+itemId; 
+	$("#pEvaluateList",getElementContext()).bootstrapTable('refresh',{url : evaluateUrl} );
+}
+
+//显示中文日期
+function showZhDate(name,inDate){
+	//评价日期格式为年 月 日
+	var date = new Date(inDate);
+	var year = date.getFullYear();
+	var month = date.getMonth()+1;
+	var day = date.getDate();
+	return name+"： "+year+"年"+month+"月"+day+"日";
+}
+
+//日期格式化
+/* function formatDate(date) {
+	  var d = new Date(date),
+	    month = '' + (d.getMonth() + 1),
+	    day = '' + d.getDate(),
+	    year = d.getFullYear();
+	 
+	  if (month.length < 2) month = '0' + month;
+	  if (day.length < 2) day = '0' + day;
+	 
+	  return [year, month, day].join('-');
+} */
+
+/**
+ * 合并单元格
+ * @param data  原始数据
+ * @param fieldName 合并属性名称
+ * @param colspan   合并列
+ * @param target    目标表格对象
+ */
+function mergeCells(data,mFieldName,fieldName,colspan,target){
+	//合并起始行
+    var index = 0;
+	//合并行数
+    var count = 1;
+    for(var i = 1 ; i < data.length ; i++){
+    	//没有依赖属性  主要列合并
+    	if(mFieldName.length == 0){
+       		if(data[i-1][fieldName] == data[i][fieldName]){
+       			count += 1;
+       		}else{
+      	        $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+      	        index += count;
+      	        count = 1;
+       		}
+       		
+       		if(i == data.length-1){
+       		    $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+       		}
+    	}
+    	//依赖列合并
+    	else{
+       		if(data[i-1][fieldName] == data[i][fieldName] && data[i-1][mFieldName] == data[i][mFieldName]){
+       			count += 1;
+       		}else{
+      	        $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+      	        index += count;
+      	        count = 1;
+       		}
+       		
+       		if(i == data.length-1){
+       		    $(target).bootstrapTable('mergeCells',{index:index, field:fieldName, colspan: colspan, rowspan: count});   
+       		}    		
+    	}
+    }
+}
+//报告说明字数限制1000
+function checkLength(a){
+	var length = $(a).val().length;
+	if(length > 1000){
+    	dmsCommon.tip({status:"error",msg:"字数上限为500字！"});
+    	var value = $(a).val().substring(0,500);
+    	$(a).val(value);
+	}
+}
+</script>

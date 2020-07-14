@@ -1,0 +1,67 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4 ">评价表名称</label>
+						<div class="col-xs-8">
+							<input type="text" class="form-control" id="evaluatename" name="evaluatename">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-xs-12">
+					<div class="query-btn">
+						<a href="javascript:;" class="btn blue  "> <i
+							class="fa fa-search"></i> 查询
+						</a> <a href="javascript:;" class="btn blue"><i
+							class="fa fa-undo"></i> 重置</a>
+						<a class="btn blue" data-url="manage/evaluation/addevlauationmodel.html" data-width="modal-lg_expend" data-toggle="modal"> 
+						<i class="fa fa-plus-square" data-validateUrl="" data-validateMethod="" data-validateModel=""></i> 新增
+							</a> 
+							<a class="btn blue" data-url="manage/evaluation/exportevlauationmodel.html" data-width="modal-lg" data-toggle="modal"> 
+						<i class=" fa fa-download" data-validateUrl="" data-validateMethod="" data-validateModel=""></i> 导入模板下载
+							</a> 
+							<a href="manage/evaluation/importevlauationmodel.html" class="btn blue ajaxify" data-width="modal-lg"> <i
+								class="fa fa-upload"></i>导入
+							</a>
+					</div>
+				</div>
+		   </div>
+		  </div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+		</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive"
+				id="evaluation_listmodle"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "evaluation_listmodle",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/evaluation/model/items",
+		rowID : "id",
+		columns : [ 
+			{field : "evaluate_name",title : "评价表名称"}, 
+			{field : "evealuation_time",title : "有效期"},
+			{field : "code_cn_desc",title : "评价表属性"},
+			{field : "id",title : "操作",operateFormat : [{type:"edit",url:"manage/evaluation/editevlauationmodel.html",openWidth:"modal-lg_expend",doubleClick:true,isShow:function(value, row, index){
+         	   return true;
+            }}]}
+		],
+		 onLoadSuccess: function (data) {
+			 
+		   }	
+	});
+});
+	
+</script>

@@ -1,0 +1,325 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="modal-header">
+			<div class="modal-title">弱项指标-查看</div>
+			<div class="modal-close">
+				<a id="btnClose" data-dismiss="modal" class="btn btn-lg"> <i
+					class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		
+		<input type="hidden" id="yearMonth1Start" name="yearMonth1Start" value={[yearMonth]}>
+		<input type="hidden" id="yearMonth1End" name="yearMonth1End" value={[yearMonth]}>
+		<input type="hidden" id="dealerCode" name="dealerCode" value={[dealerCode]}>
+	</form>
+	<div class="panel panel-default table-panel">
+			<div class="panel-heading">
+				<div class="pannel-name" ></div>
+			</div>
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive" style="word-break:break-all; word-wrap:break-word;" id="weakItemTable">
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).one("onload.dms",function(event, container) {
+		
+		new Datatable().initPagination({
+			src : "weakItemTable",
+			container:container,
+			rowID:"ID",
+			url : dmsCommon.getDmsPath()["manage"] + "/keyIndicatorDisplay/searchWeakTerm",
+			pageSize:30,
+			autoHeight:false,
+			isQueryFirst : true,
+			isShowLineNumber:false,
+			fixedColumns: true,//固定列
+	        fixedNumber:5,//固定几列 
+	        onLoadSuccess: function (data) {
+	        	$(".pagination-detail",container).hide();
+	        },
+	        columns :[
+						{align: 'center',title : "特约店名称",field : "dealername"},
+						{align: 'center',title : "特约店代码",field : "dealerCode"},
+						{align: 'center',title : "大区",field : "orgName"},
+						{align: 'center',title : "区域督导",field : "empName"},
+						{align: 'center',title : "数据截至日期",field : "dataTime"},
+						{align: 'center',title : "进厂达成率（100%）",field : "进厂台次进厂达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "保养达成率（100%）",field : "保养台次保养达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "二保维系率（60%）",field : "客户维系二保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.6){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "保养客户留存率（30%）",field : "客户维系保养客户留存率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.3){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "忠诚客户占比（70%）",field : "客户维系忠诚客户占比",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.7){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "首保维系率（95%）",field : "客户维系首保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.95){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "定保维系率（72%）",field : "客户维系定保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.72){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "过保维系率（30%）",field : "客户维系过保维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.3){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "客户维系率（60%）",field : "客户维系客户维系率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.6){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "机油订货成交率（100%）",field : "保养件订货机油订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "轮胎订货成交率（1.6%）",field : "保养件订货轮胎订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.016){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "添加剂订货成交率（0%）",field : "保养件订货添加剂订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "电瓶订货成交率（4%）",field : "保养件订货电瓶订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.04){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "活性炭滤芯订货成交率（20%）",field : "保养件订货活性炭滤芯订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.2){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							} 
+						}},
+						{align: 'center',title : "空调养护订货成交率（20%）",field : "保养件订货空调养护订货成交率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.2){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "保养件单台（400）",field : "订货单台保养件单台",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 400){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "外观件单台（250）",field : "订货单台外观件单台",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 250){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}
+						}},
+						{align: 'center',title : "用品单台金额（500）",field : "订货单台用品单台金额",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 500){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "新保渗透率（80%）",field : "保险新保渗透率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.8){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "续保目标达成率（100%）",field : "保险续保目标达成率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "延保渗透率（10%）",field : "延保延保渗透率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "IMS系统使用率（60%）",field : "平板接待IMS系统使用率",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 0.6){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						{align: 'center',title : "在线调查综合得分（96）",field : "在线调查综合得分",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 96){
+								return '<span style="color:red">'+value+'</span>'
+							}else{
+								return '<span >'+value+'</span>'
+							}  
+						}},
+						{align: 'center',title : "总经理（1人）",field : "关键岗位总经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "服务经理（1人）",field : "关键岗位服务经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "零部件经理（1人）",field : "关键岗位零部件经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							}  
+						}},
+						{align: 'center',title : "客服经理（1人）",field : "关键岗位客服经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "保险经理（1人）",field : "关键岗位保险经理",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "保修鉴定员（1人）",field : "关键岗位保修鉴定员",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "IDT讲师（业务类）（1人）",field : "关键岗位IDT讲师（业务类）",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							}  
+						}},
+						{align: 'center',title : "IDT讲师（机电类）（1人）",field : "关键岗位IDT讲师（机电类）",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else{
+								return '<span >'+value+'</span>'
+							} 
+						}},
+						{align: 'center',title : "人员数量满足度（100%）",field : "人员数量满足度",formatter:function(value,row,index){
+							if(isStringNull(value)){
+								return '';
+							}else if(value < 1){
+								return '<span style="color:red">'+(value*100).toFixed(2)+"%"+'</span>'
+							}else{
+								return '<span >'+(value*100).toFixed(2)+"%"+'</span>'
+							}
+						}},
+						
+			          ]
+		});
+		
+		
+	});
+</script>
+

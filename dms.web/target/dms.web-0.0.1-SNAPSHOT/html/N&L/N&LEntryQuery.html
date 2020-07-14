@@ -1,0 +1,128 @@
+<style type="text/css">
+.col-center-block {
+	float: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+			<input type="hidden" id="agenda_id" name="agenda_id" value=""/>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<div class="query-btn">
+							<label class="control-label col-xs-4">特约店:</label>
+							<div class="col-xs-8">
+								<select id="dealer_id" class="bs-select form-control"
+									name="dealer_id" data-url="/NLAnalysis/4sdealer"
+									data-model="manage" data-labelValue="DEALER_ID"
+									data-lableDesc="DEALER_SHORTNAME" data-live-search="true"
+									data-size="10" data-existsDefault="true">
+								</select>
+							</div>
+						</div>
+						</div>
+						</div>
+						</div>
+						<div class="row ">
+						<div class="query-btn">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-center-block ">
+							
+							<a id="query" href="javascript:;" data-onclickEvent="true"  class="btn blue" > <i
+							class="fa fa-search"></i> 查询
+						      </a> 
+							
+									<a  id="print" class="btn blue"  data-width="modal-lg" data-beforeShowEvent='true'
+								data-toggle="modal"> <i class="fa fa-plus-square" ></i> 新增
+							</a> 
+								<a id="clickme"  href="N&L/NewFile.html" data-beforeShowEvent="true" style="display: none;" class="btn blue ajaxify  blue">
+							 	<i class="fa fa-search">111</i>
+							</a>
+							</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading">
+			<div class="pannel-name"></div>
+		</div>
+		<div class="panel-body">
+			<table
+				class="table table-striped table-bordered table-hover table-responsive"
+				id="dms_table"></table>
+		</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "dms_table",
+		container:container,
+		isQueryFirst:true, // 是否进入页面查询,默认为true
+		rowID : "ID",
+		url : dmsCommon.getDmsPath()["manage"] + "/NLAnalysis/seachNL",
+		columns : [ 
+		            {field : "dealer_code",title : "特约店代码"},
+		            {field : "dealer_name",title : "特约店简称"},
+		            {field : "NL_surface_name",title : "N&L表名称"}, 
+		            {field : "isfinish",title : "状态 "}, 
+					{field : "NL_newadd_date",title : "新增日期"}, 
+					{field : "nlid",title : "操作",operateFormat : [
+					      {type:"edit",url:"N&L/detailsNewFile.html",openType:"jump",isShow:function(value, row, index){
+	                    	   return true;
+	                       }}
+	                      
+				   	]
+					}
+			     ]	
+	});
+	$("#print",container).on("beforeShow.dms",function(event,returnResult){
+		dmsCommon.ajaxRestRequest({
+			url:dmsCommon.getDmsPath()["manage"] + "/NLAnalysis/saveseach",
+			type : 'GET',
+			async : false,
+			autoHeight:true,
+			dataType: 'JSON',
+			sucessCallBack : function(data) {//成功回调
+				var msg=data.msg;
+				if(msg=='1'){
+					dmsCommon.tip({status:"warning",msg:"当前督导没有计划,不能新增"});
+					returnResult.status=false;
+				}else{
+					var agenda_id=data.id;
+					
+					$("#agenda_id").val(agenda_id);
+					$("#clickme").click();
+					
+				}
+			}
+	
+			
+		});
+	
+		//returnResult.status = false; //通过返回false ，可以控制不弹出后续页面
+	});
+	
+	//点击过后
+	$("#clickme",container).on("beforeShow.dms",function(event,result){
+		var agenda_id=$("#agenda_id").val();
+		var map={agenda_id:agenda_id};
+		$(this).data("pageData",map);
+		//result.status = false; //通过返回false ，可以控制不弹出后续页面
+	});
+	setTimeout(function() {
+	$("a[data-onclickEvent='true']",container).on("dms.click",function(event){
+		$('#query').removeAttr("disabled");
+	});}, 1000); 
+});
+			
+	
+</script>

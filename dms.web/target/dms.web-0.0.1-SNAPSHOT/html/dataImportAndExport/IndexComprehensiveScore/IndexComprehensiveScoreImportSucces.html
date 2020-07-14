@@ -1,0 +1,83 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<div style="position: absolute; left: 900px; top: 5px"
+			class="modal-close">
+			<a data-dismiss="modal" class="btn btn-lg"></a>
+		</div>
+		<div style="position: absolute; left: 900px; top: 5px"
+			class="modal-close"></div>
+		<input type="hidden" id="agendaDate" name="agendaDate" readonly />
+
+		<div class="row">
+			<div class="panel panel-default table-panel">
+				<div class="panel-body">
+					<table
+						class="table table-striped table-bordered table-hover table-responsive"
+						id="parts_table_222"></table>
+				</div>
+			</div>
+			<div class="modal-footer center-block">
+				<a href="javascript:;" class="btn blue ajaxrest"
+					data-url="/insurance/yesIndexComprehensiveScore" data-model="manage"
+					data-method="POST" data-callBack="true">
+					<i class="fa fa-print"></i>确认导入
+				</a>
+				<a data-goback="page" href="dataImportAndExport/IndexComprehensiveScore/IndexComprehensiveScoreSearch.html" class="btn blue ajaxify">
+						<i class="fa fa-reply"></i>返回
+				</a>
+			</div>
+		</div>
+	</form>
+</div>
+<style>
+</style>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	
+	dmsCommon.ajaxRestRequest({
+		url : dmsCommon.getDmsPath()["manage"]+ "/insurance/searchIndexScoreTitleTmp",
+		type : 'GET',
+		async : false,
+		dataType : 'JSON',
+		sucessCallBack : function(data) {
+			var columns1=[];
+			var columns2=[];
+			columns1.push({colspan:1,align: 'center',rowspan:2,title : "年月",field : "ITEM"});
+			columns1.push({colspan:1,align: 'center',rowspan:2,title : "特约店代码",field : "DEALER_CODE"});
+			columns1.push({colspan:1,align: 'center',rowspan:2,title : "特约店简称",field : "DEALER_SHORTNAME"});
+			if(data){
+				var columns1s = data.columns1
+				for(var i=0;i<columns1s.length;i++){
+						columns1.push({align: 'center',field : columns1s[i].BRANCH_ONE+"001",colspan:columns1s[i].NUM,title : columns1s[i].BRANCH_ONE});
+				}
+				var columns2s = data.columns2
+				for(var i=0;i<columns2s.length;i++){
+						columns2.push({field : columns2s[i].ID,align: 'center',title : columns2s[i].BRANCH_TWO});
+				}
+			}				
+			new Datatable().initPagination({
+				src : "parts_table_222",
+				container:container,
+				rowID:"ID",
+				url : dmsCommon.getDmsPath()["manage"] + "/insurance/queryTmpIndexComprehensiveScore",
+				pageSize:30,
+				autoHeight:false,
+				isQueryFirst : false,
+				isShowLineNumber:false,
+				onLoadSuccess:function(){
+				},
+				columns :[columns1,columns2]
+			});
+		}
+	});
+	
+	$("a[data-callBack='true']", container).on("callBack.dms",function(event, response) {
+		dmsCommon.ajaxPageRequest({
+					url : 'dataImportAndExport/IndexComprehensiveScore/IndexComprehensiveScoreSearch.html',
+					container : $('#funcId_201104'),//定义容器
+					success : function(html) {
+					},
+				});
+	});
+});
+</script>

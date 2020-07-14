@@ -1,0 +1,140 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="control-label col-xs-4">开始时间</label>
+							<div class="col-xs-8">
+								<div class="input-group date date-picker"
+									data-defaultToday="true" data-orientation="top left">
+									<input id="Begin" name="Begin" class="form-control" type="text"
+										value="" readonly /> <span class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="form-group">
+							<label class="control-label col-xs-4">至</label>
+							<div class="col-xs-8">
+								<div class="input-group date date-picker"
+									data-defaultToday="true" readonly data-orientation="top left">
+									<input id="End" name="End" class="form-control" type="text"
+										value="" readonly /> <span class="input-group-btn">
+										<button class="btn default date-set" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+										<button class="btn default date-reset" type="button">
+											<i class="fa fa-times"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<label class="control-label col-xs-4">督导：</label>
+						<div class="col-xs-8">
+							<select id="duDaoId" name="duDaoId"
+								class="bs-select form-control" data-model="manage"
+								data-url="/basedata/select/dudao" data-labelValue="EMPLOYEE_NO"
+								data-lableDesc="EMPLOYEE_NAME" data-size="15"
+								data-live-search="true" data-existsDefault="true">
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-4">
+					<label class="control-label col-xs-4">是否按照时间维度:</label>
+						<div class="col-xs-8">
+							<input id="flag" name="flag" type="radio" data-dictCode="1004"
+								data-allFlag="false"
+								data-value="10041002" />
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="query-btn">
+						<a id="queryBtn" href="javascript:;" class="btn blue  "> <i
+							class="fa fa-search"></i> 查询
+						</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:;"
+							data-url="/report/weakStatistics/export" data-model="manage"
+							data-method="downLoad" class="btn blue ajaxrest"
+							data-validate="false"> <i class="fa fa-download"></i>导出
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default table-panel">
+			<div class="panel-body">
+				<table
+					class="table table-striped table-bordered table-hover table-responsive"
+					id="tourList"></table>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading"></div>
+		<div class="panel-body">
+			<table
+				class="table table-striped table-bordered table-hover table-responsive"
+				id="weakStatistics_list"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).one(
+			"onload.dms",
+			function(event, container) {
+				new Datatable().initPagination({
+					src : "weakStatistics_list",
+					container : container,
+					url : dmsCommon.getDmsPath()["manage"]
+							+ "/report/weakStatistics/find",
+					rowID : "evaluate_by",
+					pageSize : 50,
+					autoHeight : false,
+					height : 520,
+					columns : [ {
+						field : "evaluate_by",
+						title : "人员编号"
+					}, {
+						field : "EMPLOYEE_NAME",
+						title : "区域督导"
+					}, {
+						field : "GLDE_NUM",
+						title : "管理店数"
+					}, {
+						field : "CORRECT_NUM",
+						title : "总共下达条数"
+					}, {
+						field : "OVERDUE_UNFINISH_NUM",
+						title : "已到期条数"
+					}, {
+						field : "FK_NUM",
+						title : "特约店到期反馈条数"
+					}, {
+						field : "DDTF_NUM",
+						title : "督导通过条数"
+					}, {
+						field : "DDCLOSE_NUM",
+						title : "已到期关闭条数"
+					}, {
+						field : "GS_NUM",
+						title : "店均改善计划数量"
+					}, {
+						field : "TG_LV",
+						title : "整改计划通过率"
+					} ]
+				});
+			});
+</script>

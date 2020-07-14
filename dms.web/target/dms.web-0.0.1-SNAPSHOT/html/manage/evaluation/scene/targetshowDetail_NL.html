@@ -1,0 +1,71 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+		<input type="hidden" value="{[EMPLOEE_ID]}" name="emploeeId" id="emploeeId" >
+		<div class="modal-header">
+			<div class="modal-title">人员履历信息</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i>
+				</a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover table-responsive"
+				id="targetshow_detail_NL"></table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal-footer center-block">
+			<a data-dismiss="modal" class="btn blue"><i
+				class="fa fa-undo"></i>返回
+			</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one(
+		"onload.dms",
+		function(event, container) {
+			new Datatable().initPagination({
+				src : "targetshow_detail_NL",
+				container:container,
+				url : dmsCommon.getDmsPath()["manage"] + "/evaluation/scene/targetshow_detail_nl",
+				pageSize:50,
+				autoHeight:false,
+				Height:400,
+				width:800,
+				isQueryFirst : true,
+				isShowLineNumber:false,
+				rowID : "id",
+				columns : [ 
+					{field : "BEGIN_DATE",title : "开始时间"}, 
+					{field : "END_DATE",title : "结束时间"},
+					{field : "CLASS_NAME",title : "培训名称"},
+					{field : "COURSE_NAME",title : "课程名称"},
+					{field : "POINT",title : "培训成绩"},
+					{field : "IS_PASS",title : "是否通过",formatter:function(value,row,index){
+				    	var is_pass=row.IS_PASS;
+				    	if(is_pass==12781001){
+				    		return "是";
+				    	}else{
+				    		return "否";
+				    	}
+				    }
+						
+					
+					}
+				],
+				 onLoadSuccess: function (data) {
+						$(".pagination-detail").hide();
+						$(".pagination").hide();
+				   }	
+			});
+			
+		});
+</script>
+
+

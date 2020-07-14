@@ -1,0 +1,153 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="form-group">
+							<label class="control-label col-xs-4 ">特约店代码</label>
+							<div class="col-xs-8">
+								<input type="text" class="form-control" id="dealer_shortname"
+									name="dealer_shortname"> <input type="hidden"
+									class="form-control" id="property_id" name="property_id"
+									value="10371002">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row ">
+					<div class="col-xs-12">
+						<div class="query-btn">
+							<a href="javascript:;" class="btn blue  "> <i
+								class="fa fa-search"></i> 查询
+							</a> <a href="javascript:;" class="btn blue"><i
+								class="fa fa-undo"></i> 重置</a>
+							<!--  
+						<a class="btn blue" data-url="/evaluation/scene/saveotherevaluate" data-method="POST"  data-model="manage" 
+				           data-callBack="true"  data-toggle="confirmation"> 
+						<i class="fa fa-plus-square" data-validateUrl="" data-validateMethod="" data-validateModel=""></i> 新增
+							</a> 
+							-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="panel panel-default table-panel ">
+		<div class="panel-heading"></div>
+		<div class="panel-body">
+			<table
+				class="table table-striped table-bordered table-hover table-responsive"
+				id="evaluation_listother"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document)
+			.one(
+					"onload.dms",
+					function(event, container) {
+						new Datatable()
+								.initPagination({
+									src : "evaluation_listother",
+									container : container,
+									url : dmsCommon.getDmsPath()["manage"]
+											+ "/evaluation/scene/items",
+									rowID : "id",
+									columns : [
+											{
+												field : "dealer_code",
+												title : "特约店代码"
+											},
+											{
+												field : "dealer_shortname",
+												title : "特约店简称"
+											},
+											{
+												field : "evaluate_name",
+												title : "评价表名称"
+											},
+											{
+												field : "evaluate_date",
+												title : "计划评价日期"
+											},
+											{
+												field : "evaluate_flagcn",
+												title : "状态"
+											},
+											{
+												field : "property_value",
+												title : "评级表属性"
+											},
+											/* {
+												field : "id",
+												title : "操作",
+												formatter : function(value,
+														row, index) {
+													if (row.ttevaluate_id == null) {
+														var str = '<input type="hidden" value="'+row.evaluate_date+'" name="evaluate_date" id="evaluate_date'+index+'"><input type="hidden" value="'+row.id+'" name="id" id="id'+index+'">';
+														return str
+																+ '<a class="btn blue" name="dbsImgother" data-beforeShowEvent="true" data-url="manage/evaluation/scene/addotherevaluation.html" data-toggle="modal" data-width="modal-lg_expend" data-tableflag="true">选择模板</a>';
+													} else if (row.evaluate_flag != 92011003
+															&& row.ttevaluate_id != null) {
+														var str = '<input type="hidden" value="'+row.evaluate_name+'" name="evaluate_name" id="evaluate_name'+index+'"><input type="hidden" value="'+row.employee_name+'" name="employee_name" id="employee_name'+index+'"><input type="hidden" value="'+row.evaluate_date+'" name="evaluate_date" id="evaluate_date'+index+'"><input type="hidden" value="'+row.dealer_code+'" name="dealer_code" id="dealer_code'+index+'"><input type="hidden" value="'+row.dealer_id+'" name="dealer_id" id="dealer_id'+index+'"><input type="hidden" value="'+row.property_id+'" name="property_id" id="property_id'+index+'"><input type="hidden" value="'+row.ttevaluate_id+'" name="ttevaluate_id" id="ttevaluate_id'+index+'"><input type="hidden" value="'+row.id+'" name="id" id="id'+index+'">';
+														return str
+																+ '<a  class="btn blue"  name="dbsImgother1" data-beforeShowEvent="true" data-url="manage/evaluation/scene/otherevaluation.html"  data-toggle="modal" data-width="modal-lg_expend"  data-tableflag="true">评价</a>';
+													}
+												}
+											}, */
+											{
+												field : "id",
+												title : "操作",
+												operateFormat : [
+														{
+															type : "edit1",
+															title : "评价",
+															url : "manage/evaluation/scene/otherevaluation.html",
+															openType : "jump",
+															isShow : function(
+																	value, row,
+																	index) {
+																if (row.evaluate_flag != 92011003
+																		&& row.ttevaluate_id != null) {
+																	return true;
+																} else {
+																	return false;
+																}
+															}
+														},
+														{
+															type : "edit2",
+															title : "新增模板",
+															url : "manage/evaluation/scene/addotherevaluation.html",
+															openWidth : "modal-lg",
+															isShow : function(
+																	value, row,
+																	index) {
+																if (row.ttevaluate_id == null) {
+																	return true;
+																} else {
+																	return false;
+																}
+															}
+														} ]
+											} ],
+									onLoadSuccess : function(data) {
+										}
+								});
+					});
+	//页面加载后初始化
+	$(document).one(
+			"onload.dms",
+			function(event, container) {
+				//新增页面的回调函数
+				$("a[data-callBack='true']", container).on(
+						"callBack.dms",
+						function(event, response) {
+							//刷新表格
+							$("#evaluation_listother", getElementContext())
+									.dmsTable().refreshTableWithForm();
+						});
+			});
+</script>

@@ -1,0 +1,100 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	<div class="panel panel-default">
+		<div class="form-group">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+					<label class="control-label col-xs-4">大区:</label>
+					<div class="col-xs-8">
+						<select id="bigOrg" class="bs-select form-control"
+									name="bigOrg" data-url="/basedata/select/bigOrg"
+									data-model="manage" data-labelValue="ORG_ID"
+									data-lableDesc="ORG_NAME" data-live-search="true" data-size="10"  >
+						</select>
+					</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+					<label class="control-label col-xs-4">督导:</label>
+					<div class="col-xs-8">
+						<select id="smallOrg" class="bs-select form-control"
+									name="smallOrg" data-url="/basedata/select/dudao"
+									data-model="manage" data-labelValue="EMPLOYEE_ID"
+									data-lableDesc="EMPLOYEE_NAME" data-live-search="true" data-size="10"  >
+						</select>
+					</div>
+					</div>
+				</div>	
+						
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<label class="control-label col-xs-4">特约店</label>
+					<div class="col-xs-8">
+ 						<select id="dealer_id"
+								class="bs-select form-control"  name="dealer_id"
+								data-url="/supervision/dealer/agendas/dudao" data-model="manage" 
+								data-labelValue="DEALER_ID"	data-lableDesc="DEALER_SHORTNAME"  
+								data-live-search="true"  data-size="10" data-existsDefault="true" >
+						</select> 
+					</div>
+				</div>
+			</div>
+			<div class="row">	
+					<div class="query-btn">
+						<a href="javascript:;" class="btn blue" data-onclickEvent="true"> 
+						 	<i class="fa fa-search" ></i> 查询
+						</a> 
+					</div>
+				</div>
+		</div>
+		</div>
+	</div>
+	</form>
+	<div class="panel panel-default table-panel">
+		<div class="panel-body">
+			<table class="table table-striped table-bordered table-hover table-responsive" id="cPlanList"></table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "cPlanList",
+		container : container,
+		url : dmsCommon.getDmsPath()["manage"] + "/correctPlan/findCorrectPlan",
+		rowID : "ID",
+		sortName : "EVALUATE_DATE",
+		sortOrder : "desc",
+		pageSize:20,
+		isQueryFirst : false,
+		autoHeight : false,
+		columns : [  
+		    {field : "ORG_NAME",title : "大区"},
+		    {field : "EMPLOYEE_NAME",title : "督导"},
+		    {field : "DEALER_CODE",title : "特约店代码"},
+			{field : "DEALER_SHORTNAME",title : "特约店简称"}, 
+			{field : "EVALUATE_NAME",title : "评价表名称"},
+			{field : "EVALUATE_BY_NAME",title : "评价人"},
+			{field : "PUBLISH_DATE",title : "整改计划发布日期",dateFormat : {format:"YYYY-MM-DD"}},
+			{field : "CORRECT_NUM",title : "需整改总数"},
+			{field : "CLOSED_NUM",title : "整改关闭数"},
+			{field : "MONTH_CLOSED_NUM",title : "本月关闭数"},
+			{field : "OVERDUE_UNFINISH_NUM",title : "逾期未完成数"},
+			{field : "PLAN_STATUS",title : "状态",codeFormat : {type : "dict",codeType : "9206"}},
+		    {field : "EVALUATE_ID",title : "操作", operateFormat : [{type:"detail",url:"manage/correctPlan/findCorrectPlanDetail.html",openType:"jump",isShow:function(value, row, index){
+         	   return true;
+            }}]}
+		],
+		onLoadSuccess : function(data){
+			for(var index=0;index<data.rows.length;index++){
+				if(data.rows[index].DEALER_UPDATE_NUM > 0){
+					$("#cPlanList tr[data-index="+index+"]",container).css("background-color","#ff9999");
+				}
+			}
+		}
+	});
+});
+</script>

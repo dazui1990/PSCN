@@ -1,0 +1,315 @@
+<div class="dms-add" id="addAgendaPlan">
+	
+	<form class="form-horizontal" id="Agenda">
+		
+		<input type="hidden" class="form-control" id="agendaPlan" name="agendaPlan"
+			value=''/>
+		<input type="hidden" class="form-control" id="userIdPlan" name="userIdPlan"
+		value=''/>
+		<div class="modal-header">
+			<div class="modal-title">
+				<span id="title"></span>
+			</div>
+			
+		</div>
+		<div class="panel panel-default">
+	     <div class="panel-body">
+	     <br>
+		 <br>
+		 <div style="display:block" id="body1">
+	     	<div class="row">
+	     		<label class="control-label col-sm-1">时间:</label>
+				<div class="col-xs-4 col-sm-4"><!-- 不同分辨率下自适应宽度，从小到大  -->
+					<div class="query-btn">
+					<div class="col-xs-8 col-sm-6">
+						<div class="input-group date date-picker" data-defaultToday = "true">
+							<input id="releaseTimez1" name="releaseTimez1"  readonly="readonly"
+								class="form-control" type="text" value="" />
+							 <span
+								class="input-group-btn">
+								<button id="releaseTimezBut1" class="btn default date-set" type="button">
+									<i class="fa fa-calendar"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+					<div class="col-xs-4">
+								<select id="item_types1" name="item_types1" class="bs-select form-control" data-existsDefault="false" data-dictCode="2007"></select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+					</div>
+					</div>
+				</div>
+				<label style="text-align: left" class="control-label col-xs-1 col-sm-1">~~</label>
+				<div class="col-xs-4 col-sm-4">
+					<div class="query-btn">
+						<div class="col-xs-8 col-sm-6">
+							<div class="input-group date date-picker" data-defaultToday = "false">
+								<input id="releaseTime1" name="releaseTime1"  readonly="readonly"
+									class="form-control" type="text" value="" />
+								 <span
+									class="input-group-btn">
+									<button id="releaseTimeBut1" class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+						<div class="col-xs-4">
+								<select id="item_typex1" name="item_typex1" class="bs-select form-control" data-existsDefault="false" data-dictCode="2007"></select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+							</div>
+					</div>
+				</div>	
+				<div class="col-xs-1 col-sm-1" style="text-align: right">
+				<a href="javascript:;" class="fa fa-remove ajaxrest" style="display: none;" data-callBack="true" id="delete1"  data-url="" data-model="manage" data-method="POST">删除</a></div>
+			</div>
+			<br>
+			<div class="row">
+	     		<label class="control-label col-sm-1">特约店:</label>
+				<div class="col-xs-12 col-sm-4">
+					<div class="query-btn">
+						<div class="col-xs-12 ">
+							<select id="dealer_id1"
+								class="bs-select form-control" name="dealer_id1"
+								data-url="/supervision/dealer/agendas/str"
+								data-model="manage" data-labelValue="DEALER_ID"
+								data-lableDesc="DEALER_SHORTNAME" data-live-search="true"  data-size="10" data-existsDefault = "true">
+							</select>
+							<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+						</div>
+					</div>
+				</div>	
+			</div>
+			<br>
+			<div class="row">
+	     		<label class="control-label col-sm-1">事项:</label>
+				<div class="col-xs-12 col-sm-8 ">
+					<div class="form-group">
+						<div class="col-xs-12">
+						<input id="region1" name="region1" type="checkbox"
+								data-dictCode="9001" data-allFlag="false"
+								 />
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="row">
+	     		<label class="control-label col-sm-1">说明:</label>
+				<div class="col-xs-12 col-sm-4">
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-12">
+						<textarea id="remindercontent1" name="remindercontent1" class="form-control" style="height:100px;"></textarea>
+						</div>
+					</div>
+				</div>	
+			</div>
+			</div>
+			<br>
+			<br>
+			<div style="display:block" id="body2">
+	     	<div class="row">
+	     		<label class="control-label col-sm-1">时间:</label>
+				<div class="col-xs-4 col-sm-4"><!-- 不同分辨率下自适应宽度，从小到大  -->
+					<div class="query-btn">
+					<div class="col-xs-8  col-sm-6">
+						<div class="input-group date date-picker" data-defaultToday = "true">
+							<input id="releaseTimez2" name="releaseTimez2"  readonly="readonly"
+								class="form-control" type="text" value="" />
+							 <span
+								class="input-group-btn">
+								<button id="releaseTimezBut2" class="btn default date-set" type="button">
+									<i class="fa fa-calendar"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+					<div class="col-xs-4">
+								<select id="item_types2" name="item_types2" class="bs-select form-control " data-existsDefault="false" data-dictCode="2007"></select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+					</div>
+					</div>
+				</div>
+				<label style="text-align: left" class="control-label col-xs-1 col-sm-1">~~</label>
+				<div class="col-xs-4 col-sm-4">
+					<div class="query-btn">
+						<div class="col-xs-8 col-sm-6">
+							<div class="input-group date date-picker" data-defaultToday = "false">
+								<input id="releaseTime2" name="releaseTime2"  readonly="readonly"
+									class="form-control" type="text" value="" />
+								 <span
+									class="input-group-btn">
+									<button id="releaseTimeBut2" class="btn default date-set" type="button">
+										<i class="fa fa-calendar"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+						<div class="col-xs-4">
+								<select id="item_typex2" name="item_typex2" class="bs-select form-control" data-existsDefault="false" data-dictCode="2007"></select>
+								<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+							</div>
+					</div>
+				</div>	
+				<div class="col-xs-1 col-sm-1" style="text-align: right">
+				<a href="javascript:;" class="fa fa-remove  ajaxrest" style="display: none;" data-callBack="true" id="delete2"  data-url="" data-model="manage" data-method="POST">删除</a></div>
+			</div>
+			<br>
+			<div class="row">
+	     		<label class="control-label  col-sm-1">特约店:</label>
+				<div class="col-xs-12 col-sm-4">
+					<div class="query-btn">
+						<div class="col-xs-12">
+							<select id="dealer_id2"
+								class="bs-select form-control"  name="dealer_id2"
+								data-url="/supervision/dealer/agendas/str"
+								data-model="manage" data-labelValue="DEALER_ID"
+								data-lableDesc="DEALER_SHORTNAME"  data-live-search="true"  data-size="10" data-existsDefault = "true" >
+							</select>
+							<!--   模糊查询  multiple  多选  data-existsDefault  请选择  data-size="2"  下拉框显示两条-->
+						</div>
+					</div>
+				</div>	
+			</div>
+			<br>
+			<div class="row">
+	     		<label class="control-label col-sm-1">事项:</label>
+				<div class="col-xs-12 col-sm-8">
+					<div class="form-group">
+						<div class="col-xs-12">
+						<input id="region2" name="region2" type="checkbox"
+								data-dictCode="9001" data-allFlag="false"
+								 />
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="row">
+	     		<label class="control-label col-sm-1">说明:</label>
+				<div class="col-xs-12 col-sm-4">
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-12">
+						<textarea id="remindercontent2" name="remindercontent2" class="form-control" style="height:100px;">
+						
+						</textarea>
+						</div>
+					</div>
+				</div>	
+			</div>
+			</div>
+			<br>
+			<br>
+		  </div>
+		</div>
+		<div class="modal-footer">
+			<a data-goback="page" href="manage/basedata/SupervisionManagement/PlanCheckingDetail.html" data-beforeShowEvent="true" class="btn blue ajaxify">
+						<i class="fa fa-reply"></i>返回
+					</a>
+		</div>
+	</form>
+</div>
+<script src="../assets/moment/moment.js" type="text/javascript"></script>
+<script type="text/javascript">
+	//页面加载后初始化
+	$(document).one("onload.dms",function(event, container) {
+		var dateStr = $('#agendaPlan', container).val();
+		 // 当天上午计划
+		
+		 dmsCommon.ajaxRestRequest({
+			url : dmsCommon.getDmsPath()["manage"] + "/supervision/querySupervisionPlanS/"+$("#userIdPlan").val()+"/"+dateStr,
+			dataType:"json",
+			type:"GET",
+			async:true,
+			container:container,
+			sucessCallBack : function(data) {
+				var resultList=data['resultList'];
+				if(resultList.length>0){
+					//创建未提交 ,驳回 可编辑
+					$("#releaseTimez1", container).val(resultList[0].START_DATE);
+					$("#releaseTimez1", container).attr("disabled",true);
+					$("#releaseTimezBut1", container).attr("disabled",true);
+					$("#releaseTime1", container).val(resultList[0].END_DATE);
+					$("#releaseTime1", container).attr("disabled",true);
+					$("#releaseTimeBut1", container).attr("disabled",true);
+					$("#item_types1", container).selectpicker('val',resultList[0].START_DATE_NOON);
+					$("#item_types1", container).attr("disabled",true);
+					$("#item_typex1", container).selectpicker('val',resultList[0].END_DATE_NOON);
+					$("#item_typex1", container).attr("disabled",true);
+					window.setTimeout(function(){
+						$("#dealer_id1", container).selectpicker('val',resultList[0].DEALER_ID);
+						$("#dealer_id1", container).attr("disabled",true);
+					},1000);
+					$("#remindercontent1", container).html(resultList[0].CONTENT);
+					$("#remindercontent1", container).attr("disabled",true);
+					var region = resultList[0].TYPE_VALUE.split(",");
+					for(var i=0;i<region.length;i++){
+						$("input[type=checkbox][name='region1'][value='"+region[i]+"']", container).attr('checked', true);
+					}
+					$("input[type=checkbox][name='region1']", container).attr("disabled",true);
+				}
+			}
+		}); 
+		// 当天上午计划
+		 dmsCommon.ajaxRestRequest({
+			url : dmsCommon.getDmsPath()["manage"] + "/supervision/querySupervisionPlanX/"+$("#userIdPlan").val()+"/"+dateStr,
+			dataType:"json",
+			type:"GET",
+			async:true,
+			container:container,
+			sucessCallBack : function(data) {
+				//resurtMap 当前天的数据   $("#body1")[0].style.display = 'none'; 
+				var resultList=data['resultList'];
+				if(resultList.length>0){
+					//创建未提交 ,驳回 可编辑
+					$("#releaseTimez2", container).val(resultList[0].START_DATE);
+					$("#releaseTimez2", container).attr("disabled",true);
+					$("#releaseTimezBut2", container).attr("disabled",true);
+					$("#releaseTime2", container).val(resultList[0].END_DATE);
+					$("#releaseTime2", container).attr("disabled",true);
+					$("#releaseTimeBut2", container).attr("disabled",true);
+					$("#item_types2", container).selectpicker('val',resultList[0].START_DATE_NOON);
+					$("#item_types2", container).attr("disabled",true);
+					$("#item_typex2", container).selectpicker('val',resultList[0].END_DATE_NOON);
+					$("#item_typex2", container).attr("disabled",true);
+					window.setTimeout(function(){
+						$("#dealer_id2", container).selectpicker('val',resultList[0].DEALER_ID);
+						$("#dealer_id2", container).attr("disabled",true);
+					},1000);
+					$("#remindercontent2", container).html(resultList[0].CONTENT);
+					$("#remindercontent2", container).attr("disabled",true);
+					var region = resultList[0].TYPE_VALUE.split(",");
+					for(var i=0;i<region.length;i++){
+						$("input[type=checkbox][name='region2'][value='"+region[i]+"']", container).attr('checked', true);
+					}
+					$("input[type=checkbox][name='region2']", container).attr("disabled",true);
+				}
+			}
+		}); 
+		 dmsCommon.ajaxRestRequest({
+				url : dmsCommon.getDmsPath()["manage"] + "/supervision/querySupervisionPlan/"+$("#userIdPlan").val()+"/"+dateStr,
+				dataType:"json",
+				type:"GET",
+				async:true,
+				container:container,
+				sucessCallBack : function(data) {
+					if(data==2){
+						$("#body2", container).hide();
+					}else if(data==3){
+						$("#body2", container).hide();
+					//为4时下面有计划，上面无计划
+					}else if(data==4){
+						$("#body1", container).hide();
+					}
+				}
+		 })
+		 
+		 $("a[data-beforeShowEvent='true']",container).on("beforeShow.dms",function(event,returnResult){
+				
+				var userIdPlan = $("#userIdPlan").val();
+				var agendaPlan = new Array();
+				agendaPlan = $("#agendaPlan").val().split("-");
+				$(this).data("pageData", {USER_ID : userIdPlan,DATE_TIME : agendaPlan[0]+"-"+agendaPlan[1]});
+				returnResult.status = true;
+			});
+	});
+	
+</script>

@@ -1,0 +1,191 @@
+<div class="dms-search">
+	<form class="form-horizontal">
+	  <div class="panel panel-default">
+	     <div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">区域</label>
+						<div class="col-xs-8">
+							<select id="orgId"
+								class="bs-select form-control" name="orgId"
+								data-url="/basedata/region/org"
+								data-model="manage" data-labelValue="ORG_ID"
+								data-lableDesc="ORG_NAME" data-live-search="true" data-size="5" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">省份</label>
+						<div class="col-xs-8">
+							<select id="regionId"
+								class="bs-select form-control" name="regionId" parent="orgId"
+								data-url="/basedata/region/regionId/{[orgId]}"
+								data-model="manage" data-labelValue="REGION_ID"
+								data-lableDesc="REGION_NAME" data-live-search="true" data-size="5" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">城市</label>
+						<div class="col-xs-8">
+							<select id="cityId"
+								class="bs-select form-control" name="cityId" parent="regionId"
+								data-url="/basedata/region/city/{[regionId]}"
+								data-model="manage" data-labelValue="CITY_ID"
+								data-lableDesc="CITY" data-live-search="true" data-size="5	" data-existsDefault = "true">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">督导</label>
+						<div class="col-xs-8 ">
+							<input type="text" class="form-control" id="duDao" name="duDao">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">特约店代码</label>
+						<div class="col-xs-8">
+							<select id="dealerCode"
+								class="bs-select form-control" name="dealerCode" 
+								data-url="/basedata/region/dealerCode"
+								data-model="manage" data-labelValue="DEALER_ID"
+								data-lableDesc="DEALER_CODE" multiple data-live-search="true" data-size="5" data-existsDefault = "false">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">特约店简称</label>
+						<div class="col-xs-8 ">
+							<input type="text" class="form-control" id="dealerName" name="dealerName">
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="form-group">
+						<label class="control-label col-xs-4">系长</label>
+						<div class="col-xs-8 ">
+							<input type="text" class="form-control" id="employeeName" name="employeeName">
+						</div>
+					</div>
+				</div>
+				<div class="query-btn">
+					<a href="javascript:;" class="btn blue"   > <i
+						class="fa fa-search"></i> 查询
+					</a> 
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped table-bordered table-hover table-responsive" id="dms_table"></table>
+				</div>	
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+								<label class="control-label col-xs-6">督导</label>
+								<div class="col-xs-4">
+									<select id="duDaoId"
+										class="bs-select form-control" name="duDaoId"
+										data-url="/basedata/region/duDao/dudao"
+										data-model="manage" data-labelValue="EMPLOYEE_ID"
+										data-lableDesc="EMPLOYEE_NAME"  data-live-search="true" data-size="5" data-existsDefault = "true">
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4">
+								<label class="control-label col-xs-4">系长</label>
+								<div class="col-xs-6">
+									<select id="xiZhangId"
+										class="bs-select form-control" name="xiZhangId"
+										data-url="/basedata/region/duDao/xiz"
+										data-model="manage" data-labelValue="EMPLOYEE_ID"
+										data-lableDesc="EMPLOYEE_NAME"  data-live-search="true" data-size="5" data-existsDefault = "true">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>	
+					<div class="row ">
+						<div class="col-xs-12 ">
+							<div class="query-btn">
+								<a href="javascript:;" class="btn blue ajaxrest"  id='targetData' data-model="manage"
+									data-method="POST" data-callBack="true" data-beforeRequest="true">
+									<i class="fa fa-print"></i>分配
+								</a>
+							</div>
+						</div>
+					</div> 
+				</div>	
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+<script type="text/javascript">
+  $(document).one("onload.dms",function(event,container){
+	new Datatable().initPagination({
+		src : "dms_table",
+		container:container,
+		url : dmsCommon.getDmsPath()["manage"] + "/basedata/region/dealerOrDudao",
+		rowID : "DEALER_ID",
+		selectItemName:"item_id", //定义checkbox 或是radio 的名字
+		autoHeight:false,
+		pageSize : 50,
+		//sortName : "EMPLOYEE_NAME", 
+		//sortOrder : "asc",
+		columns : [ 
+			{checkbox:true,sortable : false},       
+            {field : "ORG_NAME",title : "大区"},
+			{field : "REGION_NAME",title : "省份"},
+			{field : "CITY_NAME",title : "城市"},
+			{field : "DEALER_CODE",title : "特约店代码"},
+			{field : "DEALER_SHORTNAME",title : "特约店简称"},
+			{field : "STATUS",title : "营业状态",codeFormat : {type:"dict",codeType:"1001"}},
+			{field : "DATE",title : "开业时间",dateFormat : {format:"YYYY-MM-DD"}},
+			{field : "SUPERVISION",title : "督导"},
+			{field : "SERIES_ORDER",title : "系长"}
+		]	
+	});
+	
+	$("a[data-beforeRequest='true']",container).on("beforeRequest.dms",function(event,returnResult){
+		var selectRow = $("#dms_table",container).dmsTable().getSelectionIds();
+		var duDao = $("#duDaoId",container).val();
+		var xiZhang = $("#xiZhangId",container).val();
+		if(selectRow!=null && selectRow!=""){
+			if(duDao==""&&xiZhang!=""){
+				dmsCommon.tip({status:"warning",msg:"请选择督导!"});
+				return true;
+			}
+			if(duDao!=""&&xiZhang==""){
+				dmsCommon.tip({status:"warning",msg:"请选择系长!"});
+				return true;
+			}
+			$("#targetData",container).attr("data-url","/basedata/region/distribution/"+selectRow);
+		}else{
+			dmsCommon.tip({status:"warning",msg:"请选择至少一条特约店!"});
+			return true;
+		}
+		
+		returnResult.status = true;
+	});
+	
+	$("a[data-callBack='true']", container).on("callBack.dms",function(event, response) {
+		//刷新表格
+		//$("a[data-dismiss='modal']",container).click();
+		$("#dms_table",getElementContext()).dmsTable().refreshTableWithForm();
+	 });
+	
+}); 
+	 
+</script>

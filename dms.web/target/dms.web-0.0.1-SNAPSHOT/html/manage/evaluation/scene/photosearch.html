@@ -1,0 +1,43 @@
+<div class="dms-add">
+	<form class="form-horizontal">
+	<input type="hidden" value="{[id]}" name="id" id="id">
+		<input type="hidden" value="{[benphotoid]}" name="benphotoid" id="benphotoid">
+		<div class="modal-header">
+			<div class="modal-title">图片上传</div>
+			<div class="modal-close">
+				<a data-dismiss="modal" class="btn btn-lg">
+				<i class="fa fa-remove"></i></a>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div id="filIns2" class="col-xs-12">
+						<input type="file" class="importFiles" id="fileupload" multiple disabled="disabled"
+							name="dmsFile" data-inputName="planFileid" data-billId="{[id]}" data-billType="10421010" >
+					</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<style>
+ .kv-file-remove{display: none;} 
+ .input-group{display: none;} 
+</style>
+<script type="text/javascript">
+//页面加载后初始化
+$(document).one("onload.dms",function(event, container) {
+		$("#filIns2").mousemove(function(){
+			$('.kv-file-zoom').removeAttr("disabled"); 
+		});
+		});
+</script>
+
+
