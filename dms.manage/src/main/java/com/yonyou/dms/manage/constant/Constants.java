@@ -37,4 +37,13 @@ public interface Constants {
 	//整改计划书状态
     public static final Integer PLAN_STATUS_01 = 92061001; //未关闭
     public static final Integer PLAN_STATUS_02 = 92061002; //全部关闭
+    
+	//预算单
+    public static final String BUDGET = "PS"; 
+    
+    // PR审核状态
+    public static final Integer PR_STATUS = 8001;
+    public static final Integer PR_STATUS_APPROVED = 80011001;		// 审核通过
+    public static final Integer PR_STATUS_UNDER_REVIEW = 80011002;	// 审核中
+    public static final Integer PR_STATUS_REJECT = 80011003;		// 审核拒绝
 }

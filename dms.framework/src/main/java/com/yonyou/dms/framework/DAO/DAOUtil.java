@@ -44,6 +44,7 @@ import com.yonyou.dms.framework.domain.RequestPageInfoDto;
 import com.yonyou.dms.framework.domain.UserAccessInfoDto;
 import com.yonyou.dms.framework.util.bean.ApplicationContextHelper;
 import com.yonyou.dms.function.exception.DALException;
+import com.yonyou.dms.function.exception.ServiceBizException;
 import com.yonyou.dms.function.service.common.RegexReplaceCallBack;
 import com.yonyou.dms.function.utils.common.CommonUtils;
 import com.yonyou.dms.function.utils.common.StringUtils;
@@ -547,5 +548,35 @@ public class DAOUtil {
         logger.debug("Sql:"+sql+";"+Arrays.toString(params.toArray()));
         Base.addBatch(ps, params.toArray());
         Base.executeBatch(ps);
+    }
+    
+    /**
+     * 批量操作数据库
+     * @param sql
+     * @param params
+     * @throws Exception
+     */
+    public static void saveBatchData(String sql, List<Object> params) throws Exception {
+    	PreparedStatement ps = null;
+    	try {
+    		ps = Base.startBatch(sql);
+        	if (!CommonUtils.isNullOrEmpty(params)) {
+        		for (int i=0; i<params.size(); i++) {
+        			Object[] tempArr = (Object[]) params.get(i);
+        			if (!CommonUtils.isNullOrEmpty(tempArr)) {
+        				for (int j=0; j<tempArr.length; j++) {
+        					ps.setObject(j + 1, tempArr[j]);
+        				}
+        				ps.addBatch();
+        			}
+        		}
+        		ps.executeBatch();
+        	}
+    	} catch (Exception e) {
+    		throw new ServiceBizException(e);
+    	} finally {
+    		ps.close();
+    	}
+    	
     }
 }

@@ -65,6 +65,10 @@ public class CommonUtils {
     public static boolean isNullOrEmpty(Collection<?> list) {
         return list == null || list.isEmpty();
     }
+    
+    public static boolean isNullOrEmpty(Object[] objs) {
+        return objs == null || objs.length <= 0;
+    }
 
     /**
      * check if the map is null or empty

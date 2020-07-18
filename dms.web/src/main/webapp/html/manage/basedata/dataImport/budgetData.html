@@ -1,0 +1,123 @@
+<style>
+input#sales_name {
+	font-weight: bold;
+}
+</style>
+<div class="dms-search">
+	<form class="form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row ">
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="form-group">
+							<label class="control-label col-xs-4">预算年份:</label>
+							<div class="col-xs-8">
+								<select id="year" name="year" class="form-control">
+								
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="form-group">
+							<label class="control-label col-xs-4">预算月份:</label>
+							<div class="col-xs-8">
+								<select id="month" name="month" class="form-control">
+	                                <class="bs-select form-control ">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-4">
+						<div class="form-group">
+							<label class="control-label col-xs-4">预算版本号:</label>
+							<div class="col-xs-8">
+								<!-- <select id="servion"
+									class="bs-select form-control"  name="servion"
+									data-url="budget/findVerison/{[year]}/{[month]}"
+									data-model="manage" data-labelValue="SERVION_CODE"
+									data-lableDesc="SERVION_CODE"  data-live-search="true"  data-size="10" data-existsDefault = "false" >
+								</select> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<table
+						class="table table-striped table-bordered table-hover table-responsive"
+						id="sales_table"></table>
+				</div>
+				<div class="text-center">
+					<a class="btn blue ajaxify"
+						href="budgetManage/basedata/dataImport/budgetImportPre.html" id="next"> <i
+						class="fa fa-upload"></i>导入
+					</a> 
+					<a href="javascript:;"  data-url="/budget/exportData"
+						data-model="manage" data-method="downLoad"
+						class="btn blue ajaxrest"><i class="fa fa-download"></i>下载</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$(document).one("onload.dms",function(event,container){
+		
+		var myDate = new Date();
+		var year=myDate.getFullYear();
+		var month=myDate.getMonth()+1;
+		var year1=year+1;
+		var year2=year+2;
+
+		$("#year").append("<option value='"+year+"' >"+year+"</option>");
+		$("#year").append("<option value='"+year1+"'>"+year1+"</option>");
+		$("#year").append("<option value='"+year1+"'>"+year2+"</option>");
+		
+
+		/* $("#month").append("<option value='1' >1</option>");
+		$("#month").append("<option value='2' >2</option>");
+		$("#month").append("<option value='3' >3</option>");
+		$("#month").append("<option value='4' >4</option>");
+		$("#month").append("<option value='5' >5</option>");
+		$("#month").append("<option value='6' >6</option>");
+		$("#month").append("<option value='7' >7</option>");
+		$("#month").append("<option value='8' >8</option>");
+		$("#month").append("<option value='9' >9</option>"); */
+		$("#month").append("<option value='10' >10</option>");
+		$("#month").append("<option value='11' >11</option>");
+		$("#month").append("<option value='12' >12</option>");
+
+	
+	/* 	 $("a[data-beforeShowEvent='true']",container).on("beforeShow.dms",function(event,returnResult){
+			  // 这个是父页面的控件取值
+			    var sales_name = $("#sales_name",container).val();
+			    var falg=true;
+				if(sales_name == null || sales_name==""){
+					dmsCommon.tip({status:"warning",msg:"车系不能为空"});
+					falg=false;
+				}
+				
+				var year_month = $("#year_month",container).val();
+				if(year_month == null || year_month==""){
+					dmsCommon.tip({status:"warning",msg:"日期不能为空"});
+					falg=false;
+				}
+
+			    var myDate = new Date();
+				var year=myDate.getFullYear();
+				
+				var month=myDate.getMonth()+1; 
+				var myday = year+'-'+month;
+
+			    var map={myday:myday,sales_name:sales_name,year_month:year_month};
+			   
+			    
+			   $(this).data("pageData",map);
+			    if(!falg){
+			        returnResult.status = false;
+			        return;
+			    }
+			      returnResult.status = true; 
+			});  */
+	});	
+</script>
