@@ -44,7 +44,7 @@
 		<com.yonyou.f4.version>1.1.27</com.yonyou.f4.version>
 		<com.yonyou.f4.schedule.version>1.1.8</com.yonyou.f4.schedule.version>
 		<com.yonyou.f4.fileStore.version>1.1.1</com.yonyou.f4.fileStore.version>
-		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
+		<hibernate.validator.version>5.3.6.Final</hibernate.validator.version>
 		<cglib.version>3.2.2</cglib.version>
 		<okHttp.version>3.4.2</okHttp.version>
 		<!-- <com.yonyou.f4.version>0.0.20-SNAPSHOT</com.yonyou.f4.version> -->
